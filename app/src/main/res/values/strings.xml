@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Basket</string>
+    <string name="basket_title">Basket</string>
+    <string name="e_mail_field">Morganfremund@gmail.com</string>
+    <string name="password_field">Supersecretpassword</string>
+    <string name="e_mail_label">E-mail</string>
+    <string name="password_label">Password</string>
+    <string name="login_button">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="don_t_have_an_account_yet_click_here">Don\'t have an account yet? Click here</string>
+    <string name="create_user_button">Create user</string>
+    <string name="create_user_title">Create user</string>
+    <string name="re_type_password">re-type password</string>
+    <string name="phone_create_user">Phone</string>
+    <string name="your_phone_number">your phone number</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
 </resources>

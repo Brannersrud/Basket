@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.loginFragment">
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:background="@drawable/button"
+        android:text="@string/login_button"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameLoginField" />
+
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginBottom="79dp"
+        android:fontFamily="sans-serif-black"
+        android:labelFor="@+id/loginTitle"
+        android:text="@string/basket_title"
+        android:textColor="#6200EE"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/usernameTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/usernameLoginField"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="278dp"
+        android:layout_marginBottom="290dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/e_mail_field"
+        android:inputType="textEmailAddress"
+        android:labelFor="@+id/usernameLoginField"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="@+id/passwordLoginField"
+        app:layout_constraintStart_toStartOf="@+id/passwordLoginField"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordLoginField"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="100dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/password_field"
+        android:inputType="textPassword"
+
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:targetApi="o" />
+
+    <TextView
+        android:id="@+id/usernameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="19dp"
+        android:labelFor="@+id/usernameTitle"
+        android:text="@string/e_mail_label"
+        android:textColor="#6200EE"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/usernameLoginField"
+        app:layout_constraintStart_toStartOf="@+id/usernameLoginField"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
+
+    <TextView
+        android:id="@+id/passwordTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/password_label"
+        android:textColor="#6200EE"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordLoginField"
+        app:layout_constraintStart_toStartOf="@+id/passwordLoginField"
+        app:layout_constraintTop_toBottomOf="@+id/usernameLoginField" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
