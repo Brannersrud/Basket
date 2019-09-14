@@ -11,16 +11,14 @@ import no.hiof.andersax.basket.R
 /**
  * A simple [Fragment] subclass.
  */
-class createUserFragment : Fragment() {
+class privateListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getActivity()!!.setTitle("Create user")
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_user, container, false)
+        return inflater.inflate(R.layout.fragment_private_list, container, false)
     }
 
 

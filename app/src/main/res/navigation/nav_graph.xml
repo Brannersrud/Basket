@@ -13,10 +13,52 @@
         <action
             android:id="@+id/action_loginFragment_to_createUserFragment"
             app:destination="@id/createUserFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_listOverviewFragment2"
+            app:destination="@id/listOverviewFragment2" />
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
         android:name="no.hiof.andersax.basket.view.createUserFragment"
         android:label="fragment_create_user"
         tools:layout="@layout/fragment_create_user" />
+    <fragment
+        android:id="@+id/listOverviewFragment2"
+        android:name="no.hiof.andersax.basket.view.listOverviewFragment"
+        android:label="fragment_list_overview"
+        tools:layout="@layout/fragment_list_overview" >
+        <action
+            android:id="@+id/action_listOverviewFragment2_to_createListFragment"
+            app:destination="@id/createListFragment" />
+        <action
+            android:id="@+id/action_listOverviewFragment2_to_privateListFragment"
+            app:destination="@id/privateListFragment" />
+        <action
+            android:id="@+id/action_listOverviewFragment2_to_sharedListFragment"
+            app:destination="@id/sharedListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createListFragment"
+        android:name="no.hiof.andersax.basket.view.createListFragment"
+        android:label="fragment_create_list"
+        tools:layout="@layout/fragment_create_list" >
+        <action
+            android:id="@+id/action_createListFragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFriendsFragment"
+        android:name="no.hiof.andersax.basket.view.addFriendsFragment"
+        android:label="fragment_add_friends"
+        tools:layout="@layout/fragment_add_friends" />
+    <fragment
+        android:id="@+id/privateListFragment"
+        android:name="no.hiof.andersax.basket.view.privateListFragment"
+        android:label="fragment_private_list"
+        tools:layout="@layout/fragment_private_list" />
+    <fragment
+        android:id="@+id/sharedListFragment"
+        android:name="no.hiof.andersax.basket.view.sharedListFragment"
+        android:label="fragment_shared_list"
+        tools:layout="@layout/fragment_shared_list" />
 </navigation>

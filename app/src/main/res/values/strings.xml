@@ -15,6 +15,28 @@
     <string name="re_type_password">re-type password</string>
     <string name="phone_create_user">Phone</string>
     <string name="your_phone_number">your phone number</string>
+    <string name="private_lists">Private Lists</string>
+    <string name="shared_lists">Shared Lists</string>
+    <string name="add">add</string>
+    <string name="owner_you">Owner: You</string>
+    <string name="description_privateList">Description:</string>
+    <string name="add_listitem">Add listitem</string>
+    <string name="search_for_a_friend">Search for a friend</string>
+    <string name="submit">Submit</string>
+    <string name="buttonAddList">Button</string>
+    <string name="addListNameField">Name</string>
+    <string name="addListDescriptionField">Description</string>
+    <string name="createListInputName">Sunday dinner</string>
+    <string name="createListInputDescription">We need this for Sunday</string>
+    <string name="createUserPhoneNumber">your phone number</string>
+    <string name="createUserPhoneLabel">Phone</string>
+    <string name="createUserRetypeLabel">re-type password</string>
+    <string name="payForListitemsButton">Pay</string>
+    <string name="totalCostList">total is:</string>
+    <string name="totalAmountOwedLabel">You owe user:</string>
+    <string name="sharedOwnerLabel">Owner:</string>
+    <string name="sharedDescriptionLabe">Description:</string>
+    <string name="addItemToSharedList">Add item to shared list</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
