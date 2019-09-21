@@ -21,7 +21,11 @@
         android:id="@+id/createUserFragment"
         android:name="no.hiof.andersax.basket.view.createUserFragment"
         android:label="fragment_create_user"
-        tools:layout="@layout/fragment_create_user" />
+        tools:layout="@layout/fragment_create_user" >
+        <action
+            android:id="@+id/action_createUserFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listOverviewFragment2"
         android:name="no.hiof.andersax.basket.view.listOverviewFragment"
