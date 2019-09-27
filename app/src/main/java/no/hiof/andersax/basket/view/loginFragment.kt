@@ -45,18 +45,20 @@ class loginFragment : Fragment() {
         }
     }
 
-    fun goToListView() {
-        val loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
-        findNavController().navigate(loginAction)
-    }
+
 
     fun login(email : String, password : String){
         Log.d("try", "reached")
         if(email !== "" && password !== ""){
           if(presenter.SignInUser(email, password)){
-              goToListView()
+              val loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
+              findNavController().navigate(loginAction)
+          }else{
+              errorMessageLogin.text = "Could not authenticate this user"
           }
 
+        }else{
+            errorMessageLogin.text = "You need to fill out the required fields"
         }
     }
 }
