@@ -37,6 +37,11 @@
     <string name="sharedOwnerLabel">Owner:</string>
     <string name="sharedDescriptionLabe">Description:</string>
     <string name="addItemToSharedList">Add item to shared list</string>
+    <string name="item_name">Item name</string>
+    <string name="itemQuantity">1</string>
+    <string name="apply">apply</string>
+    <string name="placeholderCardTitle">gorcery</string>
+    <string name="placeholderCardDescription">Description</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

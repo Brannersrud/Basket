@@ -1,5 +1,6 @@
 package no.hiof.andersax.basket.presenter
 
+import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
 import no.hiof.andersax.basket.IuserList
 import no.hiof.andersax.basket.model.List
@@ -11,17 +12,14 @@ import java.util.ArrayList
 class ListPresenter : IuserList{
     private val listactions : ListActions = ListActions()
 
-    override fun addSharedList(uid: String?, listname: String?, description: String?, userEmails: ArrayList<String>?, items: ArrayList<ListItem>?) {
+    override fun addSharedList(listname: String?, description: String?, userEmails: ArrayList<String>?, items: ArrayList<ListItem>?) {
         TODO("Not implemented")
     }
 
-    override fun addPrivateList(uid: String?, listname : String, description : String, items : ArrayList<ListItem>) {
-        val emptyItems = ArrayList<ListItem>()
-        emptyItems.add(ListItem("Banana", 2, false, 0))
-       val newlist = List(listname, description, "You", emptyItems)
-        listactions.addPrivateList(newlist)
-    }
-
+    override fun addPrivateList(listname: String, description: String, owner: String, items: ArrayList<ListItem>) {
+            val mynewlist = List(listname, description, owner,items)
+            listactions.addPrivateList(mynewlist)
+        }
     override fun AddListItems(listId: Int, item: ArrayList<ListItem>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
