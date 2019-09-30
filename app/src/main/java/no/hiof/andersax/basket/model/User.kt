@@ -5,14 +5,14 @@ import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
 
 class User(val phone : String, val email : String){
-    val privateList = ArrayList<List>()
-    val sharedList = ArrayList<List>()
+    val privateList = ArrayList<ListCollection>()
+    val sharedList = ArrayList<ListCollection>()
 
-    fun addSharedList(list: List?) {
+    fun addSharedList(list: ListCollection?) {
         sharedList.add(list!!)
     }
 
-    fun addPrivateList(list: List?) {
+    fun addPrivateList(list: ListCollection?) {
         privateList.add(list!!)
     }
 

@@ -3,8 +3,8 @@ package no.hiof.andersax.basket.model
 class sharedList (val members : ArrayList<User>,
                   listname: String,
                   description: String,
-                  Owner: String, items: ArrayList<ListItem>
-) : List(listname, description, Owner, items) {
+                  Owner: String, items: kotlin.collections.List<ListItem>
+) : ListCollection(listname, description, Owner, items) {
 
 
 

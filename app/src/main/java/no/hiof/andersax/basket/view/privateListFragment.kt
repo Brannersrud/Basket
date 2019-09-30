@@ -10,7 +10,6 @@ import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_private_list.*
 import no.hiof.andersax.basket.R
-import no.hiof.andersax.basket.model.List
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.presenter.ListPresenter
 

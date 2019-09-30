@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
 import no.hiof.andersax.basket.R
-import no.hiof.andersax.basket.model.List
+import no.hiof.andersax.basket.model.ListCollection
 
-class ListOverviewAdapter(private val items:ArrayList<List>, var clickListener: View.OnClickListener) : RecyclerView.Adapter<ListOverviewAdapter.ListViewHolder>(){
+class ListOverviewAdapter(private val items:List<ListCollection>, var clickListener: View.OnClickListener) : RecyclerView.Adapter<ListOverviewAdapter.ListViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListOverviewAdapter.ListViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
@@ -32,7 +32,7 @@ class ListOverviewAdapter(private val items:ArrayList<List>, var clickListener: 
         private val description : TextView = view.cardViewDescription
 
 
-        fun bind(item : List, clickListener: View.OnClickListener){
+        fun bind(item : ListCollection, clickListener: View.OnClickListener){
             itemName.text = item.listname
             description.text = item.description
 

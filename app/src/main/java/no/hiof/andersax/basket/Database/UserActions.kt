@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.IuserList
-import no.hiof.andersax.basket.model.List
 import no.hiof.andersax.basket.model.User;
 
 

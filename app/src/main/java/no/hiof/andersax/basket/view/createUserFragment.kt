@@ -18,6 +18,7 @@ import no.hiof.andersax.basket.presenter.AuthPresenter
 class createUserFragment : Fragment() {
     private var presenter : AuthPresenter = AuthPresenter()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +42,7 @@ class createUserFragment : Fragment() {
 
     private fun handleUserCreation(email: String, password: String, passwordretype: String, phone: String) {
         //validating, some user input
+
         if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype)){
            if(presenter.signUpNewUser(email, password, phone)){
                var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
