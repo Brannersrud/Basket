@@ -42,7 +42,6 @@ class createUserFragment : Fragment() {
     private fun handleUserCreation(email: String, password: String, passwordretype: String, phone: String) {
         //validating, some user input
         if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype)){
-            println("signing up user ---- ")
            if(presenter.signUpNewUser(email, password, phone)){
                var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
                findNavController().navigate(action)

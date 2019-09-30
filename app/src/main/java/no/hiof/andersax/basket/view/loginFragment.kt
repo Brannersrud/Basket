@@ -11,8 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.coroutines.delay
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.presenter.AuthPresenter
+import java.lang.Thread.sleep
 
 /**
  * A simple [Fragment] subclass.
@@ -47,8 +49,7 @@ class loginFragment : Fragment() {
 
 
 
-    fun login(email : String, password : String){
-        Log.d("try", "reached")
+   fun login(email : String, password : String){
         if(email !== "" && password !== ""){
           if(presenter.SignInUser(email, password)){
               val loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
@@ -56,6 +57,7 @@ class loginFragment : Fragment() {
           }else{
               errorMessageLogin.text = "Could not authenticate this user"
           }
+
 
         }else{
             errorMessageLogin.text = "You need to fill out the required fields"

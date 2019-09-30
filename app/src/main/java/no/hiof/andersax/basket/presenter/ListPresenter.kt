@@ -11,6 +11,7 @@ import java.util.ArrayList
 
 class ListPresenter : IuserList{
     private val listactions : ListActions = ListActions()
+    private var privateLists : ArrayList<List> = ArrayList()
 
     override fun addSharedList(listname: String?, description: String?, userEmails: ArrayList<String>?, items: ArrayList<ListItem>?) {
         TODO("Not implemented")
@@ -35,5 +36,13 @@ class ListPresenter : IuserList{
     override fun CheckListItem(item: ListItem?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-    //getlists from userid.
+
+    fun setPrivateLists(){
+
+
+    }
+    fun getPrivateLists() : ArrayList<List>{
+        return this.privateLists
+    }
+
 }

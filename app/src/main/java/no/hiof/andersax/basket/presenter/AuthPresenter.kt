@@ -9,8 +9,8 @@ import no.hiof.andersax.basket.model.User
 class AuthPresenter{
     private var userAuth =  FirebaseAuth.getInstance()
     private var useractions : UserActions = UserActions()
-    private var isSignUpSuccess : Boolean = false
     private var isSignInSuccess : Boolean = false
+    private var isSignUpSuccess : Boolean = false
 
 
     fun SignInUser(email : String, password : String):Boolean {
@@ -23,14 +23,13 @@ class AuthPresenter{
 
         }catch(e : Exception){
            e.printStackTrace()
-        }finally{
-            return isSignInSuccess
         }
+        return isSignInSuccess
+
     }
 
     fun signUpNewUser(email: String, password: String, phone: String) : Boolean{
         var newUser = User(phone, email)
-
         userAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {Task ->
                isSignUpSuccess = Task.isSuccessful
