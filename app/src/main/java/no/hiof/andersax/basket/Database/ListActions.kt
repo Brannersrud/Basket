@@ -10,11 +10,10 @@ import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.presenter.ListPresenter
 
 class ListActions {
-    private var Auth : AuthActions = AuthActions()
+    private var Auth: AuthActions = AuthActions()
 
 
-
-    fun addPrivateList(list : ListCollection){
+    fun addPrivateList(list: ListCollection) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
         ref.add(list)
@@ -23,29 +22,52 @@ class ListActions {
             }
     }
 
-    fun getPrivateLists(presenter: ListPresenter){
+    fun getPrivateLists(presenter: ListPresenter) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
-        var lists : ArrayList<ListCollection> = ArrayList()
+        var lists: ArrayList<ListCollection> = ArrayList()
         ref.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnSuccessListener { documents ->
-                for(document in documents){
-                    var l : List<ListItem> = document.get("items") as List<ListItem>
+                for (document in documents) {
+                    var l: List<ListItem> = document.get("items")!! as List<ListItem>
                     var owner = document.get("owner").toString()
                     var listname = document.get("listname").toString()
                     var description = document.get("description").toString()
-
-                    var listcollection = ListCollection(listname,description, owner, l)
+                    var listcollection = ListCollection(listname, description, owner, l)
+                    listcollection.setUid(document.id)
 
                     lists.add(listcollection)
+
                 }
                 presenter.setPrivateLists(lists)
 
             }
+    }
+    fun getListItems(uid : String, presenter: ListPresenter) {
+        val db = FirebaseFirestore.getInstance()
+        val ref = db.collection("privateList").document(uid)
+        var lists: List<ListItem> = ArrayList()
+        ref.get()
+            .addOnSuccessListener { it ->
+                    var l: List<ListItem> = it.data!!.get("items") as List<ListItem>
+
+
+
+                lists = l;
+
+
+                presenter.setListItems(lists)
+            }
 
     }
 }
+
+
+
+
+
+
 
 /*
     fun setPrivateLists(lists : ArrayList<List>){

@@ -1,18 +1,17 @@
 package no.hiof.andersax.basket.model
 
-class sharedList (val members : ArrayList<User>,
+class sharedList ( val members : ArrayList<String>,
                   listname: String,
                   description: String,
-                  Owner: String, items: kotlin.collections.List<ListItem>
-) : ListCollection(listname, description, Owner, items) {
+                  Owner: String, items : List<ListItem>
+) : ListCollection( listname, description, Owner, items) {
 
 
-
-    fun addMembersToList(user : User){
-        members.add(user)
+    fun addMembersToList(email : String){
+        members.add(email)
     }
-    fun removeMember(user: User){
-        members.remove(user)
+    fun removeMember(email : String){
+        members.remove(email)
     }
 
 

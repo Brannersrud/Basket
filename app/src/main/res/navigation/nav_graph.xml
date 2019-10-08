@@ -67,13 +67,16 @@
         android:label="fragment_private_list"
         tools:layout="@layout/fragment_private_list" >
         <argument
-            android:name="listname"
+            android:name="Owner"
             app:argType="string" />
         <argument
-            android:name="listdescription"
+            android:name="name"
             app:argType="string" />
         <argument
-            android:name="owner"
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="uid"
             app:argType="string" />
     </fragment>
     <fragment

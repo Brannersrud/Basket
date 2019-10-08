@@ -24,6 +24,7 @@ class createListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_list, container, false)
     }
@@ -31,6 +32,11 @@ class createListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val iconNext = addFriendIcon;
+        iconNext.setOnClickListener {
+            val action = createListFragmentDirections.actionCreateListFragmentToAddFriendsFragment();
+            findNavController().navigate(action);
+        }
 
 
         createListButton.setOnClickListener {
@@ -39,7 +45,7 @@ class createListFragment : Fragment() {
 
             if(listName.isNotEmpty() && listDescription.isNotEmpty()){
 
-               val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(listName, listDescription,actions.getCurrentUser().email!!)
+               val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(listName, listDescription,actions.getCurrentUser().email!!, "empty")
                 //pass data with navigate, next scene makes the list.
                 //presenter.addPrivateList(actions.getCurrentUser().uid, listName, listDescription)
                 findNavController().navigate(action)

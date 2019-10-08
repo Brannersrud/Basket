@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/privateListRecyclerView"
+            android:id="@+id/singleListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>

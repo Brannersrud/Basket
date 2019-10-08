@@ -4,11 +4,15 @@ import android.app.LauncherActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_private_list.view.*
+import kotlinx.android.synthetic.main.list_items_view.view.*
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
 
-class listItemAdapter(private val listitems : ArrayList<LauncherActivity.ListItem>, var clickListener: View.OnClickListener) : RecyclerView.Adapter<listItemAdapter.ListItemHolder>() {
+class listItemAdapter(private val listitems : MutableList<ListItem>, var clickListener: View.OnClickListener) : RecyclerView.Adapter<listItemAdapter.ListItemHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -19,18 +23,23 @@ class listItemAdapter(private val listitems : ArrayList<LauncherActivity.ListIte
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return listitems.size
     }
 
     override fun onBindViewHolder(holder: listItemAdapter.ListItemHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val currentList = listitems[position]
+
+        holder.bind(currentList, clickListener)
     }
     class ListItemHolder(view : View) : RecyclerView.ViewHolder(view){
-
-
+            private val listName : TextView = view.itemName
+            private val numberOfItems : TextView = view.numberOfItems
+            private val checked : CheckBox = view.checkBoxListItem
 
         fun bind(item : ListItem, clickListener: View.OnClickListener){
-
+                listName.text = item.itemName
+                numberOfItems.text = item.quantity.toString()
+                checked.isChecked = item.isChecked
 
             this.itemView.setOnClickListener(clickListener)
 

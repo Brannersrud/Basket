@@ -71,6 +71,8 @@ class loginFragment : Fragment() {
             .addOnCompleteListener {Task->
                 if(Task.isSuccessful){
                     navigateToNextScreen()
+                }else{
+                    errorMessageLogin.text = "Could not authenticate"
                 }
             }
     }
