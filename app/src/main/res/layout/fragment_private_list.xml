@@ -5,12 +5,13 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".view.privateListFragment">
 
     <ScrollView
         android:id="@+id/scrollViewPrivateList"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
+        android:layout_width="402dp"
+        android:layout_height="352dp"
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/applyChanges"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,7 @@
             android:id="@+id/privateListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp" />
+            android:layout_marginTop="60dp" />
     </ScrollView>
 
     <TextView

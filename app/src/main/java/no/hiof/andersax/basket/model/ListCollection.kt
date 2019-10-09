@@ -1,10 +1,8 @@
 package no.hiof.andersax.basket.model
 
-import no.hiof.andersax.basket.IuserList
-import no.hiof.andersax.basket.presenter.ListPresenter
 import kotlin.collections.List
 
-open class ListCollection( val listname : String, val description : String, val Owner : String, val items : List<ListItem>) {
+open class ListCollection( val listname : String, val description : String, val Owner : String, val items : MutableList<ListItem>, var totalPrice : Long) {
     private var uid : String = "";
 
     fun calculateTotalPrice(list: ArrayList<ListItem>): Long{
@@ -14,6 +12,8 @@ open class ListCollection( val listname : String, val description : String, val 
                 temp += i.price;
             }
         }
+        totalPrice = temp;
+
         return temp;
     }
     fun getListItems() : List<ListItem>{
@@ -23,10 +23,8 @@ open class ListCollection( val listname : String, val description : String, val 
         this.uid = uid;
     }
 
-
     fun getUid() : String {
         return this.uid;
     }
-
 
 }

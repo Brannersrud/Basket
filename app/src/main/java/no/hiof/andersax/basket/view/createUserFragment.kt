@@ -48,7 +48,7 @@ class createUserFragment : Fragment() {
                var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
                findNavController().navigate(action)
            }else{
-               //feilmelding
+               error("need to create an error message here to")
            }
         }
 

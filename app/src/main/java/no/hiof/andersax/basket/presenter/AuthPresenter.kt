@@ -8,6 +8,7 @@ import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.UserActions
 import no.hiof.andersax.basket.model.User
 import no.hiof.andersax.basket.view.loginFragment
+import java.lang.Exception
 
 
 class AuthPresenter {
@@ -29,6 +30,8 @@ class AuthPresenter {
                     useractions.addUserToDb(newUser, userAuth.uid!!)
 
                 }
+        }catch (e : Exception){
+            e.printStackTrace()
         } finally {
             return isSignUpSuccess
         }

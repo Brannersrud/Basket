@@ -23,10 +23,10 @@ class privateListFragment : Fragment() {
     private var listname: String = ""
     private var listdescription: String = ""
     private var owner: String = ""
-    private var items: ArrayList<ListItem> = ArrayList()
     private var id: String = "";
-    private var presenter : ListPresenter = ListPresenter()
     private var store : FirebaseFirestore  = FirebaseFirestore.getInstance()
+    private var currentList : MutableList<ListItem> = ArrayList()
+    private var presenter : ListPresenter = ListPresenter()
 
 
 
@@ -36,7 +36,6 @@ class privateListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val args = arguments
-
         if (args != null) {
             listname = args.getString("name")!!
             listdescription = args.getString("description")!!
@@ -44,7 +43,7 @@ class privateListFragment : Fragment() {
             id = args.getString("uid")!!
 
         }
-        getListItems(id);
+        getListItems(id)
         return inflater.inflate(R.layout.fragment_private_list, container, false)
     }
 
@@ -57,36 +56,36 @@ class privateListFragment : Fragment() {
         applyChanges.setOnClickListener {
             val itemText = itemNameField.text.toString()
             val qt = addItemQuantityField.text.toString()
-            if (qt !== null && itemText !== null) {
+            if (qt !== null && itemText !== "") {
                 val desiredValue: Long = qt.toLong()
                 addListItem(desiredValue, itemText)
+            }else{
+                println("error")
             }
         }
 
     }
 
     fun addListItem(qt: Long, itemname: String) {
+        //need to push this to the a mutablelist then rerender recyclerview
         val listitem = ListItem(itemname, qt, false, 0)
-        items.add(listitem)
-
+        presenter.addItemToList(listitem)
+        setUpSingleListRecyclerView()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-       // presenter.addPrivateList(listname, listdescription, owner, items)
+        presenter.addPrivateList(listname,listdescription,owner,0, id)
     }
 
-    private fun setUpSingleListRecyclerView(listitem: MutableList<ListItem>) {
-        println(listitem)
-           scrollViewPrivateList.privateListRecyclerView.adapter = listItemAdapter(listitem,
-                View.OnClickListener { view ->
-                    val position = privateListRecyclerView.getChildAdapterPosition(view)
-                    val clickedList = items[position]
 
-                }
-            )
+
+    private fun setUpSingleListRecyclerView() {
+        var list = presenter.getCurrentList()
+           scrollViewPrivateList.privateListRecyclerView.adapter = listItemAdapter(list)
             privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
         }
+
 
     fun getListItems(id: String) {
         val ref = store.collection("privateList")
@@ -100,11 +99,10 @@ class privateListFragment : Fragment() {
                             var data = it.data["items"] as List<HashMap<String, Any>>
                             prepareData(data)
                         }
+                }else{
+                    error("Should i have an error field instead of posts?")
                 }
-
             }
-
-
     }
 
     private fun prepareData(list: List<HashMap<String, Any>>) {
@@ -115,11 +113,12 @@ class privateListFragment : Fragment() {
             var n = list.get(i)["itemName"] as String
             var c = list.get(i)["checked"] as Boolean
             var q = list.get(i)["quantity"] as Long
-            items.add(ListItem(n,q,c,q))
+            items.add(ListItem(n,q,c,p))
             i++;
 
         }
-        setUpSingleListRecyclerView(items)
+        presenter.addCurrentList(items)
+        setUpSingleListRecyclerView()
     }
 
 

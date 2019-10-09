@@ -13,7 +13,7 @@ class ListActions {
     private var Auth: AuthActions = AuthActions()
 
 
-    fun addPrivateList(list: ListCollection) {
+    fun addPrivateList(list: ListCollection, uid : String) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
         ref.add(list)
@@ -21,7 +21,7 @@ class ListActions {
                 Log.d("successfull", "jyeee")
             }
     }
-
+/*
     fun getPrivateLists(presenter: ListPresenter) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
@@ -61,6 +61,8 @@ class ListActions {
             }
 
     }
+
+ */
 }
 
 

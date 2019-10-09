@@ -42,6 +42,7 @@
     <string name="apply">apply</string>
     <string name="placeholderCardTitle">gorcery</string>
     <string name="placeholderCardDescription">Description</string>
+    <string name="toolbarTitleLogin" color="green">Login</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
