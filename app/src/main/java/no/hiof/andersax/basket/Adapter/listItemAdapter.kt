@@ -42,11 +42,13 @@ class listItemAdapter(private val listitems : MutableList<ListItem>) : RecyclerV
             private var listName : TextView = view.itemName
             private var numberOfItems : TextView = view.numberOfItems
             private var checked : CheckBox = view.checkBoxListItem
+            private var price : TextView = view.priceOfItem
 
         fun bind(item : ListItem){
                 listName.text = item.itemName
                 numberOfItems.text = item.quantity.toString()
                 checked.isChecked = item.isChecked
+                price.text = item.price.toString()
 
             checked.setOnClickListener {
                 checkMakeItemChecked(item, checked.isChecked)
@@ -60,19 +62,24 @@ class listItemAdapter(private val listitems : MutableList<ListItem>) : RecyclerV
                 changeQuantityOfItem(item, numberOfItems.text.toString().toLong())
                 //item.quantity = numberOfItems.text.toString().toLong()
             }
+            price.addTextChangedListener{
+                changePriceOfItem(item, price.text.toString().toLong())
+            }
 
         }
 
-        //move this maybe ? could me smarter to have it in a different component, alltho easier i guess
+        private fun changePriceOfItem(item: ListItem, newPrice: Long) {
+            item.price = newPrice
+        }
 
-        fun changeNameOfListItem(item : ListItem, newName : String){
+        private fun changeNameOfListItem(item : ListItem, newName : String){
             item.itemName = newName
         }
-        fun checkMakeItemChecked(item : ListItem, isChecked : Boolean){
+        private fun checkMakeItemChecked(item : ListItem, isChecked : Boolean){
             item.isChecked = isChecked
         }
-        fun changeQuantityOfItem(item : ListItem, quantity : Long){
-            item.quantity = quantity
+        private fun changeQuantityOfItem(item : ListItem, newQuantity : Long){
+            item.quantity = newQuantity
         }
 
     }
