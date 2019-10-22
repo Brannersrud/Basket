@@ -1,18 +1,16 @@
 package no.hiof.andersax.basket.Adapter
 
-import android.app.LauncherActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.user_search_layout.view.*
 import no.hiof.andersax.basket.R
-import no.hiof.andersax.basket.model.ListItem
-import no.hiof.andersax.basket.model.User
 
-class SearchAdapter(private val searchItems : ArrayList<User>, var clickListener: View.OnClickListener): RecyclerView.Adapter<SearchAdapter.SearchItemHolder>(){
+class SearchAdapter(private val searchItems : MutableList<String>, var clickListener: View.OnClickListener): RecyclerView.Adapter<SearchAdapter.SearchItemHolder>(){
     override fun onBindViewHolder(holder: SearchItemHolder, position: Int) {
         val currentList = searchItems[position]
 
@@ -32,14 +30,11 @@ class SearchAdapter(private val searchItems : ArrayList<User>, var clickListener
 
     class SearchItemHolder(view : View) : RecyclerView.ViewHolder(view){
         private val email : TextView = view.emailFieldSearchResult;
-        private val phone : TextView = view.phoneLabelAddUser;
-        private val checked : RadioButton = view.radioButtonAddFriends;
+        private val checked : CheckBox = view.radioButtonAddFriends;
 
 
-        fun bind(item : User, clickListener: View.OnClickListener){
-            email.text = item.email
-            phone.text = item.phone
-            checked.isChecked = false
+        fun bind(item: String, clickListener: View.OnClickListener){
+            email.text = item
 
             this.itemView.setOnClickListener(clickListener)
 

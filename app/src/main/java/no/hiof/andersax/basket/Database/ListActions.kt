@@ -1,6 +1,7 @@
 package no.hiof.andersax.basket.Database
 
 import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -15,12 +16,46 @@ class ListActions {
 
     fun addPrivateList(list: ListCollection, uid : String) {
         val db = FirebaseFirestore.getInstance()
-        val ref = db.collection("privateList")
-        ref.add(list)
-            .addOnSuccessListener {
-                Log.d("successfull", "jyeee")
+        val ref = db.collection("privateList").document(uid)
+        ref.get()
+            .addOnCompleteListener { Task ->
+                if(Task.isSuccessful){
+                    overWritePrivateList(uid, list)
+                }else{
+                    addNewPrivateList(list)
+                }
             }
     }
+
+    private fun addNewPrivateList(list: ListCollection) {
+        val db = FirebaseFirestore.getInstance()
+        val ref = db.collection("privateList")
+
+        ref.add(list)
+            .addOnCompleteListener { Task ->
+                if(Task.isSuccessful){
+                    //do some fancy stuff, toast for user
+                }else{
+                    //do some less fancy, negative toast
+                }
+            }
+
+    }
+    private fun overWritePrivateList(uid: String, list: ListCollection) {
+        val db = FirebaseFirestore.getInstance()
+        val ref = db.collection("privateList").document(uid)
+        ref.update("items", list.getListItems())
+            .addOnCompleteListener {Task ->
+                if(Task.isSuccessful){
+                    //probably should show an update toast to the user
+                }else{
+                    //something went wrong ?
+                }
+
+            }
+    }
+
+
 /*
     fun getPrivateLists(presenter: ListPresenter) {
         val db = FirebaseFirestore.getInstance()

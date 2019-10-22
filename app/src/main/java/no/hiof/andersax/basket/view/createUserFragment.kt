@@ -35,20 +35,21 @@ class createUserFragment : Fragment() {
             val email = createUserEmailInput.text.toString()
             val password = createUserPasswordInput.text.toString()
             val passwordretype = createUserRetypePasswordInput.text.toString()
+            val username = userNameSignup.text.toString()
             val phone = createUserPhonenumberInput.text.toString()
-            handleUserCreation(email, password, passwordretype,phone)
+            handleUserCreation(email, password, passwordretype,phone, username)
         }
     }
 
-    private fun handleUserCreation(email: String, password: String, passwordretype: String, phone: String) {
+    private fun handleUserCreation(email: String, password: String, passwordretype: String, phone: String, username : String) {
         //validating, some user input
 
-        if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype)){
-           if(presenter.signUpNewUser(email, password, phone)){
+        if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype) && username.isNotEmpty()){
+           if(presenter.signUpNewUser(email, password, phone, username)){
                var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
                findNavController().navigate(action)
            }else{
-               error("need to create an error message here to")
+               println("could not compute?")
            }
         }
 

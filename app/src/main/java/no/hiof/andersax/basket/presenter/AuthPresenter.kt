@@ -20,14 +20,19 @@ class AuthPresenter {
 
 
 
-    fun signUpNewUser(email: String, password: String, phone: String): Boolean {
+    fun signUpNewUser(email: String, password: String, phone: String, username : String): Boolean {
         var isSignUpSuccess = false
         var newUser = User(phone, email)
         try {
             userAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { Task ->
-                    isSignUpSuccess = Task.isSuccessful
-                    useractions.addUserToDb(newUser, userAuth.uid!!)
+                    if(Task.isSuccessful) {
+                        isSignUpSuccess = Task.isSuccessful
+                        useractions.addUserToDb(newUser, userAuth.uid!!, username)
+                    }else{
+
+                        Log.d("taged" ,Task.result.toString())
+                    }
 
                 }
         }catch (e : Exception){

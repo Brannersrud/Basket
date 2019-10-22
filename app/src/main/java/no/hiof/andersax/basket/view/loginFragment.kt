@@ -50,9 +50,9 @@ class loginFragment : Fragment() {
         FirebaseApp.initializeApp(context!!);
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-        if(currentUser !== null){
+        /*if(currentUser !== null){
             navigateToNextScreen()
-        }
+        }*/
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

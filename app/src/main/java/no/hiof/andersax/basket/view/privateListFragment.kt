@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_private_list.*
 import kotlinx.android.synthetic.main.fragment_private_list.view.*
 import no.hiof.andersax.basket.Adapter.listItemAdapter
+import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.R
@@ -27,6 +28,7 @@ class privateListFragment : Fragment() {
     private var store : FirebaseFirestore  = FirebaseFirestore.getInstance()
     private var currentList : MutableList<ListItem> = ArrayList()
     private var presenter : ListPresenter = ListPresenter()
+    private var actions : AuthActions = AuthActions()
 
 
 
@@ -75,7 +77,7 @@ class privateListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter.addPrivateList(listname,listdescription,owner,0, id)
+       presenter.addPrivateList(listname,listdescription,owner,0, id)
     }
 
 

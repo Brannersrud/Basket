@@ -59,13 +59,16 @@ class listItemAdapter(private val listitems : MutableList<ListItem>) : RecyclerV
                 //item.itemName = listName.text.toString()
             }
             numberOfItems.addTextChangedListener {
+                if(numberOfItems.text.toString().isNotEmpty()){
                 changeQuantityOfItem(item, numberOfItems.text.toString().toLong())
                 //item.quantity = numberOfItems.text.toString().toLong()
+                }
             }
-            price.addTextChangedListener{
-                changePriceOfItem(item, price.text.toString().toLong())
+            price.addTextChangedListener {
+                if (price.text.toString().isNotEmpty()) {
+                    changePriceOfItem(item, price.text.toString().toLong())
+                }
             }
-
         }
 
         private fun changePriceOfItem(item: ListItem, newPrice: Long) {

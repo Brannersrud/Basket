@@ -32,7 +32,6 @@ class ListPresenter{
 
     fun setPrivateLists(list : ArrayList<ListCollection>){
         privateLists = list
-        println(privateLists)
 
     }
 

@@ -43,9 +43,10 @@ class createListFragment : Fragment() {
             var listName = createListNameField.text.toString()
             var listDescription = createListDescriptionField.text.toString()
 
+            println(listName + " " + listDescription)
             if(listName.isNotEmpty() && listDescription.isNotEmpty()){
 
-               val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(listName, listDescription,actions.getCurrentUser().email!!, "empty")
+               val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(actions.getCurrentUser().email!!,listName, listDescription, actions.getCurrentUser().uid)
                 //pass data with navigate, next scene makes the list.
                 //presenter.addPrivateList(actions.getCurrentUser().uid, listName, listDescription)
                 findNavController().navigate(action)

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_list_overview.*
 import no.hiof.andersax.basket.Adapter.ListOverviewAdapter
 import no.hiof.andersax.basket.Database.AuthActions
+import no.hiof.andersax.basket.Database.UserActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
@@ -26,19 +27,19 @@ import java.util.ArrayList
 class listOverviewFragment : Fragment() {
     private var Auth : AuthActions = AuthActions()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPrivateLists()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        getPrivateLists()
+
         return inflater.inflate(R.layout.fragment_list_overview, container, false)
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

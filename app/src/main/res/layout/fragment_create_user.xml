@@ -11,7 +11,7 @@
         android:id="@+id/buttonCreateUser"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/button"
         android:text="@string/create_user_button"
         android:textAllCaps="false"
@@ -26,39 +26,42 @@
         android:layout_width="265dp"
         android:layout_height="65dp"
         android:layout_marginBottom="44dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/e_mail_field"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/createUserPasswordInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" tools:targetApi="o" />
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/createUserPasswordInput"
         android:layout_width="265dp"
         android:layout_height="65dp"
         android:layout_marginBottom="52dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/password_field"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/createUserRetypePasswordInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" tools:targetApi="o" />
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/createUserRetypePasswordInput"
         android:layout_width="265dp"
         android:layout_height="65dp"
         android:layout_marginBottom="48dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/password_field"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/createUserPhonenumberInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" tools:targetApi="o" />
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/createUserPhonenumberInput"
@@ -80,15 +83,14 @@
         android:id="@+id/createUserTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="@string/create_user_title"
         android:textColor="#6200EE"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/createUserEmailInput"
+        app:layout_constraintBottom_toTopOf="@+id/userNameSignup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.271" />
 
     <TextView
         android:id="@+id/emailSignup"
@@ -135,4 +137,30 @@
         android:textColor="#6200EE"
         app:layout_constraintBottom_toTopOf="@+id/createUserRetypePasswordInput"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/userNameSignup"
+        android:layout_width="265dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="52dp"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/createUserEmailInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:textColor="#6200EE"
+        app:layout_constraintBottom_toTopOf="@+id/userNameSignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.855" />
 </androidx.constraintlayout.widget.ConstraintLayout>
