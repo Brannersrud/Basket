@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import no.hiof.andersax.basket.R
+import no.hiof.andersax.basket.presenter.ListPresenter
 
 /**
  * A simple [Fragment] subclass.
  */
 class sharedListFragment : Fragment() {
-
+    var presenter : ListPresenter = ListPresenter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

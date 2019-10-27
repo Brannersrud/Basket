@@ -24,13 +24,6 @@
             android:text="@string/e_mail_field"
             android:textSize="16sp" />
 
-        <CheckBox
-            android:id="@+id/radioButtonAddFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp" />
-
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

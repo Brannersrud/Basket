@@ -78,7 +78,9 @@
         android:textColor="#6200EE"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/usernameLoginField"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitle"
+        app:layout_constraintVertical_bias="0.987" />
 
     <TextView
         android:id="@+id/passwordTitle"

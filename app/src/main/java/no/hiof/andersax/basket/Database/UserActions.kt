@@ -2,9 +2,9 @@ package no.hiof.andersax.basket.Database
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.User;
-import no.hiof.andersax.basket.presenter.UserPresenter
-import no.hiof.andersax.basket.view.addFriendsFragment
+import no.hiof.andersax.basket.view.createListFragment
 
 
 class UserActions{
@@ -21,8 +21,8 @@ class UserActions{
             }
     }
 
-    fun getAllUsers(target : addFriendsFragment){
-        val users : MutableList<String> = ArrayList<String>()
+    fun getAllUsers(target: createListFragment){
+        val users : MutableList<ListMembers> = ArrayList<ListMembers>()
         db.collection("Users")
             .get()
             .addOnCompleteListener { task ->
@@ -30,10 +30,10 @@ class UserActions{
                     task.result!!
                         .asSequence()
                         .forEach {
-                            users.add(it.id)
+                            users.add(ListMembers(it.id, false, 0, false))
 
                         }
-                    target.setUpSingleListRecyclerView(users)
+                    target.setSearchAbles(users)
                 }
             }
     }

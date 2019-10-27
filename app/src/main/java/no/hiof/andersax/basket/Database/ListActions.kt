@@ -8,7 +8,11 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
+import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.presenter.ListPresenter
+import no.hiof.andersax.basket.view.createListFragment
+import no.hiof.andersax.basket.view.listOverviewFragment
+import java.util.ArrayList
 
 class ListActions {
     private var Auth: AuthActions = AuthActions()
@@ -55,6 +59,19 @@ class ListActions {
             }
     }
 
+     fun addNewSharedList(list:sharedList, fragment : createListFragment){
+         val db = FirebaseFirestore.getInstance()
+         val ref = db.collection("sharedList")
+         ref.add(list)
+             .addOnCompleteListener { Task ->
+                 if(Task.isSuccessful){
+                     //do some fancy stuff, toast for user
+                     fragment.showToastToUser("List created carefully")
+                 }else{
+                     fragment.showToastToUser("List denied awfully")
+                 }
+             }
+     }
 
 /*
     fun getPrivateLists(presenter: ListPresenter) {
