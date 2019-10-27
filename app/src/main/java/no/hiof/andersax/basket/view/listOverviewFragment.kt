@@ -54,10 +54,7 @@ class listOverviewFragment : Fragment() {
                 listOverviewFragmentDirections.actionListOverviewFragment2ToCreateListFragment()
             findNavController().navigate(addListAction)
         }
-        addSharedButton.setOnClickListener {
-            val addListAction = listOverviewFragmentDirections.actionListOverviewFragment2ToCreateListFragment()
-            findNavController().navigate(addListAction)
-        }
+
 
     }
 
