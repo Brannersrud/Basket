@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
@@ -36,18 +37,18 @@ class loginFragment : Fragment() {
     private var userAuth = FirebaseAuth.getInstance()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getActivity()!!.setTitle(R.string.toolbarTitleLogin)
+
+
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(context!!);
+        FirebaseApp.initializeApp(context!!)
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
         /*if(currentUser !== null){

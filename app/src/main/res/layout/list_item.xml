@@ -7,9 +7,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewListOverView"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="360dp"
+        android:layout_height="199dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:fadingEdgeLength="2dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.262"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,7 +9,6 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="99dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +17,7 @@
             android:id="@+id/emailFieldSearchResult"
             android:layout_width="269dp"
             android:layout_height="67dp"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:paddingTop="15dp"
             android:text="@string/e_mail_field"

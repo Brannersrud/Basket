@@ -1,8 +1,6 @@
 package no.hiof.andersax.basket.presenter
 
 import android.os.Handler
-import android.util.Log
-import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
@@ -12,8 +10,8 @@ import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.view.createListFragment
 import no.hiof.andersax.basket.view.listOverviewFragment
+import no.hiof.andersax.basket.view.privateListFragment
 import java.util.ArrayList
-import java.util.zip.ZipEntry
 
 class ListPresenter{
     private var privateLists : List<ListCollection> = ArrayList()
@@ -22,7 +20,12 @@ class ListPresenter{
     private var Auth : AuthActions = AuthActions()
     private var currentUserName : String = ""
      fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long) {
-         var sharedListToAdd :sharedList = sharedList(members, listname, description, owner, items, totalprice)
+        var usernames : MutableList<String> = ArrayList()
+         for (member in members){
+             usernames.add(member.username)
+         }
+
+         var sharedListToAdd : sharedList = sharedList(members,listname,description, usernames,owner, items, totalprice)
          listactions.addNewSharedList(sharedListToAdd, listFragment)
     }
 
@@ -32,15 +35,17 @@ class ListPresenter{
         description: String,
         owner: String,
         totalprice: Long,
-        id: String
+        id: String,
+    fragment : privateListFragment
     ) {
         val mynewlist = ListCollection(listname, description, owner,currentList, 0)
-        listactions.addPrivateList(mynewlist, id)
+        listactions.addPrivateList(mynewlist, id, fragment)
     }
 
 
-    fun addItemToList(item : ListItem){
+    fun addItemToList(item : ListItem, fragment : privateListFragment){
         currentList.add(item)
+        fragment.setUpSingleListRecyclerView()
     }
 
     fun setPrivateLists(list : ArrayList<ListCollection>){
@@ -61,6 +66,7 @@ class ListPresenter{
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
         var lists: ArrayList<ListCollection> = ArrayList()
+
         ref.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnSuccessListener { documents ->
@@ -81,25 +87,26 @@ class ListPresenter{
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("sharedList")
         var list : ArrayList<sharedList> = ArrayList()
+        var memberUsernames : MutableList<String> = ArrayList<String>()
 
-         ref.whereArrayContains("members", this.currentUserName)
+         ref.whereArrayContains("members",uname)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
                     var members: MutableList<ListMembers> =
-                        document.get("members") as MutableList<ListMembers>
+                        document.get("members")!! as MutableList<ListMembers>
+                    //var memberUsernames = document.get("memberUsernames") as MutableList<String>
                     var price: Long = document.get("totalPrice") as Long
                     var owner = document.get("owner").toString()
                     var listname = document.get("listname").toString()
                     var description = document.get("description").toString()
-                    var listcollection = sharedList(members, listname, description, owner, l, price)
+                    var listcollection = sharedList(members, listname, description,memberUsernames, owner, l, price)
                     listcollection.setUid(document.id)
                     list.add(listcollection)
                 }
             }
-
-        ref.whereEqualTo("description", uname)
+        ref.whereEqualTo("owner", uname)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -110,7 +117,7 @@ class ListPresenter{
                     var owner = document.get("owner").toString()
                     var listname = document.get("listname").toString()
                     var description = document.get("description").toString()
-                    var listcollection = sharedList(members, listname, description, owner, l, price)
+                    var listcollection = sharedList(members, listname, description,memberUsernames, owner, l, price)
                     listcollection.setUid(document.id)
                     list.add(listcollection)
 
@@ -141,7 +148,6 @@ class ListPresenter{
                         getSharedLists(frag, username)
                     }
             }
-
     }
 
 

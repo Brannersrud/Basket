@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_private_list.*
@@ -68,28 +69,28 @@ class privateListFragment : Fragment() {
 
     }
 
-    fun addListItem(qt: Long, itemname: String) {
+    private fun addListItem(qt: Long, itemname: String) {
         //need to push this to the a mutablelist then rerender recyclerview
         val listitem = ListItem(itemname, qt, false, 0)
-        presenter.addItemToList(listitem)
-        setUpSingleListRecyclerView()
+        presenter.addItemToList(listitem, this)
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-       presenter.addPrivateList(listname,listdescription,owner,0, id)
+       presenter.addPrivateList(listname,listdescription,owner,0, id, this)
     }
 
 
 
-    private fun setUpSingleListRecyclerView() {
+     fun setUpSingleListRecyclerView() {
         var list = presenter.getCurrentList()
            scrollViewPrivateList.privateListRecyclerView.adapter = listItemAdapter(list)
             privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
         }
 
 
-    fun getListItems(id: String) {
+    private fun getListItems(id: String) {
         val ref = store.collection("privateList")
         ref.get()
             .addOnCompleteListener { task ->
@@ -123,6 +124,13 @@ class privateListFragment : Fragment() {
         setUpSingleListRecyclerView()
     }
 
+    fun showToastToUser(message : String){
+        val duration = Toast.LENGTH_LONG
+        val toast = Toast.makeText(context, message, duration)
+
+        toast.show()
+
+    }
 
 }
 

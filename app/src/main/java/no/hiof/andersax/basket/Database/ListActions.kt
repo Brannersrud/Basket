@@ -1,59 +1,51 @@
 package no.hiof.andersax.basket.Database
 
-import android.util.Log
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.SetOptions
 import no.hiof.andersax.basket.model.ListCollection
-import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.sharedList
-import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.view.createListFragment
-import no.hiof.andersax.basket.view.listOverviewFragment
-import java.util.ArrayList
+import no.hiof.andersax.basket.view.privateListFragment
 
 class ListActions {
     private var Auth: AuthActions = AuthActions()
 
 
-    fun addPrivateList(list: ListCollection, uid : String) {
+    fun addPrivateList(list: ListCollection, uid: String, fragment: privateListFragment) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList").document(uid)
         ref.get()
             .addOnCompleteListener { Task ->
                 if(Task.isSuccessful){
-                    overWritePrivateList(uid, list)
+                    overWritePrivateList(uid, list,fragment)
                 }else{
-                    addNewPrivateList(list)
+                    addNewPrivateList(list, fragment)
                 }
             }
     }
 
-    private fun addNewPrivateList(list: ListCollection) {
+    private fun addNewPrivateList(list: ListCollection, fragment: privateListFragment) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList")
 
         ref.add(list)
             .addOnCompleteListener { Task ->
                 if(Task.isSuccessful){
-                    //do some fancy stuff, toast for user
+                    fragment.showToastToUser("List added beautifully")
                 }else{
-                    //do some less fancy, negative toast
+                    fragment.showToastToUser("List rejected violently")
                 }
             }
 
     }
-    private fun overWritePrivateList(uid: String, list: ListCollection) {
+    private fun overWritePrivateList(uid: String, list: ListCollection, fragment: privateListFragment) {
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("privateList").document(uid)
         ref.update("items", list.getListItems())
             .addOnCompleteListener {Task ->
                 if(Task.isSuccessful){
-                    //probably should show an update toast to the user
+                    fragment.showToastToUser("List updated gracefully")
                 }else{
-                    //something went wrong ?
+                    fragment.showToastToUser("Unable to update list, obnoxiously")
                 }
 
             }
@@ -62,6 +54,7 @@ class ListActions {
      fun addNewSharedList(list:sharedList, fragment : createListFragment){
          val db = FirebaseFirestore.getInstance()
          val ref = db.collection("sharedList")
+
          ref.add(list)
              .addOnCompleteListener { Task ->
                  if(Task.isSuccessful){

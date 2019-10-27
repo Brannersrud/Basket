@@ -34,10 +34,10 @@ android {
     dataBinding {
         enabled = true
     }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:17.1.2'
     //noinspection GradleCompatible
-    implementation "com.android.support:support-compat:28.0.0"
+
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -54,7 +54,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'com.firebaseui:firebase-ui-firestore:6.0.2'
-
 
 
 }
