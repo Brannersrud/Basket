@@ -21,12 +21,13 @@
         <TextView
             android:id="@+id/cardViewTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
             android:paddingStart="20dp"
             android:paddingTop="30dp"
             android:paddingEnd="0dp"
             android:text="@string/placeholderCardTitle"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,16 +35,40 @@
             android:layout_width="wrap_content"
             android:layout_height="37dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
             android:text="@string/placeholderCardDescription"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="300dp"
             android:layout_height="3dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="140dp"
             android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/ownerNameCardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/amountOfMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="242dp"
+            android:layout_marginTop="160dp" />
+
+        <ImageView
+            android:id="@+id/membersIcon"
+            android:layout_width="22dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="160dp" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

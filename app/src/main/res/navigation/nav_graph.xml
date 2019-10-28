@@ -50,8 +50,8 @@
             android:id="@+id/action_createListFragment_to_privateListFragment"
             app:destination="@id/privateListFragment" />
         <action
-            android:id="@+id/action_createListFragment_to_sharedListFragment"
-            app:destination="@id/sharedListFragment" />
+            android:id="@+id/action_createListFragment_to_listOverviewFragment2"
+            app:destination="@id/listOverviewFragment2" />
     </fragment>
     <fragment
         android:id="@+id/privateListFragment"
@@ -75,5 +75,11 @@
         android:id="@+id/sharedListFragment"
         android:name="no.hiof.andersax.basket.view.sharedListFragment"
         android:label="fragment_shared_list"
-        tools:layout="@layout/fragment_shared_list" />
+        tools:layout="@layout/fragment_shared_list" >
+        <argument
+            android:name="uid"
+            app:argType="string" />
+        <argument android:name="listname" />
+        <argument android:name="listdescription" />
+    </fragment>
 </navigation>

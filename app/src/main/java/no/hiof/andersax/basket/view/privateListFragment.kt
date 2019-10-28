@@ -27,9 +27,7 @@ class privateListFragment : Fragment() {
     private var owner: String = ""
     private var id: String = "";
     private var store : FirebaseFirestore  = FirebaseFirestore.getInstance()
-    private var currentList : MutableList<ListItem> = ArrayList()
     private var presenter : ListPresenter = ListPresenter()
-    private var actions : AuthActions = AuthActions()
 
 
 
@@ -57,14 +55,8 @@ class privateListFragment : Fragment() {
         privateListName.text = listname
 
         applyChanges.setOnClickListener {
-            val itemText = itemNameField.text.toString()
-            val qt = addItemQuantityField.text.toString()
-            if (qt !== null && itemText !== "") {
-                val desiredValue: Long = qt.toLong()
-                addListItem(desiredValue, itemText)
-            }else{
-                println("error")
-            }
+            presenter.addPrivateList(listname,listdescription,owner,0, id, this)
+
         }
 
     }
@@ -78,7 +70,6 @@ class privateListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-       presenter.addPrivateList(listname,listdescription,owner,0, id, this)
     }
 
 
@@ -86,8 +77,9 @@ class privateListFragment : Fragment() {
      fun setUpSingleListRecyclerView() {
         var list = presenter.getCurrentList()
            scrollViewPrivateList.privateListRecyclerView.adapter = listItemAdapter(list)
-            privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
-        }
+         privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+
+     }
 
 
     private fun getListItems(id: String) {

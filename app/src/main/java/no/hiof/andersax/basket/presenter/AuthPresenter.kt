@@ -42,6 +42,32 @@ class AuthPresenter {
         }
 
     }
+
+    fun getCurrentLoggedInUser() : String {
+        var ref = useractions.db.collection("Users")
+        var myLoggedInUser = ""
+        try {
+            ref.whereEqualTo("email", userAuth.currentUser!!.email)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        task.result!!
+                            .asSequence()
+                            .forEach { it ->
+                                myLoggedInUser = it.id
+
+                            }
+
+                    }
+                }
+        }catch (e : Exception){
+            e.printStackTrace()
+        }finally {
+            return myLoggedInUser
+
+        }
+
+    }
 }
 
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_list_overview.*
@@ -28,6 +29,7 @@ class listOverviewFragment : Fragment() {
     private var presenter : ListPresenter = ListPresenter()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,9 +47,10 @@ class listOverviewFragment : Fragment() {
 
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getEmailOfUser(this)
+        presenter.getListOverViews(this)
 
 
         addPrivateButton.setOnClickListener {
@@ -85,8 +88,8 @@ class listOverviewFragment : Fragment() {
                 val position = sharedListRecyclerView.getChildAdapterPosition(view)
                 val clickedList = list[position]
 
-                Log.d("print", clickedList.members.toString())
-
+               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description)
+                findNavController().navigate(action)
             })
         sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)
     }

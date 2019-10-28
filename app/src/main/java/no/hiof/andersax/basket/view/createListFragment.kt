@@ -19,6 +19,7 @@ import no.hiof.andersax.basket.Database.UserActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
+import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 
 /**
@@ -30,6 +31,7 @@ class createListFragment : Fragment() {
     private var addedToList : MutableList<ListMembers> = ArrayList<ListMembers>()
     private var useractions : UserActions = UserActions()
     private var searchables : MutableList<ListMembers> = ArrayList<ListMembers>()
+    private var authpresenter : AuthPresenter = AuthPresenter()
 
 
     override fun onCreateView(
@@ -63,7 +65,6 @@ class createListFragment : Fragment() {
     }
 
     private fun handleRedirect(listName: String, listDescription: String) {
-        println(listDescription + " " + listName)
         if(listName.isNotEmpty() && listDescription.isNotEmpty() && this.addedToList.size == 0){
 
             val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(actions.getCurrentUser().email!!,listName, listDescription, actions.getCurrentUser().uid)
@@ -73,10 +74,10 @@ class createListFragment : Fragment() {
 
         }else if(listName.isNotEmpty() && listDescription.isNotEmpty() && this.addedToList.size > 0){
             //add shared list to db
-            var emptylist :  MutableList<ListItem> = ArrayList<ListItem>()
+            val emptylist :  MutableList<ListItem> = ArrayList<ListItem>()
             listpresenter.addSharedList(this,actions.getCurrentUser().email!!, listName, listDescription, this.addedToList, emptylist, 0)
-            val action = createListFragmentDirections.actionCreateListFragmentToSharedListFragment()
-            findNavController().navigate(action)
+            val action = createListFragmentDirections.actionCreateListFragmentToListOverviewFragment2()
+           findNavController().navigate(action)
 
         }else{
             errorCreateList.text = "You have to fill out listname \n and description to create a list"
@@ -89,10 +90,12 @@ class createListFragment : Fragment() {
             for(item in searchables){
                 if(item.username.contains(query)){
                     list.add(item)
-                   // searchables.remove(item)
                 }
             }
 
+            setUpSingleListRecyclerView(list)
+        }else if(query.length < 3){
+            list.clear()
             setUpSingleListRecyclerView(list)
         }
 

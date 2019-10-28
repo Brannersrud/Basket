@@ -1,6 +1,7 @@
 package no.hiof.andersax.basket.presenter
 
 import android.os.Handler
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
@@ -19,16 +20,16 @@ class ListPresenter{
     private var currentList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
     private var currentUserName : String = ""
+
      fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long) {
-        var usernames : MutableList<String> = ArrayList()
+        val usernames : MutableList<String> = ArrayList()
          for (member in members){
              usernames.add(member.username)
          }
 
-         var sharedListToAdd : sharedList = sharedList(members,listname,description, usernames,owner, items, totalprice)
+         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,totalprice)
          listactions.addNewSharedList(sharedListToAdd, listFragment)
     }
-
 
     fun addPrivateList(
         listname: String,
@@ -63,7 +64,7 @@ class ListPresenter{
         return this.currentList
     }
     fun getPrivateLists(fragment: listOverviewFragment) {
-        val db = FirebaseFirestore.getInstance()
+        val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList")
         var lists: ArrayList<ListCollection> = ArrayList()
 
@@ -84,12 +85,34 @@ class ListPresenter{
     }
 
     fun getSharedLists(fragment: listOverviewFragment, uname : String){
-        val db = FirebaseFirestore.getInstance()
+        val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
         var list : ArrayList<sharedList> = ArrayList()
         var memberUsernames : MutableList<String> = ArrayList<String>()
 
-         ref.whereArrayContains("members",uname)
+
+        ref.whereEqualTo("owner", Auth.getCurrentUser().email)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
+                    var members: MutableList<ListMembers> =
+                        document.get("members") as MutableList<ListMembers>
+                    var price: Long = document.get("totalPrice") as Long
+                    var owner = document.get("owner").toString()
+                    var listname = document.get("listname").toString()
+                    var description = document.get("description").toString()
+                    var listcollection = sharedList(members, memberUsernames,listname,description,owner,l,price)
+                    listcollection.setUid(document.id)
+                    list.add(listcollection)
+
+                    fragment.setUpSharedListRecyclerView(list)
+                }
+
+            }
+        Log.d("uname", uname)
+
+        ref.whereArrayContains("usernames", uname.toString())
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -101,52 +124,38 @@ class ListPresenter{
                     var owner = document.get("owner").toString()
                     var listname = document.get("listname").toString()
                     var description = document.get("description").toString()
-                    var listcollection = sharedList(members, listname, description,memberUsernames, owner, l, price)
+                    var listcollection = sharedList(members, memberUsernames,listname,description,owner,l,price)
                     listcollection.setUid(document.id)
                     list.add(listcollection)
                 }
-            }
-        ref.whereEqualTo("owner", uname)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
-                    var members: MutableList<ListMembers> =
-                        document.get("members") as MutableList<ListMembers>
-                    var price: Long = document.get("totalPrice") as Long
-                    var owner = document.get("owner").toString()
-                    var listname = document.get("listname").toString()
-                    var description = document.get("description").toString()
-                    var listcollection = sharedList(members, listname, description,memberUsernames, owner, l, price)
-                    listcollection.setUid(document.id)
-                    list.add(listcollection)
-
-                    fragment.setUpSharedListRecyclerView(list)
-                }
-
+                fragment.setUpSharedListRecyclerView(list)
             }
 
     }
 
 
-    fun getEmailOfUser(frag : listOverviewFragment) {
+    fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
         val db = FirebaseFirestore.getInstance()
         val ref = db.collection("Users")
         Handler().postDelayed({
             getPrivateLists(frag)
         },300)
-
+        var uname = ""
         ref.whereEqualTo("email", email)
             .get()
-            .addOnCompleteListener {task ->
-                if(task.isSuccessful)
-                task.result!!
-                    .asSequence()
-                    .forEach {it ->
-                       var username =  it.id
-                        getSharedLists(frag, username)
-                    }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result!!
+                        .asSequence()
+                        .forEach { it ->
+                            uname = it.id
+
+                        }
+                    getSharedLists(frag, uname)
+
+
+                }
             }
     }
 

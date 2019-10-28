@@ -86,7 +86,7 @@ class loginFragment : Fragment() {
 
 
     fun navigateToNextScreen(){
-        var loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
+        val loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
         findNavController().navigate(loginAction)
 
     }

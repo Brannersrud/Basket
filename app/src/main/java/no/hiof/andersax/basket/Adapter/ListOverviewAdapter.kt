@@ -3,6 +3,7 @@ package no.hiof.andersax.basket.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -30,11 +31,18 @@ class ListOverviewAdapter(private val items:ArrayList<ListCollection>, var click
     class ListViewHolder(view : View) : RecyclerView.ViewHolder(view){
         private val itemName : TextView = view.cardViewTitle
         private val description : TextView = view.cardViewDescription
+        private val ownerName : TextView = view.ownerNameCardTitle
+        private val imageview : ImageView = view.membersIcon
 
 
         fun bind(item : ListCollection, clickListener: View.OnClickListener){
             itemName.text = item.listname
             description.text = item.description
+            ownerName.text = "You ;)"
+
+
+
+
 
             this.itemView.setOnClickListener(clickListener)
 

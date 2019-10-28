@@ -9,6 +9,7 @@ import no.hiof.andersax.basket.view.createListFragment
 
 class UserActions{
     val db = FirebaseFirestore.getInstance()
+    val authActions : AuthActions = AuthActions()
 
     fun addUserToDb(user : User, uid: String, username : String){
         db.collection("Users").document("${username}")
@@ -30,6 +31,7 @@ class UserActions{
                     task.result!!
                         .asSequence()
                         .forEach {
+                            if(!it.get("email")!!.equals(authActions.getCurrentUser().email))
                             users.add(ListMembers(it.id, false, 0, false))
 
                         }
