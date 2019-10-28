@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -9,9 +9,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-        <style name="HeaderBar">
-            <item name="android:background">@color/colorPrimary</item>
-        </style>
+
+
 
 
 </resources>

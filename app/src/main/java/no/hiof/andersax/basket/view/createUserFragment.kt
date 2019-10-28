@@ -23,7 +23,6 @@ class createUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getActivity()!!.setTitle("Create user")
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_user, container, false)

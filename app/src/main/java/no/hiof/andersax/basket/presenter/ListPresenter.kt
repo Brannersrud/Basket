@@ -18,6 +18,7 @@ class ListPresenter{
     private var privateLists : List<ListCollection> = ArrayList()
     private var listactions : ListActions = ListActions()
     private var currentList : MutableList<ListItem> = ArrayList()
+    private var currentSharedList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
     private var currentUserName : String = ""
 
@@ -53,12 +54,18 @@ class ListPresenter{
         privateLists = list
 
     }
+    fun addCurrentSharedList(list:MutableList<ListItem>){
+        currentSharedList.addAll(list)
+    }
 
     fun addCurrentList(list : MutableList<ListItem>){
         currentList.addAll(list)
     }
     fun removeListItem(index : Int){
         currentList.removeAt(index)
+    }
+    fun getCurrentSharedList() : MutableList<ListItem>{
+        return this.currentSharedList
     }
     fun getCurrentList() : MutableList<ListItem>{
         return this.currentList

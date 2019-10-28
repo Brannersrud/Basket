@@ -38,7 +38,7 @@ class ListOverviewAdapter(private val items:ArrayList<ListCollection>, var click
         fun bind(item : ListCollection, clickListener: View.OnClickListener){
             itemName.text = item.listname
             description.text = item.description
-            ownerName.text = "You ;)"
+            ownerName.text = "owner: You ofcourse :)"
 
 
 

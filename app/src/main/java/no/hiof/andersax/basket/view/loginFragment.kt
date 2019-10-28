@@ -51,6 +51,7 @@ class loginFragment : Fragment() {
         FirebaseApp.initializeApp(context!!)
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+
         /*if(currentUser !== null){
             navigateToNextScreen()
         }*/
