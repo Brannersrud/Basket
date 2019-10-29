@@ -31,7 +31,7 @@ class createListFragment : Fragment() {
     private var addedToList : MutableList<ListMembers> = ArrayList<ListMembers>()
     private var useractions : UserActions = UserActions()
     private var searchables : MutableList<ListMembers> = ArrayList<ListMembers>()
-    private var authpresenter : AuthPresenter = AuthPresenter()
+    private var sharedList : sharedListFragment = sharedListFragment()
 
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class createListFragment : Fragment() {
         }else if(listName.isNotEmpty() && listDescription.isNotEmpty() && this.addedToList.size > 0){
             //add shared list to db
             val emptylist :  MutableList<ListItem> = ArrayList<ListItem>()
-            listpresenter.addSharedList(this,actions.getCurrentUser().email!!, listName, listDescription, this.addedToList, emptylist, 0)
+            listpresenter.addSharedList(sharedList,actions.getCurrentUser().email!!, listName, listDescription, this.addedToList, emptylist, 0, "")
             val action = createListFragmentDirections.actionCreateListFragmentToListOverviewFragment2()
            findNavController().navigate(action)
 
@@ -126,11 +126,4 @@ class createListFragment : Fragment() {
     }
 
 
-    fun showToastToUser(message : String){
-        val duration = Toast.LENGTH_LONG
-        val toast = Toast.makeText(context, message, duration)
-
-        toast.show()
-
-    }
 }

@@ -10,18 +10,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sharedListItemRecyclerView"
         android:layout_width="394dp"
-        android:layout_height="257dp"
+        android:layout_height="239dp"
         android:layout_marginBottom="112dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPay"
+        app:layout_constraintBottom_toTopOf="@+id/buttonUpdate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonPay"
+        android:id="@+id/buttonUpdate"
         android:layout_width="201dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button"
         android:text="@string/payForListitemsButton"
         android:textColor="#FFFFFF"
@@ -44,8 +44,8 @@
         android:id="@+id/youOweLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="116dp"
         android:text="@string/totalAmountOwedLabel"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,59 +53,84 @@
 
     <TextView
         android:id="@+id/sharedOwnerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="166dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
         android:text="@string/sharedOwnerLabel"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sharedDescriptionLabel"
-        android:layout_width="160dp"
-        android:layout_height="54dp"
+        android:layout_width="217dp"
+        android:layout_height="125dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:text="@string/sharedDescriptionLabe"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sharedOwnerLabel" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sharedOwnerLabel"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/addItemToSharedListButton"
-        android:layout_width="50dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="40dp"
-        android:background="#ffffff"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="28dp"
+        android:background="#00000000"
         android:contentDescription="@string/addItemToSharedList"
         android:scaleType="fitCenter"
         android:src="@drawable/add"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/editText2" />
+        app:layout_constraintEnd_toStartOf="@+id/sharedListItemQuantity" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="40dp"
+        android:id="@+id/sharedListItemName"
+        android:layout_width="215dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
+        android:hint="@string/item_name"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemRecyclerView"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="40dp"
+        android:id="@+id/sharedListItemQuantity"
+        android:layout_width="57dp"
+        android:layout_height="53dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
+        android:hint="@string/itemQuantity"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/editText" />
+        app:layout_constraintEnd_toStartOf="@+id/sharedListItemName" />
+
+    <TextView
+        android:id="@+id/sharedListName"
+        android:layout_width="163dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Listname: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sharedOwnerLabel" />
+
+    <ImageButton
+        android:id="@+id/paymentButton"
+        android:layout_width="45dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/payment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

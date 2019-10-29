@@ -79,7 +79,12 @@
         <argument
             android:name="uid"
             app:argType="string" />
-        <argument android:name="listname" />
-        <argument android:name="listdescription" />
+        <argument android:name="listname"
+            app:argType="string" />
+        <argument android:name="listdescription"
+            app:argType="string" />
+        <argument
+            android:name="owner"
+            app:argType="string" />
     </fragment>
 </navigation>

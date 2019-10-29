@@ -12,6 +12,7 @@ import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.view.createListFragment
 import no.hiof.andersax.basket.view.listOverviewFragment
 import no.hiof.andersax.basket.view.privateListFragment
+import no.hiof.andersax.basket.view.sharedListFragment
 import java.util.ArrayList
 
 class ListPresenter{
@@ -22,15 +23,21 @@ class ListPresenter{
     private var Auth : AuthActions = AuthActions()
     private var currentUserName : String = ""
 
-     fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long) {
+     fun addSharedList(listFragment: sharedListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
         val usernames : MutableList<String> = ArrayList()
          for (member in members){
              usernames.add(member.username)
          }
 
          var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,totalprice)
-         listactions.addNewSharedList(sharedListToAdd, listFragment)
+         listactions.addSharedList(sharedListToAdd, listFragment)
     }
+
+    fun updateSharedList(listFragment: sharedListFragment, uid : String){
+        listactions.overWriteSharedList(uid, currentSharedList, listFragment)
+    }
+
+
 
     fun addPrivateList(
         listname: String,
@@ -50,9 +57,10 @@ class ListPresenter{
         fragment.setUpSingleListRecyclerView()
     }
 
-    fun setPrivateLists(list : ArrayList<ListCollection>){
-        privateLists = list
-
+    fun addItemToSharedList(item : ListItem, fragment: sharedListFragment){
+        currentSharedList.add(item)
+        Log.d("items", currentSharedList.toString())
+        fragment.setUpSharedRecyclerView(currentSharedList)
     }
     fun addCurrentSharedList(list:MutableList<ListItem>){
         currentSharedList.addAll(list)
@@ -61,10 +69,8 @@ class ListPresenter{
     fun addCurrentList(list : MutableList<ListItem>){
         currentList.addAll(list)
     }
-    fun removeListItem(index : Int){
-        currentList.removeAt(index)
-    }
-    fun getCurrentSharedList() : MutableList<ListItem>{
+
+    fun getCurrentSharedList():MutableList<ListItem>{
         return this.currentSharedList
     }
     fun getCurrentList() : MutableList<ListItem>{
@@ -117,8 +123,6 @@ class ListPresenter{
                 }
 
             }
-        Log.d("uname", uname)
-
         ref.whereArrayContains("usernames", uname.toString())
             .get()
             .addOnSuccessListener { documents ->

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_private_list.*
 import kotlinx.android.synthetic.main.fragment_private_list.view.*
+import kotlinx.android.synthetic.main.fragment_shared_list.*
 import no.hiof.andersax.basket.Adapter.listItemAdapter
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.model.ListItem
@@ -55,8 +56,17 @@ class privateListFragment : Fragment() {
         privateListName.text = listname
 
         applyChanges.setOnClickListener {
-            presenter.addPrivateList(listname,listdescription,owner,0, id, this)
+            presenter.addPrivateList(listname, listdescription, owner, 0, id, this)
+        }
 
+        addNewItemPrivate.setOnClickListener {
+            //presenter.addPrivateList(listname,listdescription,owner,0, id, this)
+            if(addItemQuantityField.text.toString().isNotEmpty() && itemNameField.text.toString().isNotEmpty()) {
+                addListItem(
+                    addItemQuantityField.text.toString().toLong(),
+                    itemNameField.text.toString()
+                )
+            }
         }
 
     }

@@ -31,15 +31,15 @@
     <string name="createUserPhoneNumber">your phone number</string>
     <string name="createUserPhoneLabel">Phone</string>
     <string name="createUserRetypeLabel">re-type password</string>
-    <string name="payForListitemsButton">Pay</string>
+    <string name="payForListitemsButton">Update</string>
     <string name="totalCostList">total is:</string>
-    <string name="totalAmountOwedLabel">You owe user:</string>
+    <string name="totalAmountOwedLabel">You owe:</string>
     <string name="sharedOwnerLabel">Owner:</string>
     <string name="sharedDescriptionLabe">Description:</string>
     <string name="addItemToSharedList">Add item to shared list</string>
     <string name="item_name">Item name</string>
     <string name="itemQuantity">1</string>
-    <string name="apply">apply</string>
+    <string name="apply">Update</string>
     <string name="placeholderCardTitle">gorcery</string>
     <string name="placeholderCardDescription">Description</string>
     <string name="toolbarTitleLogin" color="green">Login</string>
