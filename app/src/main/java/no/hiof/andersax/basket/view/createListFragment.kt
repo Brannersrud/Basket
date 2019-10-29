@@ -21,6 +21,7 @@ import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
+import no.hiof.andersax.basket.presenter.UserPresenter
 
 /**
  * A simple [Fragment] subclass.
@@ -28,8 +29,8 @@ import no.hiof.andersax.basket.presenter.ListPresenter
 class createListFragment : Fragment() {
     private var listpresenter : ListPresenter = ListPresenter()
     private var actions : AuthActions = AuthActions()
+    private var userpresenter : UserPresenter = UserPresenter()
     private var addedToList : MutableList<ListMembers> = ArrayList<ListMembers>()
-    private var useractions : UserActions = UserActions()
     private var searchables : MutableList<ListMembers> = ArrayList<ListMembers>()
     private var sharedList : sharedListFragment = sharedListFragment()
 
@@ -38,9 +39,7 @@ class createListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        useractions.getAllUsers(this)
-
-
+        userpresenter.getAllUsers(this)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_list, container, false)
     }

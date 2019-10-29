@@ -26,6 +26,7 @@ class sharedListFragment : Fragment() {
     private var listdescription: String = ""
     private var owner: String = ""
     private var id: String = "";
+    private var totalPrice : Long = 0;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +37,7 @@ class sharedListFragment : Fragment() {
             listdescription = args.getString("listdescription")!!
             id = args.getString("uid")!!
             owner = args.getString("owner")!!
+            totalPrice = args.getLong("totalPrice")!!
 
         }
         getListItems(id)
@@ -48,8 +50,11 @@ class sharedListFragment : Fragment() {
         sharedOwnerLabel.text = "owner: " + this.owner
         sharedDescriptionLabel.text = this.listdescription
         sharedListName.text = this.listname
+        listTotalAmount.text = "total price: " + this.totalPrice.toString()
         val sharedListButton = addItemToSharedListButton
         val updateButton = buttonUpdate
+
+
 
         buttonUpdate.setOnClickListener {
                 presenter.updateSharedList(this, id)

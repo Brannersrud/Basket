@@ -16,41 +16,41 @@ import no.hiof.andersax.basket.view.sharedListFragment
 import java.util.ArrayList
 
 class ListPresenter{
-    private var privateLists : List<ListCollection> = ArrayList()
     private var listactions : ListActions = ListActions()
     private var currentList : MutableList<ListItem> = ArrayList()
     private var currentSharedList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
-    private var currentUserName : String = ""
 
+    //MAKE ONE FOR SHARED, ONE FOR PRIVATE AND INTERFACE THAT BOTH CAN GET?
      fun addSharedList(listFragment: sharedListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
         val usernames : MutableList<String> = ArrayList()
          for (member in members){
              usernames.add(member.username)
          }
 
-         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,totalprice)
+         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items))
          listactions.addSharedList(sharedListToAdd, listFragment)
     }
 
     fun updateSharedList(listFragment: sharedListFragment, uid : String){
-        listactions.overWriteSharedList(uid, currentSharedList, listFragment)
+        listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList))
+        //need to update the price 2 stupid
     }
 
-
-
-    fun addPrivateList(
-        listname: String,
-        description: String,
-        owner: String,
-        totalprice: Long,
-        id: String,
-    fragment : privateListFragment
-    ) {
-        val mynewlist = ListCollection(listname, description, owner,currentList, 0)
+    fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
+        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList))
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
+     private fun calculateTotalPrice(list: MutableList<ListItem>): Long{
+        var temp: Long = 0;
+        for (i in list) {
+            if (i.isChecked) {
+                temp += i.price;
+            }
+        }
+        return temp
+    }
 
     fun addItemToList(item : ListItem, fragment : privateListFragment){
         currentList.add(item)
@@ -59,7 +59,6 @@ class ListPresenter{
 
     fun addItemToSharedList(item : ListItem, fragment: sharedListFragment){
         currentSharedList.add(item)
-        Log.d("items", currentSharedList.toString())
         fragment.setUpSharedRecyclerView(currentSharedList)
     }
     fun addCurrentSharedList(list:MutableList<ListItem>){
@@ -141,10 +140,7 @@ class ListPresenter{
                 }
                 fragment.setUpSharedListRecyclerView(list)
             }
-
     }
-
-
     fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
         val db = FirebaseFirestore.getInstance()

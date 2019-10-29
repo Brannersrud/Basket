@@ -45,9 +45,6 @@ class listOverviewFragment : Fragment() {
 
     }
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListOverViews(this)
@@ -58,8 +55,6 @@ class listOverviewFragment : Fragment() {
                 listOverviewFragmentDirections.actionListOverviewFragment2ToCreateListFragment()
             findNavController().navigate(addListAction)
         }
-
-
     }
 
 
@@ -88,7 +83,7 @@ class listOverviewFragment : Fragment() {
                 val position = sharedListRecyclerView.getChildAdapterPosition(view)
                 val clickedList = list[position]
 
-               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner)
+               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner, clickedList.totalPrice)
                 findNavController().navigate(action)
             })
         sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)

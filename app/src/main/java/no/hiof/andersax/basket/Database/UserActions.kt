@@ -22,21 +22,5 @@ class UserActions{
             }
     }
 
-    fun getAllUsers(target: createListFragment){
-        val users : MutableList<ListMembers> = ArrayList<ListMembers>()
-        db.collection("Users")
-            .get()
-            .addOnCompleteListener { task ->
-                if(task.isSuccessful){
-                    task.result!!
-                        .asSequence()
-                        .forEach {
-                            if(!it.get("email")!!.equals(authActions.getCurrentUser().email))
-                            users.add(ListMembers(it.id, false, 0, false))
 
-                        }
-                    target.setSearchAbles(users)
-                }
-            }
-    }
 }

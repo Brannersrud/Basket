@@ -16,10 +16,6 @@ class AuthPresenter {
     private var useractions: UserActions = UserActions()
 
 
-
-
-
-
     fun signUpNewUser(email: String, password: String, phone: String, username : String): Boolean {
         var isSignUpSuccess = false
         var newUser = User(phone, email)
