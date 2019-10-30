@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_createUserFragment"
-            app:destination="@id/createUserFragment" />
+            app:destination="@id/createUserFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <action
             android:id="@+id/action_loginFragment_to_listOverviewFragment2"
             app:destination="@id/listOverviewFragment2" />
@@ -33,13 +34,26 @@
         tools:layout="@layout/fragment_list_overview" >
         <action
             android:id="@+id/action_listOverviewFragment2_to_createListFragment"
-            app:destination="@id/createListFragment" />
+            app:destination="@id/createListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_listOverviewFragment2_to_privateListFragment"
-            app:destination="@id/privateListFragment" />
+            app:destination="@id/privateListFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_listOverviewFragment2_to_sharedListFragment"
-            app:destination="@id/sharedListFragment" />
+            app:destination="@id/sharedListFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/createListAction"
+            app:destination="@id/createListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/createListFragment"
@@ -51,7 +65,9 @@
             app:destination="@id/privateListFragment" />
         <action
             android:id="@+id/action_createListFragment_to_listOverviewFragment2"
-            app:destination="@id/listOverviewFragment2" />
+            app:destination="@id/listOverviewFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/privateListFragment"

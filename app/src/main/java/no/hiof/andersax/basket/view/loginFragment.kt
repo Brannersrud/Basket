@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.core.app.NotificationCompat
@@ -60,10 +61,11 @@ class loginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val createUserAction = loginFragmentDirections.actionLoginFragmentToCreateUserFragment()
+        val loginbtn : Button = loginButton
         goToCreateUser.setOnClickListener {
             findNavController().navigate(createUserAction)
         }
-        loginButton.setOnClickListener {
+        loginbtn.setOnClickListener {
             val email = usernameLoginField.text.toString()
             val password = passwordLoginField.text.toString()
             doLogin(email,password)
@@ -71,10 +73,14 @@ class loginFragment : Fragment() {
     }
 
     fun doLogin(email : String, password : String){
+
         if(password.isNotEmpty() && email.isNotEmpty()){
             userAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { Task ->
                     if (Task.isSuccessful) {
+                        print("Ja?")
+                        Log.d("result", Task.result.toString())
+
                         navigateToNextScreen()
                     } else {
                         errorMessageLogin.text = "Could not authenticate"

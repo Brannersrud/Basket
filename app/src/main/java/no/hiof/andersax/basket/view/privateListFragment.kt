@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_list_overview.*
 import kotlinx.android.synthetic.main.fragment_private_list.*
 import kotlinx.android.synthetic.main.fragment_private_list.view.*
 import kotlinx.android.synthetic.main.fragment_shared_list.*
@@ -17,6 +19,7 @@ import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.R
+import java.lang.reflect.Array.getInt
 
 
 /**
@@ -54,6 +57,7 @@ class privateListFragment : Fragment() {
         privateListDescriptionField.text = listdescription
         privateListOwnerField.text = "owner: " + owner
         privateListName.text = listname
+
 
         applyChanges.setOnClickListener {
             presenter.addPrivateList(listname, listdescription, owner, 0, id, this)

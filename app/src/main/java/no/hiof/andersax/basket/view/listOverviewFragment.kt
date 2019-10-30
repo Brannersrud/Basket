@@ -2,15 +2,13 @@ package no.hiof.andersax.basket.view
 
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.fragment_list_overview.*
 import no.hiof.andersax.basket.Adapter.ListOverviewAdapter
 import no.hiof.andersax.basket.Adapter.sharedListOverviewAdapter
@@ -27,6 +25,8 @@ import java.util.ArrayList
 class listOverviewFragment : Fragment() {
     private var Auth : AuthActions = AuthActions()
     private var presenter : ListPresenter = ListPresenter()
+
+
 
 
 
@@ -49,8 +49,8 @@ class listOverviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListOverViews(this)
 
-
         addPrivateButton.setOnClickListener {
+
             val addListAction =
                 listOverviewFragmentDirections.actionListOverviewFragment2ToCreateListFragment()
             findNavController().navigate(addListAction)

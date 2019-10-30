@@ -44,7 +44,7 @@
     <string name="placeholderCardDescription">Description</string>
     <string name="toolbarTitleLogin" color="green">Login</string>
     <string name="username">username</string>
-
+    <string name="transition_fab" translatable="false">transition_fab</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
