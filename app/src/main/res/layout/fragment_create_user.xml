@@ -80,19 +80,6 @@
         tools:targetApi="o" />
 
     <TextView
-        android:id="@+id/createUserTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_user_title"
-        android:textColor="#6200EE"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/userNameSignup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271" />
-
-    <TextView
         android:id="@+id/emailSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,9 +88,7 @@
         android:text="@string/e_mail_label"
         android:textColor="#6200EE"
         app:layout_constraintBottom_toTopOf="@+id/createUserEmailInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createUserTitle"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/phoneSignUp"

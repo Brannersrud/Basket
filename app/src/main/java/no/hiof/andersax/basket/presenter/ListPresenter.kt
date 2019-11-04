@@ -2,6 +2,7 @@ package no.hiof.andersax.basket.presenter
 
 import android.os.Handler
 import android.util.Log
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
@@ -42,7 +43,7 @@ class ListPresenter{
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
-     private fun calculateTotalPrice(list: MutableList<ListItem>): Long{
+      fun calculateTotalPrice(list: MutableList<ListItem>): Long{
         var temp: Long = 0;
         for (i in list) {
             if (i.isChecked) {
@@ -118,9 +119,7 @@ class ListPresenter{
                     listcollection.setUid(document.id)
                     list.add(listcollection)
 
-                    fragment.setUpSharedListRecyclerView(list)
                 }
-
             }
         ref.whereArrayContains("usernames", uname.toString())
             .get()
@@ -138,8 +137,8 @@ class ListPresenter{
                     listcollection.setUid(document.id)
                     list.add(listcollection)
                 }
-                fragment.setUpSharedListRecyclerView(list)
             }
+        fragment.setUpSharedListRecyclerView(list)
     }
     fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
