@@ -10,6 +10,7 @@ import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.sharedList
+import no.hiof.andersax.basket.profileActivity
 import no.hiof.andersax.basket.view.createListFragment
 import no.hiof.andersax.basket.view.listOverviewFragment
 import no.hiof.andersax.basket.view.privateListFragment
@@ -140,6 +141,8 @@ class ListPresenter{
             }
         fragment.setUpSharedListRecyclerView(list)
     }
+
+
     fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
         val db = FirebaseFirestore.getInstance()
@@ -163,6 +166,56 @@ class ListPresenter{
 
                 }
             }
+    }
+
+
+    fun getProfileInformation(activity : profileActivity) {
+        val db = Auth.getFireBaseStoreReference()
+        val ref = db.collection("sharedList")
+        var refPriv = db.collection("sharedList")
+        var usersref = db.collection("Users")
+        var sharedres = 0
+        ref.whereEqualTo("owner", Auth.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    sharedres = task.result!!.size()
+                    activity.setUpPrivateCount(sharedres)
+                }
+            }
+        var privRes = 0;
+        refPriv.whereEqualTo("owner", Auth.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    privRes = task.result!!.size()
+                    activity.setUpPrivateCount(privRes)
+                }
+            }
+
+        var name = "";
+        usersref.whereEqualTo("email", Auth.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result!!
+                        .asSequence()
+                        .forEach { it ->
+                            name = it.id
+
+                        }
+                }
+                activity.setUpName(name)
+            }
+
+    }
+
+
+    fun getHistoryOfPayments(){
+        val db = Auth.getFireBaseStoreReference()
+        val ref = db.collection("History")
+        //need to implement the paymenthistory
+
     }
 
 

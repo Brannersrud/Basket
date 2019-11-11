@@ -1,12 +1,17 @@
 package no.hiof.andersax.basket.view
 
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,18 +20,21 @@ import no.hiof.andersax.basket.Adapter.listItemAdapter
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.presenter.ListPresenter
+import no.hiof.andersax.basket.presenter.UserPresenter
 
 /**
  * A simple [Fragment] subclass.
  */
 class sharedListFragment : Fragment() {
-    var presenter : ListPresenter = ListPresenter()
+    private var presenter : ListPresenter = ListPresenter()
     private var store : FirebaseFirestore = FirebaseFirestore.getInstance()
     private var listname: String = ""
     private var listdescription: String = ""
     private var owner: String = ""
     private var id: String = "";
     private var totalPrice : Long = 0;
+    private var memberCount : Long = 0;
+    private val userPresenter : UserPresenter = UserPresenter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +45,8 @@ class sharedListFragment : Fragment() {
             listdescription = args.getString("listdescription")!!
             id = args.getString("uid")!!
             owner = args.getString("owner")!!
-            totalPrice = args.getLong("totalPrice")!!
+            totalPrice = args.getLong("totalPrice")
+            memberCount = args.getLong("members")!!
 
         }
         getListItems(id)
@@ -52,8 +61,15 @@ class sharedListFragment : Fragment() {
         sharedListName.text = this.listname
         listTotalAmount.text = "total price: " + this.totalPrice.toString()
         val sharedListButton = addItemToSharedListButton
-        val updateButton = buttonUpdate
 
+
+        if(totalPrice.compareTo(1) == 1){
+            println(memberCount)
+            youOweLabel.text ="you owe: "+ (totalPrice/(memberCount)).toString()
+        }
+        paymentButton.setOnClickListener {
+            handlePayMent()
+        }
 
 
         buttonUpdate.setOnClickListener {
@@ -71,6 +87,39 @@ class sharedListFragment : Fragment() {
             }
         }
     }
+
+    private fun handlePayMent(){
+      var build :  AlertDialog.Builder = AlertDialog.Builder(context)
+        build.setTitle("This is the title")
+        var input : EditText = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        build.setView(input)
+        build.setCancelable(true)
+
+
+        build.setPositiveButton("Pay", DialogInterface.OnClickListener { dialogInterface, i ->
+            var valuePaid = input.text.toString().toLong()
+            var priceExpected = (totalPrice/memberCount)
+
+            if(valuePaid == priceExpected){
+                showToastToUser("Successfull")
+               userPresenter.handlePayMentForUser(id, valuePaid, listname)
+
+            }else if(valuePaid < priceExpected){
+                showToastToUser("$valuePaid is to low when expected is $priceExpected")
+            }else if(valuePaid > priceExpected){
+                showToastToUser("you don't have to pay that much, we only want $priceExpected")
+            }
+        })
+
+        build.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialogInterface, i ->
+            print("ive been canceled")
+        })
+
+        build.show()
+
+    }
+
 
     private fun handleListItemAdd(itemName: String, qt: Long) {
         val listitem = ListItem(itemName, qt, false, 0)

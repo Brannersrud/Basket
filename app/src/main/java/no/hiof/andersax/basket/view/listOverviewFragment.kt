@@ -2,6 +2,7 @@ package no.hiof.andersax.basket.view
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,7 @@ class listOverviewFragment : Fragment() {
                             clickedList.description,
                             clickedList.listname,
                             clickedList.getUid()
+
                         );
                     findNavController().navigate(action)
                 }
@@ -83,7 +85,7 @@ class listOverviewFragment : Fragment() {
                 val position = sharedListRecyclerView.getChildAdapterPosition(view)
                 val clickedList = list[position]
 
-               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner, clickedList.totalPrice)
+               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner, clickedList.totalPrice, clickedList.members.size.toLong())
                 findNavController().navigate(action)
             })
         sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)

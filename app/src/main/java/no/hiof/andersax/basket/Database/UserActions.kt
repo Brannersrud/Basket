@@ -22,5 +22,10 @@ class UserActions{
             }
     }
 
+    fun addHistoryItem(listname : String, amount : Long){
+
+        db.collection("Users").document()
+    }
+
 
 }

@@ -50,6 +50,7 @@
     <string name="qt_label">qt.</string>
     <string name="price_label">price</string>
     <string name="qt_hint">1</string>
+    <string name="paylabel">pay</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

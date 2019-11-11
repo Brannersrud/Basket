@@ -105,5 +105,8 @@
         <argument
             android:name="totalPrice"
             app:argType="long" />
+        <argument
+            android:name="members"
+            app:argType="long" />
     </fragment>
 </navigation>
