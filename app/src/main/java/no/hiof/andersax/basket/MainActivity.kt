@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         setSupportActionBar(findViewById(R.id.mytoolbar))
+        setTitle("")
+
 
 
 

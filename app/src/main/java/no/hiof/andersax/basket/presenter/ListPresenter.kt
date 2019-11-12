@@ -15,6 +15,7 @@ import no.hiof.andersax.basket.view.createListFragment
 import no.hiof.andersax.basket.view.listOverviewFragment
 import no.hiof.andersax.basket.view.privateListFragment
 import no.hiof.andersax.basket.view.sharedListFragment
+import java.lang.reflect.GenericArrayType
 import java.util.ArrayList
 
 class ListPresenter{
@@ -24,7 +25,7 @@ class ListPresenter{
     private var Auth : AuthActions = AuthActions()
 
     //MAKE ONE FOR SHARED, ONE FOR PRIVATE AND INTERFACE THAT BOTH CAN GET?
-     fun addSharedList(listFragment: sharedListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
+     fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
         val usernames : MutableList<String> = ArrayList()
          for (member in members){
              usernames.add(member.username)
@@ -102,23 +103,26 @@ class ListPresenter{
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
         var list : ArrayList<sharedList> = ArrayList()
-        var memberUsernames : MutableList<String> = ArrayList<String>()
 
 
         ref.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
-                    var members: MutableList<ListMembers> =
-                        document.get("members") as MutableList<ListMembers>
+                    val obj = document.toObject(sharedList::class.java)
+
+
+                    /*var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
+                   var members: MutableList<ListMembers> =
+                       document.get("members") as MutableList<ListMembers>
                     var price: Long = document.get("totalPrice") as Long
                     var owner = document.get("owner").toString()
                     var listname = document.get("listname").toString()
                     var description = document.get("description").toString()
                     var listcollection = sharedList(members, memberUsernames,listname,description,owner,l,price)
-                    listcollection.setUid(document.id)
-                    list.add(listcollection)
+                    listcollection.setUid(document.id)*/
+                    obj.setUid(document.id)
+                    list.add(obj)
 
                 }
             }
@@ -126,20 +130,13 @@ class ListPresenter{
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
-                    var members: MutableList<ListMembers> =
-                        document.get("members")!! as MutableList<ListMembers>
-                    //var memberUsernames = document.get("memberUsernames") as MutableList<String>
-                    var price: Long = document.get("totalPrice") as Long
-                    var owner = document.get("owner").toString()
-                    var listname = document.get("listname").toString()
-                    var description = document.get("description").toString()
-                    var listcollection = sharedList(members, memberUsernames,listname,description,owner,l,price)
-                    listcollection.setUid(document.id)
-                    list.add(listcollection)
+                    val obj = document.toObject(sharedList::class.java)
+
+                    obj.setUid(document.id)
+                    list.add(obj)
                 }
+                fragment.setUpSharedListRecyclerView(list)
             }
-        fragment.setUpSharedListRecyclerView(list)
     }
 
 
@@ -149,7 +146,7 @@ class ListPresenter{
         val ref = db.collection("Users")
         Handler().postDelayed({
             getPrivateLists(frag)
-        },300)
+        },800)
         var uname = ""
         ref.whereEqualTo("email", email)
             .get()

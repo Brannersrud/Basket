@@ -16,9 +16,10 @@ import no.hiof.andersax.basket.Adapter.sharedListOverviewAdapter
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListCollection
+import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.presenter.ListPresenter
-import java.util.ArrayList
+
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +27,7 @@ import java.util.ArrayList
 class listOverviewFragment : Fragment() {
     private var Auth : AuthActions = AuthActions()
     private var presenter : ListPresenter = ListPresenter()
+    private val shared : sharedListFragment = sharedListFragment()
 
 
 
@@ -85,7 +87,9 @@ class listOverviewFragment : Fragment() {
                 val position = sharedListRecyclerView.getChildAdapterPosition(view)
                 val clickedList = list[position]
 
+
                val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner, clickedList.totalPrice, clickedList.members.size.toLong())
+
                 findNavController().navigate(action)
             })
         sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)

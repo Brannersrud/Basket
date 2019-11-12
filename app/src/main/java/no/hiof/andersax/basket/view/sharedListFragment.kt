@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_shared_list.*
 import no.hiof.andersax.basket.Adapter.listItemAdapter
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
+import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
 
@@ -35,6 +36,7 @@ class sharedListFragment : Fragment() {
     private var totalPrice : Long = 0;
     private var memberCount : Long = 0;
     private val userPresenter : UserPresenter = UserPresenter()
+    private var priceExpected : Long = 0;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,9 +65,17 @@ class sharedListFragment : Fragment() {
         val sharedListButton = addItemToSharedListButton
 
 
-        if(totalPrice.compareTo(1) == 1){
-            println(memberCount)
-            youOweLabel.text ="you owe: "+ (totalPrice/(memberCount)).toString()
+
+
+        if(memberCount.toInt() == 1){
+            youOweLabel.text = "you owe: " + (totalPrice / 2).toString()
+            priceExpected = (totalPrice / 2)
+
+        }else if(memberCount > 1){
+            youOweLabel.text = "you owe: " + (totalPrice / memberCount).toString()
+            priceExpected = (totalPrice / memberCount)
+        }else{
+            youOweLabel.text = "no payment has been registrerd"
         }
         paymentButton.setOnClickListener {
             handlePayMent()
@@ -99,9 +109,11 @@ class sharedListFragment : Fragment() {
 
         build.setPositiveButton("Pay", DialogInterface.OnClickListener { dialogInterface, i ->
             var valuePaid = input.text.toString().toLong()
-            var priceExpected = (totalPrice/memberCount)
 
-            if(valuePaid == priceExpected){
+            if(priceExpected < 1){
+                showToastToUser("No payment registerd")
+            }
+            else if(valuePaid == priceExpected){
                 showToastToUser("Successfull")
                userPresenter.handlePayMentForUser(id, valuePaid, listname)
 

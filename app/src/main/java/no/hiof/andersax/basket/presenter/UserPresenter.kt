@@ -1,12 +1,15 @@
 package no.hiof.andersax.basket.presenter
 
 import android.util.Log
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.UserActions
 import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.User
+import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.view.createListFragment
 
 class UserPresenter {
@@ -40,7 +43,6 @@ class UserPresenter {
 
 
     fun handlePayMentForUser(id : String, pricePaid : Long, listname : String){
-
         db.collection("Users")
             .whereEqualTo("email", authActions.getCurrentUser().email)
             .get().addOnCompleteListener { it ->
@@ -56,10 +58,34 @@ class UserPresenter {
     }
 
     private fun markUserAsPaid(id : String, pricePaid: Long, listname: String, username : String){
-        val member = ListMembers(username, true, true, pricePaid)
+        val members : MutableList<ListMembers> = ArrayList<ListMembers>()
         db.collection("sharedList").document(id)
-            .update("members", member)
+            .get()
+            .addOnSuccessListener { doc ->
+                val list = doc.toObject(sharedList::class.java)
+
+                for(m in list!!.members){
+                    if(m.username == username){
+                        m.amountpaid = pricePaid
+                        m.checked = true
+                        m.hasPaid = true
+
+                       members.add(m)
+                    }
+                }
+            }.continueWith {
+                db.collection("sharedList").document(id)
+                    .update("members", members)
+            }
+
+
     }
+
+
+
+
+
+
 
     private fun insertHistoryItem(pricePaid: Long, listname: String, username : String){
         val item = ListHistoryItem(pricePaid, listname)

@@ -10,6 +10,7 @@ class sharedList (val members : MutableList<ListMembers>,
 
 
 
-
+constructor() : this(members=ArrayList<ListMembers>(),usernames = ArrayList<String>(), listname = "", description = "",
+    Owner = "", items = ArrayList<ListItem>(), totalPrice = 0)
 
 }

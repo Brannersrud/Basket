@@ -58,12 +58,16 @@ class ListActions {
      fun overWriteSharedList(uid: String, list: MutableList<ListItem>, fragment: sharedListFragment, totalprice : Long) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList").document(uid)
+         var price : Long= 0;
+         for(i in list){
+             price+= i.price
+         }
 
         ref.update("items", list)
             .addOnCompleteListener { Task ->
                 if(Task.isSuccessful){
                     fragment.showToastToUser("Updated list... fabolously")
-                    ref.update("totalPrice", totalprice)
+                    ref.update("totalPrice", price)
                 }else{
                     fragment.showToastToUser("Could not update.. tragicly")
                 }
@@ -73,7 +77,7 @@ class ListActions {
 
     }
 
-     fun addSharedList(list:sharedList, fragment:sharedListFragment){
+     fun addSharedList(list:sharedList, fragment:createListFragment){
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
 
