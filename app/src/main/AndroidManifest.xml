@@ -28,6 +28,9 @@
         <activity android:name=".profileActivity">
 
         </activity>
+        <activity android:name=".statisticsActivity">
+
+        </activity>
 
     </application>
 
