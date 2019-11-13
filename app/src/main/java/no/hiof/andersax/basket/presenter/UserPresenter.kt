@@ -1,6 +1,7 @@
 package no.hiof.andersax.basket.presenter
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,7 +11,10 @@ import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.User
 import no.hiof.andersax.basket.model.sharedList
+import no.hiof.andersax.basket.profileActivity
 import no.hiof.andersax.basket.view.createListFragment
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UserPresenter {
      val db : FirebaseFirestore = AuthActions().getFireBaseStoreReference()
@@ -42,7 +46,7 @@ class UserPresenter {
 
 
 
-    fun handlePayMentForUser(id : String, pricePaid : Long, listname : String){
+    fun handlePayMentForUser(id : String, pricePaid : Long, listname : String, date : Date){
         db.collection("Users")
             .whereEqualTo("email", authActions.getCurrentUser().email)
             .get().addOnCompleteListener { it ->
@@ -50,50 +54,31 @@ class UserPresenter {
                     it.result!!
                         .asSequence()
                         .forEach {
-                            insertHistoryItem(pricePaid, listname, it.id)
-                            markUserAsPaid(id,pricePaid,listname, it.id)
+                            uactions.insertHistoryItem(pricePaid, listname, it.id, date)
+                            uactions.markUserAsPaid(id,pricePaid,listname, it.id)
                         }
                 }
             }
     }
 
-    private fun markUserAsPaid(id : String, pricePaid: Long, listname: String, username : String){
-        val members : MutableList<ListMembers> = ArrayList<ListMembers>()
-        db.collection("sharedList").document(id)
+
+
+    fun getHistoryForUser(activity: profileActivity, uname : String){
+        val listHistory : MutableList<ListHistoryItem> = ArrayList<ListHistoryItem>()
+        db.collection("Users").document(uname)
+            .collection("History")
             .get()
-            .addOnSuccessListener { doc ->
-                val list = doc.toObject(sharedList::class.java)
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val obj = document.toObject(ListHistoryItem::class.java)
+                    listHistory.add(obj)
 
-                for(m in list!!.members){
-                    if(m.username == username){
-                        m.amountpaid = pricePaid
-                        m.checked = true
-                        m.hasPaid = true
-
-                       members.add(m)
-                    }
                 }
-            }.continueWith {
-                db.collection("sharedList").document(id)
-                    .update("members", members)
+                activity.setUpRecyclerView(listHistory)
             }
 
-
+        //update activity
     }
-
-
-
-
-
-
-
-    private fun insertHistoryItem(pricePaid: Long, listname: String, username : String){
-        val item = ListHistoryItem(pricePaid, listname)
-        db.collection("Users").document(username).collection("History")
-            .add(item)
-    }
-
-
 
 
 }

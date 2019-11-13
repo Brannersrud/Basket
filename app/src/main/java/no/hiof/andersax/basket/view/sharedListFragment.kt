@@ -22,6 +22,9 @@ import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * A simple [Fragment] subclass.
@@ -60,9 +63,10 @@ class sharedListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedOwnerLabel.text = "owner: " + this.owner
         sharedDescriptionLabel.text = this.listdescription
-        sharedListName.text = this.listname
+        sharedListName.text = listname
         listTotalAmount.text = "total price: " + this.totalPrice.toString()
         val sharedListButton = addItemToSharedListButton
+
 
 
 
@@ -83,7 +87,7 @@ class sharedListFragment : Fragment() {
 
 
         buttonUpdate.setOnClickListener {
-                presenter.updateSharedList(this, id)
+                presenter.updateSharedList(this, id, "slow")
 
         }
 
@@ -96,6 +100,12 @@ class sharedListFragment : Fragment() {
 
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.updateSharedList(this, id, "destroy")
+
     }
 
     private fun handlePayMent(){
@@ -115,7 +125,7 @@ class sharedListFragment : Fragment() {
             }
             else if(valuePaid == priceExpected){
                 showToastToUser("Successfull")
-               userPresenter.handlePayMentForUser(id, valuePaid, listname)
+               userPresenter.handlePayMentForUser(id, valuePaid, listname, Date())
 
             }else if(valuePaid < priceExpected){
                 showToastToUser("$valuePaid is to low when expected is $priceExpected")
@@ -140,7 +150,7 @@ class sharedListFragment : Fragment() {
 
 
     fun setUpSharedRecyclerView(list : MutableList<ListItem>) {
-        sharedListItemRecyclerView.adapter = listItemAdapter(list)
+        sharedListItemRecyclerView.adapter = listItemAdapter(list.asReversed())
         sharedListItemRecyclerView.layoutManager = GridLayoutManager(context, 1)
     }
 

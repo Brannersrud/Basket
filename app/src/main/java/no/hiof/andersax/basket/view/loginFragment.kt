@@ -26,10 +26,12 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import no.hiof.andersax.basket.Database.ListActions
-import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 import java.lang.Thread.sleep
+import androidx.appcompat.app.AppCompatActivity
+
+
 
 /**
  * A simple [Fragment] subclass.
@@ -44,7 +46,7 @@ class loginFragment : Fragment() {
     ): View? {
 
 
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(no.hiof.andersax.basket.R.layout.fragment_login, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,12 +54,17 @@ class loginFragment : Fragment() {
         FirebaseApp.initializeApp(context!!)
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+        (activity as AppCompatActivity).supportActionBar!!.hide()
 
         /*if(currentUser !== null){
             navigateToNextScreen()
         }*/
 
     }
+
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val createUserAction = loginFragmentDirections.actionLoginFragmentToCreateUserFragment()

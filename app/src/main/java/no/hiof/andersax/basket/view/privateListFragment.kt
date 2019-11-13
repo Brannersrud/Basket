@@ -55,11 +55,12 @@ class privateListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         privateListDescriptionField.text = listdescription
-        privateListOwnerField.text = "owner: " + owner
+        //privateListOwnerField.text = "owner: " + owner
         privateListName.text = listname
 
 
-        applyChanges.setOnClickListener {
+
+        applyprivateChangeButton.setOnClickListener {
             presenter.addPrivateList(listname, listdescription, owner, 0, id, this)
         }
 
@@ -90,7 +91,7 @@ class privateListFragment : Fragment() {
 
      fun setUpSingleListRecyclerView() {
         var list = presenter.getCurrentList()
-           scrollViewPrivateList.privateListRecyclerView.adapter = listItemAdapter(list)
+           privateListRecyclerView.adapter = listItemAdapter(list)
          privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
 
      }

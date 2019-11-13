@@ -44,10 +44,10 @@ class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var cli
             description.text = item.description
             amountOfMembers.text = item.members.size.toString()
             members.setImageResource(R.drawable.add_friend)
-            if(item.Owner.equals(this.Auth.getCurrentUser().email)){
+            if(item.owner.equals(this.Auth.getCurrentUser().email)){
                 ownerName.text = "owner: you:)"
             }else{
-                ownerName.text = "owner: " + item.Owner
+                ownerName.text = "owner: " + item.owner
             }
 
             this.itemView.setOnClickListener(clickListener)

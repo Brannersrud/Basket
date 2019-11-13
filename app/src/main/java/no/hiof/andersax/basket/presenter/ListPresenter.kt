@@ -24,36 +24,6 @@ class ListPresenter{
     private var currentSharedList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
 
-    //MAKE ONE FOR SHARED, ONE FOR PRIVATE AND INTERFACE THAT BOTH CAN GET?
-     fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
-        val usernames : MutableList<String> = ArrayList()
-         for (member in members){
-             usernames.add(member.username)
-         }
-
-         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items))
-         listactions.addSharedList(sharedListToAdd, listFragment)
-    }
-
-    fun updateSharedList(listFragment: sharedListFragment, uid : String){
-        listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList))
-        //need to update the price 2 stupid
-    }
-
-    fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
-        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList))
-        listactions.addPrivateList(mynewlist, id, fragment)
-    }
-
-      fun calculateTotalPrice(list: MutableList<ListItem>): Long{
-        var temp: Long = 0;
-        for (i in list) {
-            if (i.isChecked) {
-                temp += i.price;
-            }
-        }
-        return temp
-    }
 
     fun addItemToList(item : ListItem, fragment : privateListFragment){
         currentList.add(item)
@@ -78,6 +48,43 @@ class ListPresenter{
     fun getCurrentList() : MutableList<ListItem>{
         return this.currentList
     }
+
+    //MAKE ONE FOR SHARED, ONE FOR PRIVATE AND INTERFACE THAT BOTH CAN GET?
+     fun addSharedList(listFragment: createListFragment, owner: String, listname: String, description: String,members : MutableList<ListMembers>, items: MutableList<ListItem>, totalprice: Long, uid : String) {
+        val usernames : MutableList<String> = ArrayList()
+         for (member in members){
+             usernames.add(member.username)
+         }
+
+         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items))
+         listactions.addSharedList(sharedListToAdd, listFragment)
+    }
+
+    fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
+        if(updatefashion.equals("destroy")){
+        listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), false)
+        //need to update the price 2 stupid
+        }else{
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), true)
+
+        }
+    }
+
+    fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
+        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList))
+        listactions.addPrivateList(mynewlist, id, fragment)
+    }
+
+      fun calculateTotalPrice(list: MutableList<ListItem>): Long{
+        var temp: Long = 0;
+        for (i in list) {
+            if (i.isChecked) {
+                temp += i.price;
+            }
+        }
+        return temp
+    }
+
     fun getPrivateLists(fragment: listOverviewFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList")
@@ -87,13 +94,9 @@ class ListPresenter{
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
-                    var owner = document.get("owner").toString()
-                    var listname = document.get("listname").toString()
-                    var description = document.get("description").toString()
-                    var listcollection = ListCollection(listname, description, owner, l, 0)
-                    listcollection.setUid(document.id)
-                    lists.add(listcollection)
+                    val obj = document.toObject(ListCollection::class.java)
+                    obj.setUid(document.id)
+                    lists.add(obj)
                     fragment.setUpListRecyclerView(lists);
                 }
             }
@@ -110,17 +113,6 @@ class ListPresenter{
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val obj = document.toObject(sharedList::class.java)
-
-
-                    /*var l: MutableList<ListItem> = document.get("items")!! as MutableList<ListItem>
-                   var members: MutableList<ListMembers> =
-                       document.get("members") as MutableList<ListMembers>
-                    var price: Long = document.get("totalPrice") as Long
-                    var owner = document.get("owner").toString()
-                    var listname = document.get("listname").toString()
-                    var description = document.get("description").toString()
-                    var listcollection = sharedList(members, memberUsernames,listname,description,owner,l,price)
-                    listcollection.setUid(document.id)*/
                     obj.setUid(document.id)
                     list.add(obj)
 
@@ -159,8 +151,6 @@ class ListPresenter{
 
                         }
                     getSharedLists(frag, uname)
-
-
                 }
             }
     }
@@ -177,7 +167,7 @@ class ListPresenter{
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     sharedres = task.result!!.size()
-                    activity.setUpPrivateCount(sharedres)
+                    activity.setUpSharedCount(sharedres)
                 }
             }
         var privRes = 0;
@@ -204,14 +194,6 @@ class ListPresenter{
                 }
                 activity.setUpName(name)
             }
-
-    }
-
-
-    fun getHistoryOfPayments(){
-        val db = Auth.getFireBaseStoreReference()
-        val ref = db.collection("History")
-        //need to implement the paymenthistory
 
     }
 

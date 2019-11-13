@@ -2,21 +2,19 @@ package no.hiof.andersax.basket.view
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.fragment_list_overview.*
 import no.hiof.andersax.basket.Adapter.ListOverviewAdapter
 import no.hiof.andersax.basket.Adapter.sharedListOverviewAdapter
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListCollection
-import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.presenter.ListPresenter
 
@@ -36,6 +34,9 @@ class listOverviewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        (activity as AppCompatActivity).supportActionBar!!.show()
+
+
     }
 
     override fun onCreateView(
@@ -52,7 +53,7 @@ class listOverviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListOverViews(this)
 
-        addPrivateButton.setOnClickListener {
+        applyChanges.setOnClickListener {
 
             val addListAction =
                 listOverviewFragmentDirections.actionListOverviewFragment2ToCreateListFragment()
@@ -69,7 +70,7 @@ class listOverviewFragment : Fragment() {
                     //Action
                     val action =
                         listOverviewFragmentDirections.actionListOverviewFragment2ToPrivateListFragment(
-                            clickedList.Owner,
+                            clickedList.owner,
                             clickedList.description,
                             clickedList.listname,
                             clickedList.getUid()
@@ -87,8 +88,8 @@ class listOverviewFragment : Fragment() {
                 val position = sharedListRecyclerView.getChildAdapterPosition(view)
                 val clickedList = list[position]
 
-
-               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.Owner, clickedList.description, clickedList.Owner, clickedList.totalPrice, clickedList.members.size.toLong())
+                println("- " + clickedList.listname + " - " + clickedList.owner)
+               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.listname, clickedList.description, clickedList.owner, clickedList.totalPrice, clickedList.members.size.toLong())
 
                 findNavController().navigate(action)
             })

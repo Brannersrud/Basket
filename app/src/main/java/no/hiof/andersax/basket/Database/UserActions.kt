@@ -2,9 +2,12 @@ package no.hiof.andersax.basket.Database
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.User;
+import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.view.createListFragment
+import java.util.*
 
 
 class UserActions{
@@ -22,10 +25,35 @@ class UserActions{
             }
     }
 
-    fun addHistoryItem(listname : String, amount : Long){
 
-        db.collection("Users").document()
+    fun insertHistoryItem(pricePaid: Long, listname: String, username : String, date : Date){
+        val item = ListHistoryItem(pricePaid, listname, date)
+        db.collection("Users").document(username).collection("History")
+            .add(item)
     }
+
+    fun markUserAsPaid(id : String, pricePaid: Long, listname: String, username : String){
+        val members : MutableList<ListMembers> = ArrayList<ListMembers>()
+        db.collection("sharedList").document(id)
+            .get()
+            .addOnSuccessListener { doc ->
+                val list = doc.toObject(sharedList::class.java)
+
+                for(m in list!!.members){
+                    if(m.username == username){
+                        m.amountpaid = pricePaid
+                        m.checked = true
+                        m.hasPaid = true
+
+                        members.add(m)
+                    }
+                }
+            }.continueWith {
+                db.collection("sharedList").document(id)
+                    .update("members", members)
+            }
+    }
+
 
 
 }
