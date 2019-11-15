@@ -40,6 +40,8 @@ class UserPresenter {
                         }
                     target.setSearchAbles(users)
                 }
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
     }
 
@@ -58,6 +60,8 @@ class UserPresenter {
                             uactions.markUserAsPaid(id,pricePaid,listname, it.id)
                         }
                 }
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
     }
 
@@ -75,6 +79,8 @@ class UserPresenter {
 
                 }
                 activity.setUpRecyclerView(listHistory)
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
 
         //update activity

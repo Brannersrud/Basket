@@ -23,6 +23,8 @@ class ListActions {
                 }else{
                     addNewPrivateList(list, fragment)
                 }
+            }.addOnFailureListener { e ->
+               fragment.showToastToUser("something happened, try checking your internet connection")
             }
     }
 
@@ -37,6 +39,8 @@ class ListActions {
                 }else{
                     fragment.showToastToUser("List rejected violently")
                 }
+            }.addOnFailureListener { e ->
+                fragment.showToastToUser("something happened, try checking your internet connection")
             }
 
     }
@@ -50,6 +54,9 @@ class ListActions {
                 }else{
                     fragment.showToastToUser("Unable to update list, obnoxiously")
                 }
+            }.addOnFailureListener {
+                fragment.showToastToUser("Something happened, try checking your internet connection")
+
             }
     }
 
@@ -75,6 +82,10 @@ class ListActions {
                         fragment.showToastToUser("Could not update.. tragicly")
                     }
                 }
+            }.addOnFailureListener {
+                if(shouldShowToast){
+                    fragment.showToastToUser("Something happened, try checking your internet connection")
+                }
             }
 
 
@@ -93,6 +104,8 @@ class ListActions {
                 } else {
                     fragment.showToastToUser("List denied awfully")
                 }
+            }.addOnFailureListener {
+                fragment.showToastToUser("Something happened, try checking your internet connection")
             }
     }
 

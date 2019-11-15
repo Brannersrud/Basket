@@ -29,7 +29,9 @@ class UserActions{
     fun insertHistoryItem(pricePaid: Long, listname: String, username : String, date : Date){
         val item = ListHistoryItem(pricePaid, listname, date)
         db.collection("Users").document(username).collection("History")
-            .add(item)
+            .add(item).addOnFailureListener { e ->
+                e.suppressed
+            }
     }
 
     fun markUserAsPaid(id : String, pricePaid: Long, listname: String, username : String){
@@ -51,6 +53,8 @@ class UserActions{
             }.continueWith {
                 db.collection("sharedList").document(id)
                     .update("members", members)
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
     }
 

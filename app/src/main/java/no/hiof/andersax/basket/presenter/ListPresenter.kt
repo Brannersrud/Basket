@@ -16,6 +16,7 @@ import no.hiof.andersax.basket.view.listOverviewFragment
 import no.hiof.andersax.basket.view.privateListFragment
 import no.hiof.andersax.basket.view.sharedListFragment
 import java.lang.reflect.GenericArrayType
+import java.net.ConnectException
 import java.util.ArrayList
 
 class ListPresenter{
@@ -99,6 +100,8 @@ class ListPresenter{
                     lists.add(obj)
                     fragment.setUpListRecyclerView(lists);
                 }
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
     }
 
@@ -108,27 +111,34 @@ class ListPresenter{
         var list : ArrayList<sharedList> = ArrayList()
 
 
-        ref.whereEqualTo("owner", Auth.getCurrentUser().email)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val obj = document.toObject(sharedList::class.java)
-                    obj.setUid(document.id)
-                    list.add(obj)
+        try {
+            ref.whereEqualTo("owner", Auth.getCurrentUser().email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val obj = document.toObject(sharedList::class.java)
+                        obj.setUid(document.id)
+                        list.add(obj)
 
+                    }
                 }
-            }
-        ref.whereArrayContains("usernames", uname.toString())
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val obj = document.toObject(sharedList::class.java)
+            ref.whereArrayContains("usernames", uname.toString())
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val obj = document.toObject(sharedList::class.java)
 
-                    obj.setUid(document.id)
-                    list.add(obj)
+                        obj.setUid(document.id)
+                        list.add(obj)
+                    }
+                    fragment.setUpSharedListRecyclerView(list)
                 }
-                fragment.setUpSharedListRecyclerView(list)
-            }
+
+        }catch (e : ConnectException){
+            //show toast
+        }catch (e : Exception){
+            println("some thing wong")
+        }
     }
 
 
@@ -152,6 +162,8 @@ class ListPresenter{
                         }
                     getSharedLists(frag, uname)
                 }
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
     }
 
@@ -178,6 +190,8 @@ class ListPresenter{
                     privRes = task.result!!.size()
                     activity.setUpPrivateCount(privRes)
                 }
+            }.addOnFailureListener { e ->
+                e.suppressed
             }
 
         var name = "";
@@ -193,6 +207,8 @@ class ListPresenter{
                         }
                 }
                 activity.setUpName(name)
+            }.addOnFailureListener {e ->
+                e.suppressed
             }
 
     }
