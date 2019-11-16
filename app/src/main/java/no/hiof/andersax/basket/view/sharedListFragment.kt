@@ -159,12 +159,17 @@ class sharedListFragment : Fragment() {
     private fun handleListItemAdd(itemName: String, qt: Long) {
         val listitem = ListItem(itemName, qt, false, 0)
         presenter.addItemToSharedList(listitem, this)
+        noSharedListItemsLabel.text = ""
     }
 
 
     fun setUpSharedRecyclerView(list : MutableList<ListItem>) {
-        sharedListItemRecyclerView.adapter = listItemAdapter(list.asReversed())
-        sharedListItemRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        if(list.isNotEmpty()) {
+            sharedListItemRecyclerView.adapter = listItemAdapter(list.asReversed())
+            sharedListItemRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        }else{
+            noSharedListItemsLabel.text = "You guys do not have any items yet. You should add some"
+        }
     }
 
     private fun getListItems(id: String) {

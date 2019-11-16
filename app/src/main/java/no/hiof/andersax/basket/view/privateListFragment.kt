@@ -80,6 +80,7 @@ class privateListFragment : Fragment() {
         //need to push this to the a mutablelist then rerender recyclerview
         val listitem = ListItem(itemname, qt, false, 0)
         presenter.addItemToList(listitem, this)
+        noPrivateListItemsLabel.text=""
 
     }
 
@@ -91,8 +92,13 @@ class privateListFragment : Fragment() {
 
      fun setUpSingleListRecyclerView() {
         var list = presenter.getCurrentList()
-           privateListRecyclerView.adapter = listItemAdapter(list)
-         privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+
+         if(list.isNotEmpty()) {
+             privateListRecyclerView.adapter = listItemAdapter(list.asReversed())
+             privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+         }else{
+             noPrivateListItemsLabel.text = "No items yet.. add some"
+         }
 
      }
 
