@@ -93,8 +93,9 @@ class ListPresenter{
                     val obj = document.toObject(ListCollection::class.java)
                     obj.setUid(document.id)
                     lists.add(obj)
-                    fragment.setUpListRecyclerView(lists);
                 }
+                fragment.setUpListRecyclerView(lists);
+
             }.addOnFailureListener { e ->
                 e.suppressed
             }

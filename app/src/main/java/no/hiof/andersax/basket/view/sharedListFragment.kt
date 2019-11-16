@@ -138,7 +138,7 @@ class sharedListFragment : Fragment() {
             }
             else if(valuePaid == priceExpected){
                 showToastToUser("Successfull")
-               userPresenter.handlePayMentForUser(id, valuePaid, listname, Date())
+               userPresenter.handlePayMentForUser(id, valuePaid, listname, Date(), "shared")
 
             }else if(valuePaid < priceExpected){
                 showToastToUser("$valuePaid is to low when expected is $priceExpected")

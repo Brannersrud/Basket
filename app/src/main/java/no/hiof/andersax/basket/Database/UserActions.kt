@@ -26,8 +26,8 @@ class UserActions{
     }
 
 
-    fun insertHistoryItem(pricePaid: Long, listname: String, username : String, date : Date){
-        val item = ListHistoryItem(pricePaid, listname, date)
+    fun insertHistoryItem(pricePaid: Long, listname: String, username : String, date : Date, isPrivate : String){
+        val item = ListHistoryItem(pricePaid, listname, date, isPrivate)
         db.collection("Users").document(username).collection("History")
             .add(item).addOnFailureListener { e ->
                 e.suppressed

@@ -29,9 +29,10 @@
                 android:id="@+id/singleListRecyclerView"
                 android:layout_width="418dp"
                 android:layout_height="272dp"
-                android:layout_marginTop="88dp"
+                android:layout_marginTop="92dp"
+                android:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.62"
+                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
                 android:layout_height="303dp"
                 android:layout_marginTop="64dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.514"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/singleListRecyclerView" />
 
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/shared_lists"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -76,12 +77,35 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
-                android:focusable="auto"
+                android:focusable="true"
                 android:src="@drawable/add_white_icon"
                 android:transitionName="@string/transition_fab"
                 app:elevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/noPrivateListsMessage"
+                android:layout_width="276dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:elevation="0dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/privateListTitle" />
+
+            <TextView
+                android:id="@+id/noSharedListsMessage"
+                android:layout_width="311dp"
+                android:layout_height="112dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sharedListTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

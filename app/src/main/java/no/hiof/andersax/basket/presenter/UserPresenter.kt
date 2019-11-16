@@ -48,7 +48,7 @@ class UserPresenter {
 
 
 
-    fun handlePayMentForUser(id : String, pricePaid : Long, listname : String, date : Date){
+    fun handlePayMentForUser(id : String, pricePaid : Long, listname : String, date : Date, isPrivate : String){
         db.collection("Users")
             .whereEqualTo("email", authActions.getCurrentUser().email)
             .get().addOnCompleteListener { it ->
@@ -56,8 +56,16 @@ class UserPresenter {
                     it.result!!
                         .asSequence()
                         .forEach {
-                            uactions.insertHistoryItem(pricePaid, listname, it.id, date)
-                            uactions.markUserAsPaid(id,pricePaid,listname, it.id)
+                            if(isPrivate.equals("shared")) {
+                                uactions.markUserAsPaid(id, pricePaid, listname, it.id)
+                            }
+                            uactions.insertHistoryItem(
+                                pricePaid,
+                                listname,
+                                it.id,
+                                date,
+                                isPrivate
+                            )
                         }
                 }
             }.addOnFailureListener { e ->

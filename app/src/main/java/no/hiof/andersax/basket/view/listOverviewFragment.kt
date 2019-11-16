@@ -4,6 +4,7 @@ package no.hiof.andersax.basket.view
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,12 @@ import no.hiof.andersax.basket.Adapter.sharedListOverviewAdapter
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListCollection
+import no.hiof.andersax.basket.model.User
 import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.presenter.ListPresenter
+import no.hiof.andersax.basket.presenter.UserPresenter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -27,6 +32,7 @@ import no.hiof.andersax.basket.presenter.ListPresenter
  */
 class listOverviewFragment : Fragment() {
     private var presenter : ListPresenter = ListPresenter()
+    private val uPresenter : UserPresenter = UserPresenter()
 
 
 
@@ -62,8 +68,8 @@ class listOverviewFragment : Fragment() {
 
 
     fun setUpListRecyclerView(list : ArrayList<ListCollection>){
+        if(list.isNotEmpty()){
             singleListRecyclerView.adapter = ListOverviewAdapter(list,
-
                 View.OnClickListener { view ->
                     val position = singleListRecyclerView.getChildAdapterPosition(view)
                     val clickedList = list[position]
@@ -82,36 +88,47 @@ class listOverviewFragment : Fragment() {
                     val position = singleListRecyclerView.getChildAdapterPosition(view)
                     val clickedList = list[position]
                     handleLongPress(clickedList, false)
-
-
                     true
                 }
-
-
             )
             singleListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        }else{
+            noPrivateListsMessage.text = "You have no private lists yet, create one and lets get started"
         }
+    }
 
-    fun setUpSharedListRecyclerView(list : ArrayList<sharedList>){
-        sharedListRecyclerView.adapter = sharedListOverviewAdapter(list,
-            View.OnClickListener {view ->
-                val position = sharedListRecyclerView.getChildAdapterPosition(view)
-                val clickedList = list[position]
+    fun setUpSharedListRecyclerView(list : ArrayList<sharedList>) {
+        if (list.isNotEmpty()) {
+            sharedListRecyclerView.adapter = sharedListOverviewAdapter(list,
+                View.OnClickListener { view ->
+                    val position = sharedListRecyclerView.getChildAdapterPosition(view)
+                    val clickedList = list[position]
 
-                println("- " + clickedList.listname + " - " + clickedList.owner)
-               val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.listname, clickedList.description, clickedList.owner, clickedList.totalPrice, clickedList.members.size.toLong())
+                    println("- " + clickedList.listname + " - " + clickedList.owner)
+                    val action =
+                        listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(
+                            clickedList.getUid(),
+                            clickedList.listname,
+                            clickedList.description,
+                            clickedList.owner,
+                            clickedList.totalPrice,
+                            clickedList.members.size.toLong()
+                        )
 
-                findNavController().navigate(action)
-            },
-            View.OnLongClickListener { view ->
-                val position = sharedListRecyclerView.getChildAdapterPosition(view)
-                val clickedList = list[position]
+                    findNavController().navigate(action)
+                },
+                View.OnLongClickListener { view ->
+                    val position = sharedListRecyclerView.getChildAdapterPosition(view)
+                    val clickedList = list[position]
 
-                handleLongPress(clickedList, true)
-                true
-            }
+                    handleLongPress(clickedList, true)
+                    true
+                }
             )
-        sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)
+            sharedListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        }else{
+            noSharedListsMessage.text = "You have no shared lists yet, create one, invite your friends and lets get started"
+        }
     }
 
     fun handleLongPress(list : ListCollection, isShared : Boolean){
@@ -122,9 +139,11 @@ class listOverviewFragment : Fragment() {
             dialogInterface.cancel()
         })
         build.setPositiveButton("Delete", DialogInterface.OnClickListener { dialogInterface, i ->
+            if(!isShared) {
+                uPresenter.handlePayMentForUser(list.getUid(), list.totalPrice, list.listname, Date(), "private")
+            }
             presenter.handleListDelete(isShared, list.getUid(), this)
-
-
+            presenter.getListOverViews(this)
 
         })
         build.show()

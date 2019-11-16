@@ -1,6 +1,7 @@
 package no.hiof.andersax.basket.Database
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
@@ -19,9 +20,12 @@ class ListActions {
         ref.get()
             .addOnCompleteListener { Task ->
                 if(Task.isSuccessful){
-                    overWritePrivateList(uid, list,fragment)
-                }else{
-                    addNewPrivateList(list, fragment)
+                    val taskResult = Task.result
+                    if(!taskResult!!.exists()){
+                        addNewPrivateList(list, fragment)
+                    }else {
+                        overWritePrivateList(uid, list, fragment)
+                    }
                 }
             }.addOnFailureListener { e ->
                fragment.showToastToUser("something happened, try checking your internet connection")
@@ -40,7 +44,7 @@ class ListActions {
                     fragment.showToastToUser("List rejected violently")
                 }
             }.addOnFailureListener { e ->
-                fragment.showToastToUser("something happened, try checking your internet connection")
+                e.printStackTrace()
             }
 
     }
