@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_shared_list.*
 import no.hiof.andersax.basket.Adapter.listItemAdapter
+import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
+import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
 import java.util.*
@@ -40,6 +42,7 @@ class sharedListFragment : Fragment() {
     private var memberCount : Long = 0;
     private val userPresenter : UserPresenter = UserPresenter()
     private var priceExpected : Long = 0;
+    private var Auth : AuthActions = AuthActions()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,21 +72,31 @@ class sharedListFragment : Fragment() {
 
 
 
+        if(!owner.equals(Auth.getCurrentUser().email)) {
+            if (memberCount.toInt() == 1) {
+                youOweLabel.text = "you owe: " + (totalPrice / 2).toString()
+                priceExpected = (totalPrice / 2)
 
-
-        if(memberCount.toInt() == 1){
-            youOweLabel.text = "you owe: " + (totalPrice / 2).toString()
-            priceExpected = (totalPrice / 2)
-
-        }else if(memberCount > 1){
-            youOweLabel.text = "you owe: " + (totalPrice / memberCount).toString()
-            priceExpected = (totalPrice / memberCount)
+            } else if (memberCount > 1) {
+                youOweLabel.text = "you owe: " + (totalPrice / memberCount).toString()
+                priceExpected = (totalPrice / memberCount)
+            } else {
+                youOweLabel.text = "no payment has been registrerd"
+            }
         }else{
-            youOweLabel.text = "no payment has been registrerd"
+            youOweLabel.text = ""
+            listTotalAmount.text=""
         }
-        paymentButton.setOnClickListener {
-            handlePayMent()
+
+
+        if(!owner.equals(Auth.getCurrentUser().email)) {
+            paymentButton.setOnClickListener {
+                handlePayMent()
+            }
+        }else{
+            paymentButton.setImageResource(android.R.color.transparent)
         }
+
 
 
         buttonUpdate.setOnClickListener {
@@ -110,7 +123,7 @@ class sharedListFragment : Fragment() {
 
     private fun handlePayMent(){
       var build :  AlertDialog.Builder = AlertDialog.Builder(context)
-        build.setTitle("This is the title")
+        build.setTitle("Payment")
         var input : EditText = EditText(context)
         input.inputType = InputType.TYPE_CLASS_TEXT
         build.setView(input)

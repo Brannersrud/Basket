@@ -51,6 +51,7 @@
     <string name="price_label">price</string>
     <string name="qt_hint">1</string>
     <string name="paylabel">pay</string>
+    <string name="Historydatelabel">%1$s/%2$s/%3$s</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

@@ -12,7 +12,7 @@ import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.sharedList
 
-class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var clickListener: View.OnClickListener) : RecyclerView.Adapter<sharedListOverviewAdapter.ListViewHolder>() {
+class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var clickListener: View.OnClickListener, var longpressListener : View.OnLongClickListener) : RecyclerView.Adapter<sharedListOverviewAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): sharedListOverviewAdapter.ListViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
@@ -27,8 +27,10 @@ class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var cli
 
         val currentList = items[position]
 
-        holder.bind(currentList, clickListener)
+        holder.bind(currentList, clickListener, longpressListener)
     }
+
+
 
     class ListViewHolder(view : View) : RecyclerView.ViewHolder(view){
         private val itemName : TextView = view.cardViewTitle
@@ -39,7 +41,7 @@ class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var cli
         private val members : ImageView = view.membersIcon
 
 
-        fun bind(item : sharedList, clickListener: View.OnClickListener){
+        fun bind(item : sharedList, clickListener: View.OnClickListener, longpressListener: View.OnLongClickListener){
             itemName.text = item.listname
             description.text = item.description
             amountOfMembers.text = item.members.size.toString()
@@ -50,10 +52,12 @@ class sharedListOverviewAdapter(private val items:ArrayList<sharedList>, var cli
                 ownerName.text = "owner: " + item.owner
             }
 
+            this.itemView.setOnLongClickListener(longpressListener)
             this.itemView.setOnClickListener(clickListener)
 
 
         }
+
     }
 
 }

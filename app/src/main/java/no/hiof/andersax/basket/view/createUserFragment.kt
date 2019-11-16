@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavGraphNavigator
 import androidx.navigation.fragment.findNavController
@@ -49,8 +50,11 @@ class createUserFragment : Fragment() {
 
     private fun handleUserCreation(email: String, password: String, passwordretype: String, phone: String, username : String) {
         //validating, some user input
-
-        if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype) && username.isNotEmpty()){
+        if(email.isEmpty() || phone.isEmpty() || username.isEmpty()){
+            showToastToUser("Email, phone and username is required")
+        }else if(password.isEmpty() || !password.equals(passwordretype) || password.length < 6){
+            showToastToUser("Your password has to match and it is required to have more then 6 characters")
+        }else if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype) && username.isNotEmpty()){
            if(presenter.signUpNewUser(email, password, phone, username)){
                var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
                findNavController().navigate(action)
@@ -58,6 +62,13 @@ class createUserFragment : Fragment() {
                println("could not compute?")
            }
         }
+
+    }
+
+    fun showToastToUser(message : String){
+        val duration = Toast.LENGTH_LONG
+        val toast = Toast.makeText(context, message, duration)
+        toast.show()
 
     }
 

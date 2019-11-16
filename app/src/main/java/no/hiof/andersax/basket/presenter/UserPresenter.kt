@@ -68,16 +68,17 @@ class UserPresenter {
 
 
     fun getHistoryForUser(activity: profileActivity, uname : String){
-        val listHistory : MutableList<ListHistoryItem> = ArrayList<ListHistoryItem>()
+        var listHistory : MutableList<ListHistoryItem> = ArrayList<ListHistoryItem>()
         db.collection("Users").document(uname)
             .collection("History")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val obj = document.toObject(ListHistoryItem::class.java)
+                    var obj = document.toObject(ListHistoryItem::class.java)
                     listHistory.add(obj)
 
                 }
+
                 activity.setUpRecyclerView(listHistory)
             }.addOnFailureListener { e ->
                 e.suppressed

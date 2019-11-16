@@ -2,6 +2,7 @@ package no.hiof.andersax.basket.presenter
 
 import android.os.Handler
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
@@ -61,21 +62,14 @@ class ListPresenter{
          listactions.addSharedList(sharedListToAdd, listFragment)
     }
 
-    fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
-        if(updatefashion.equals("destroy")){
-        listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), false)
-        //need to update the price 2 stupid
-        }else{
-            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), true)
 
-        }
-    }
 
     fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
         val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList))
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
+    //calculate
       fun calculateTotalPrice(list: MutableList<ListItem>): Long{
         var temp: Long = 0;
         for (i in list) {
@@ -86,6 +80,7 @@ class ListPresenter{
         return temp
     }
 
+    //get private
     fun getPrivateLists(fragment: listOverviewFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList")
@@ -105,6 +100,7 @@ class ListPresenter{
             }
     }
 
+    //get shared lists
     fun getSharedLists(fragment: listOverviewFragment, uname : String){
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
@@ -134,6 +130,7 @@ class ListPresenter{
                     fragment.setUpSharedListRecyclerView(list)
                 }
 
+
         }catch (e : ConnectException){
             //show toast
         }catch (e : Exception){
@@ -142,6 +139,7 @@ class ListPresenter{
     }
 
 
+    //get det lists
     fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
         val db = FirebaseFirestore.getInstance()
@@ -168,6 +166,7 @@ class ListPresenter{
     }
 
 
+    //fetch profile information and set it up
     fun getProfileInformation(activity : profileActivity) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
@@ -213,6 +212,40 @@ class ListPresenter{
 
     }
 
+
+    // DELETE AND UPDATE
+
+    fun handleListDelete(isShared : Boolean, uid : String, fragment : listOverviewFragment){
+        var db = Auth.getFireBaseStoreReference()
+        var ref: String
+        if(isShared){
+            ref = "sharedList"
+        }else{
+            ref ="privateList"
+        }
+        db.collection(ref).document(uid).delete().addOnCompleteListener { it ->
+            if(it.isSuccessful){
+                fragment.showToastToUser("Successfully deleted this old ragged list")
+            }else{
+                fragment.showToastToUser("this list really wont go away")
+            }
+
+        }.addOnFailureListener { e ->
+            e.suppressed
+        }
+
+    }
+
+
+    fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
+        if(updatefashion.equals("destroy")){
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), false)
+            //need to update the price 2 stupid
+        }else{
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), true)
+
+        }
+    }
 
 
 }

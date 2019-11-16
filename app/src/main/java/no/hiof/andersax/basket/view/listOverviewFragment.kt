@@ -1,11 +1,14 @@
 package no.hiof.andersax.basket.view
 
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,11 +26,7 @@ import no.hiof.andersax.basket.presenter.ListPresenter
  * A simple [Fragment] subclass.
  */
 class listOverviewFragment : Fragment() {
-    private var Auth : AuthActions = AuthActions()
     private var presenter : ListPresenter = ListPresenter()
-    private val shared : sharedListFragment = sharedListFragment()
-
-
 
 
 
@@ -64,6 +63,7 @@ class listOverviewFragment : Fragment() {
 
     fun setUpListRecyclerView(list : ArrayList<ListCollection>){
             singleListRecyclerView.adapter = ListOverviewAdapter(list,
+
                 View.OnClickListener { view ->
                     val position = singleListRecyclerView.getChildAdapterPosition(view)
                     val clickedList = list[position]
@@ -77,7 +77,17 @@ class listOverviewFragment : Fragment() {
 
                         );
                     findNavController().navigate(action)
+                } ,
+                View.OnLongClickListener {view ->
+                    val position = singleListRecyclerView.getChildAdapterPosition(view)
+                    val clickedList = list[position]
+                    handleLongPress(clickedList, false)
+
+
+                    true
                 }
+
+
             )
             singleListRecyclerView.layoutManager = GridLayoutManager(context, 1)
         }
@@ -92,9 +102,40 @@ class listOverviewFragment : Fragment() {
                val action = listOverviewFragmentDirections.actionListOverviewFragment2ToSharedListFragment(clickedList.getUid(), clickedList.listname, clickedList.description, clickedList.owner, clickedList.totalPrice, clickedList.members.size.toLong())
 
                 findNavController().navigate(action)
-            })
+            },
+            View.OnLongClickListener { view ->
+                val position = sharedListRecyclerView.getChildAdapterPosition(view)
+                val clickedList = list[position]
+
+                handleLongPress(clickedList, true)
+                true
+            }
+            )
         sharedListRecyclerView.layoutManager = GridLayoutManager(context,1)
     }
+
+    fun handleLongPress(list : ListCollection, isShared : Boolean){
+        var build :  AlertDialog.Builder = AlertDialog.Builder(context)
+        build.setCancelable(true)
+        build.setTitle("Are you sure you want to delete this?")
+        build.setNegativeButton("Cancel",  DialogInterface.OnClickListener { dialogInterface, i ->
+            dialogInterface.cancel()
+        })
+        build.setPositiveButton("Delete", DialogInterface.OnClickListener { dialogInterface, i ->
+            presenter.handleListDelete(isShared, list.getUid(), this)
+
+
+
+        })
+        build.show()
+    }
+    fun showToastToUser(message : String){
+        val duration = Toast.LENGTH_LONG
+        val toast = Toast.makeText(context, message, duration)
+
+        toast.show()
+    }
+
 
 
 
