@@ -19,7 +19,7 @@
         android:id="@+id/usageLabel"
         android:layout_width="240dp"
         android:layout_height="63dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="120dp"
         android:text="This weeks spending"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,5 +46,24 @@
         android:text="You and your friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/graphViewBar" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout_statistics"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Past week" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Past month" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
