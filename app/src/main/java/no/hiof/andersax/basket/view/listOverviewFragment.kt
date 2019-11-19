@@ -98,7 +98,9 @@ class listOverviewFragment : Fragment() {
     }
 
     fun setUpSharedListRecyclerView(list : ArrayList<sharedList>) {
+
         if (list.isNotEmpty()) {
+            noSharedListsMessage.text = ""
             sharedListRecyclerView.adapter = sharedListOverviewAdapter(list,
                 View.OnClickListener { view ->
                     val position = sharedListRecyclerView.getChildAdapterPosition(view)

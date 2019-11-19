@@ -52,6 +52,9 @@
     <string name="qt_hint">1</string>
     <string name="paylabel">pay</string>
     <string name="Historydatelabel">%1$s/%2$s/%3$s</string>
+    <string name="title_activity_pager">pagerActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

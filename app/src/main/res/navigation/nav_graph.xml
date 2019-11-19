@@ -3,30 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/listOverviewFragment2">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="no.hiof.andersax.basket.view.loginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_createUserFragment"
-            app:destination="@id/createUserFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" />
-        <action
-            android:id="@+id/action_loginFragment_to_listOverviewFragment2"
-            app:destination="@id/listOverviewFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/createUserFragment"
-        android:name="no.hiof.andersax.basket.view.createUserFragment"
-        android:label="fragment_create_user"
-        tools:layout="@layout/fragment_create_user" >
-        <action
-            android:id="@+id/action_createUserFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
     <fragment
         android:id="@+id/listOverviewFragment2"
         android:name="no.hiof.andersax.basket.view.listOverviewFragment"

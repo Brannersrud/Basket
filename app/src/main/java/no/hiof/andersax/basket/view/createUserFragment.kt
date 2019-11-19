@@ -25,7 +25,6 @@ class createUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar!!.hide()
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_user, container, false)
@@ -56,7 +55,7 @@ class createUserFragment : Fragment() {
             showToastToUser("Your password has to match and it is required to have more then 6 characters")
         }else if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype) && username.isNotEmpty()){
            if(presenter.signUpNewUser(email, password, phone, username)){
-               var action = createUserFragmentDirections.actionCreateUserFragmentToLoginFragment()
+               var action = createUserFragmentDirections.actionCreateUserFragment2ToLoginFragment2()
                findNavController().navigate(action)
            }else{
                println("could not compute?")

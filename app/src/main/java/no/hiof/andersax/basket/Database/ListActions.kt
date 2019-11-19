@@ -51,7 +51,7 @@ class ListActions {
     private fun overWritePrivateList(uid: String, list: ListCollection, fragment: privateListFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList").document(uid)
-        ref.update("items", list.getListItems())
+        ref.update("items", list.items)
             .addOnCompleteListener {Task ->
                 if(Task.isSuccessful){
                     fragment.showToastToUser("List updated gracefully")

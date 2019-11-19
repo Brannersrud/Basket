@@ -3,6 +3,8 @@ package no.hiof.andersax.basket.view
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -30,7 +32,7 @@ import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 import java.lang.Thread.sleep
 import androidx.appcompat.app.AppCompatActivity
-
+import no.hiof.andersax.basket.Onboarding.OnBoardingActivity
 
 
 /**
@@ -54,8 +56,10 @@ class loginFragment : Fragment() {
         FirebaseApp.initializeApp(context!!)
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-        (activity as AppCompatActivity).supportActionBar!!.hide()
 
+        if(restoredPrefData()){
+            navigateToNextScreen()
+        }
         /*if(currentUser !== null){
             navigateToNextScreen()
         }*/
@@ -67,7 +71,7 @@ class loginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val createUserAction = loginFragmentDirections.actionLoginFragmentToCreateUserFragment()
+        val createUserAction = loginFragmentDirections.actionLoginFragment2ToCreateUserFragment2()
         val loginbtn : Button = loginButton
         goToCreateUser.setOnClickListener {
             findNavController().navigate(createUserAction)
@@ -87,6 +91,7 @@ class loginFragment : Fragment() {
                     if (Task.isSuccessful) {
                         print("Ja?")
                         Log.d("result", Task.result.toString())
+                        savePrefsData()
 
                         navigateToNextScreen()
                     } else {
@@ -100,8 +105,25 @@ class loginFragment : Fragment() {
 
 
     fun navigateToNextScreen(){
-        val loginAction = loginFragmentDirections.actionLoginFragmentToListOverviewFragment2()
-        findNavController().navigate(loginAction)
+        val intent = Intent(context,OnBoardingActivity::class.java )
 
+        startActivity(intent)
+
+    }
+
+    fun savePrefsData(){
+        val preferences : SharedPreferences = context!!.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val prefEd : SharedPreferences.Editor = preferences.edit()
+
+        prefEd.putBoolean("isPrevLoggedIn", true)
+        prefEd.commit()
+
+    }
+
+    fun restoredPrefData() : Boolean{
+        val pref : SharedPreferences = context!!.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val isIntroFinished = pref.getBoolean("isPrevLoggedIn", false)
+
+        return isIntroFinished
     }
 }

@@ -58,14 +58,14 @@ class ListPresenter{
              usernames.add(member.username)
          }
 
-         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items))
+         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items), ArrayList<ListItem>())
          listactions.addSharedList(sharedListToAdd, listFragment)
     }
 
 
 
     fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
-        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList))
+        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList), ArrayList<ListItem>())
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
@@ -108,7 +108,7 @@ class ListPresenter{
         var list : ArrayList<sharedList> = ArrayList()
 
 
-        try {
+
             ref.whereEqualTo("owner", Auth.getCurrentUser().email)
                 .get()
                 .addOnSuccessListener { documents ->
@@ -117,7 +117,10 @@ class ListPresenter{
                         obj.setUid(document.id)
                         list.add(obj)
 
+
                     }
+                    fragment.setUpSharedListRecyclerView(list)
+
                 }
             ref.whereArrayContains("usernames", uname.toString())
                 .get()
@@ -127,16 +130,14 @@ class ListPresenter{
 
                         obj.setUid(document.id)
                         list.add(obj)
+
                     }
                     fragment.setUpSharedListRecyclerView(list)
+
                 }
 
 
-        }catch (e : ConnectException){
-            //show toast
-        }catch (e : Exception){
-            println("some thing wong")
-        }
+
     }
 
 
