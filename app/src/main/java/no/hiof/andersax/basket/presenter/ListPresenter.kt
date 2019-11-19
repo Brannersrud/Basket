@@ -73,7 +73,7 @@ class ListPresenter{
       fun calculateTotalPrice(list: MutableList<ListItem>): Long{
         var temp: Long = 0;
         for (i in list) {
-            if (i.isChecked) {
+            if (i.isChecked && i.price > 0) {
                 temp += i.price;
             }
         }

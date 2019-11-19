@@ -79,7 +79,8 @@ class listOverviewFragment : Fragment() {
                             clickedList.owner,
                             clickedList.description,
                             clickedList.listname,
-                            clickedList.getUid()
+                            clickedList.getUid(),
+                            clickedList.totalPrice
 
                         );
                     findNavController().navigate(action)

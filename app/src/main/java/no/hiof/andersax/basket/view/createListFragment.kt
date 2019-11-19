@@ -65,7 +65,7 @@ class createListFragment : Fragment() {
     private fun handleRedirect(listName: String, listDescription: String) {
         if(listName.isNotEmpty() && listDescription.isNotEmpty() && this.addedToList.size == 0){
 
-            val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(actions.getCurrentUser().email!!,listName, listDescription, actions.getCurrentUser().uid)
+            val action = createListFragmentDirections.actionCreateListFragmentToPrivateListFragment(actions.getCurrentUser().email!!,listName, listDescription, actions.getCurrentUser().uid, 0)
             //pass data with navigate, next scene makes the list.
             //presenter.addPrivateList(actions.getCurrentUser().uid, listName, listDescription)
             findNavController().navigate(action)

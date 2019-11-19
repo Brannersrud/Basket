@@ -82,8 +82,9 @@ class UserPresenter {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    var obj = document.toObject(ListHistoryItem::class.java)
-                    listHistory.add(obj)
+                        var obj = document.toObject(ListHistoryItem::class.java)
+                        listHistory.add(obj)
+
 
                 }
 

@@ -64,6 +64,8 @@
         <argument
             android:name="uid"
             app:argType="string" />
+        <argument android:name="totalPrice"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/sharedListFragment"

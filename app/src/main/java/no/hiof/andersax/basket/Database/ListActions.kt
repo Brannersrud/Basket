@@ -51,11 +51,19 @@ class ListActions {
     private fun overWritePrivateList(uid: String, list: ListCollection, fragment: privateListFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList").document(uid)
+        var price : Long = 0
+
+        for(i in list.items){
+            price += i.price
+        }
         ref.update("items", list.items)
             .addOnCompleteListener {Task ->
                 if(Task.isSuccessful){
                     fragment.showToastToUser("List updated gracefully")
-                }else{
+                    ref.update("totalPrice", price)
+
+                }
+                else{
                     fragment.showToastToUser("Unable to update list, obnoxiously")
                 }
             }.addOnFailureListener {

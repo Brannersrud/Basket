@@ -32,6 +32,7 @@ class privateListFragment : Fragment() {
     private var id: String = "";
     private var store : FirebaseFirestore  = FirebaseFirestore.getInstance()
     private var presenter : ListPresenter = ListPresenter()
+    private var totalPrice : Long = 0
 
 
 
@@ -46,6 +47,7 @@ class privateListFragment : Fragment() {
             listdescription = args.getString("description")!!
             owner = args.getString("Owner")!!
             id = args.getString("uid")!!
+            totalPrice = args.getLong("totalPrice")
 
         }
         getListItems(id)
@@ -61,7 +63,7 @@ class privateListFragment : Fragment() {
 
 
         applyprivateChangeButton.setOnClickListener {
-            presenter.addPrivateList(listname, listdescription, owner, 0, id, this)
+            presenter.addPrivateList(listname, listdescription, owner, totalPrice, id, this)
         }
 
         addNewItemPrivate.setOnClickListener {
