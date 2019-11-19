@@ -39,9 +39,9 @@ class OnBoardingActivity : AppCompatActivity() {
 
         val screenList : MutableList<ScreenItem> = ArrayList()
 
-        screenList.add(ScreenItem("Private", "Create private lists to help you remember what to buy", R.drawable.account_icon))
-        screenList.add(ScreenItem("Shared", "Create lists with your friend for your events and gatherings", R.drawable.add_friend))
-        screenList.add(ScreenItem("Third page", "this is the third", R.drawable.avatar))
+        screenList.add(ScreenItem("Organize your shopping", "Organize your lists to help you remember what to buy", R.drawable.shopping))
+        screenList.add(ScreenItem("Keep it private", "Create private lists that are only for your eyes", R.drawable.safetylist))
+        screenList.add(ScreenItem("Share with friends", "Create lists with your friend(s) for your events and gatherings", R.drawable.shared))
 
         val adapter : introViewPagerAdapter = introViewPagerAdapter(this, screenList)
 
