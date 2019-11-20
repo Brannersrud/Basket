@@ -12,6 +12,7 @@ import no.hiof.andersax.basket.model.ListMembers
 import no.hiof.andersax.basket.model.User
 import no.hiof.andersax.basket.model.sharedList
 import no.hiof.andersax.basket.profileActivity
+import no.hiof.andersax.basket.statisticsActivity
 import no.hiof.andersax.basket.view.createListFragment
 import java.util.*
 import kotlin.collections.ArrayList
@@ -87,8 +88,7 @@ class UserPresenter {
 
 
                 }
-
-                activity.setUpRecyclerView(listHistory)
+                activity.setHistoryForUser(listHistory)
             }.addOnFailureListener { e ->
                 e.suppressed
             }

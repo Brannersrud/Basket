@@ -11,8 +11,9 @@ import kotlinx.android.synthetic.main.history_item.view.*
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.profileActivity
+import no.hiof.andersax.basket.statisticsActivity
 
-class ListHistoryAdapter(private val listHistory : MutableList<ListHistoryItem>, var activity : profileActivity) : RecyclerView.Adapter<ListHistoryAdapter.ListHistoryHolder>(){
+class ListHistoryAdapter(private val listHistory : MutableList<ListHistoryItem>, var activity : statisticsActivity) : RecyclerView.Adapter<ListHistoryAdapter.ListHistoryHolder>(){
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,7 +43,7 @@ class ListHistoryAdapter(private val listHistory : MutableList<ListHistoryItem>,
 
     }
 
-    class ListHistoryHolder(view : View, activity : profileActivity) : RecyclerView.ViewHolder(view){
+    class ListHistoryHolder(view : View, activity : statisticsActivity) : RecyclerView.ViewHolder(view){
         private val pricepaid : TextView = view.pricePaidLabelHistory
         private val itemTitle : TextView = view.listHistoryListTitle
         private val date : TextView = view.datePaid

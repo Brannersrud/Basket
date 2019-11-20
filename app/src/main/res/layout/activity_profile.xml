@@ -44,29 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileNameText" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="92dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="8dp"
-        android:text="History"
-        android:textColor="#4527A0"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/listHistoryRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/privateListProfileCount"
-        app:layout_constraintVertical_bias="0.968" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listHistoryRecyclerView"
-        android:layout_width="408dp"
-        android:layout_height="191dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintVertical_bias="0.995" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="422dp"
@@ -121,10 +98,10 @@
         android:id="@+id/buttonStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="144dp"
         android:text="statistics"
-        app:layout_constraintBottom_toTopOf="@+id/listHistoryRecyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

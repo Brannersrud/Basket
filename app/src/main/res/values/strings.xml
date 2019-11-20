@@ -55,6 +55,12 @@
     <string name="title_activity_pager">pagerActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="historyLabelStats">History</string>
+    <string name="private_usage">Private usage</string>
+    <string name="you_and_your_friends">You and your friends usage</string>
+    <string name="past_week_stats">Past week</string>
+    <string name="past_month_stats">Past month</string>
+    <string name="history_stats_label">History</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

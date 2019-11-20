@@ -171,11 +171,11 @@ class ListPresenter{
     //fetch profile information and set it up
     fun getProfileInformation(activity : profileActivity) {
         val db = Auth.getFireBaseStoreReference()
-        val ref = db.collection("sharedList")
-        var refPriv = db.collection("sharedList")
+        val refPriv = db.collection("privateList")
+        var refShared = db.collection("sharedList")
         var usersref = db.collection("Users")
         var sharedres = 0
-        ref.whereEqualTo("owner", Auth.getCurrentUser().email)
+        refShared.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -183,7 +183,7 @@ class ListPresenter{
                     activity.setUpSharedCount(sharedres)
                 }
             }
-        var privRes = 0;
+        var privRes = 0
         refPriv.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnCompleteListener { task ->

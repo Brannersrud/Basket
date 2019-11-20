@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".statisticsActivity">
-
+    tools:context=".statisticsActivity"
+    android:background="#fff"
+    >
+<!--
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graphViewBar"
         android:layout_width="409dp"
@@ -14,56 +16,83 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/usageLabel"
-        android:layout_width="240dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="120dp"
-        android:text="This weeks spending"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+-->
 
     <TextView
         android:id="@+id/privateSpendingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
-        android:text="Yours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/graphViewBar" />
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/private_usage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/usageLabel" />
 
     <TextView
         android:id="@+id/sharedSpendingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="36dp"
-        android:text="You and your friends"
+        android:layout_marginEnd="16dp"
+        android:text="@string/you_and_your_friends"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/graphViewBar" />
+        app:layout_constraintTop_toBottomOf="@+id/usageLabel"
+        app:layout_constraintVertical_bias="0.843" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listHistoryRecyclerView"
+        android:layout_width="397dp"
+        android:layout_height="460dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout_statistics"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Past week" />
+            android:text="@string/history_stats_label" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Past month" />
+            android:text="@string/past_week_stats" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/past_month_stats" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <com.anychart.AnyChartView
+        android:id="@+id/chart_view"
+        android:layout_width="400dp"
+        android:layout_height="459dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usageLabel">
+
+    </com.anychart.AnyChartView>
+
+    <TextView
+        android:id="@+id/usageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="@string/historyLabelStats"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,8 @@ class profileActivity: AppCompatActivity() {
     private var presenter: ListPresenter = ListPresenter()
     private var userPresenter : UserPresenter = UserPresenter()
     private var username : String = ""
-    private lateinit var adapter : ListHistoryAdapter
+    //private lateinit var adapter : ListHistoryAdapter
+    private lateinit var userHistory : MutableList<ListHistoryItem>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,7 @@ class profileActivity: AppCompatActivity() {
 
 
     private fun onUserRedirectToStatistic(){
-        val arr = ArrayList(adapter.getListHistory())
+        val arr = ArrayList(userHistory)
         val intent = Intent(applicationContext, statisticsActivity::class.java)
         intent.putParcelableArrayListExtra("extra", arr)
         startActivity(intent)
@@ -56,9 +57,15 @@ class profileActivity: AppCompatActivity() {
     private fun prepareHistory(name : String){
         userPresenter.getHistoryForUser(this, name)
     }
-    fun setUpRecyclerView(listhistory : MutableList<ListHistoryItem>){
+
+    fun setHistoryForUser(listhistory : MutableList<ListHistoryItem>){
+        this.userHistory = listhistory
+    }
+   /* fun setUpRecyclerView(listhistory : MutableList<ListHistoryItem>){
             adapter = ListHistoryAdapter(listhistory, this)
             listHistoryRecyclerView.adapter = adapter
             listHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 1)
     }
+
+    */
 }
