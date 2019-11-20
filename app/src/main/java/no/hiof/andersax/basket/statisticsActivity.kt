@@ -49,12 +49,10 @@ class statisticsActivity() : AppCompatActivity() {
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 if(p0!!.position == 2 ){
-                    //graph.series.clear()
                     showGraph()
                     usageLabel.text = "Past month spending"
                     plotMonthData(items, chartView)
                 }else if(p0!!.position == 1){
-                    //graph.series.clear()
                     showGraph()
                     usageLabel.text = "Past week spending"
 

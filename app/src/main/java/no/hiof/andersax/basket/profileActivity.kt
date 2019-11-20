@@ -61,11 +61,5 @@ class profileActivity: AppCompatActivity() {
     fun setHistoryForUser(listhistory : MutableList<ListHistoryItem>){
         this.userHistory = listhistory
     }
-   /* fun setUpRecyclerView(listhistory : MutableList<ListHistoryItem>){
-            adapter = ListHistoryAdapter(listhistory, this)
-            listHistoryRecyclerView.adapter = adapter
-            listHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 1)
-    }
 
-    */
 }
