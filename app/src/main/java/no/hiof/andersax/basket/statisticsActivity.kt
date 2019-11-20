@@ -152,6 +152,7 @@ class statisticsActivity() : AppCompatActivity() {
 
         chart.data(list)
         chart.palette().itemAt(0, SolidFill("#0100CA", 1.0))
+
         chartView.setChart(chart)
 
     }

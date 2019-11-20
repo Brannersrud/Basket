@@ -61,6 +61,8 @@
     <string name="past_week_stats">Past week</string>
     <string name="past_month_stats">Past month</string>
     <string name="history_stats_label">History</string>
+    <string name="history_and_statistics">History and statistics</string>
+    <string name="placeholder_profile">Ola normann</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
