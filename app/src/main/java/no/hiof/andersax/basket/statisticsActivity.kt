@@ -1,22 +1,16 @@
 package no.hiof.andersax.basket
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Parcelable
-import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.graphics.vector.SolidFill
 import com.google.android.material.tabs.TabLayout
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.BarGraphSeries
-import com.jjoe64.graphview.series.DataPoint
-import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_statistics.*
 import no.hiof.andersax.basket.Adapter.ListHistoryAdapter
 import no.hiof.andersax.basket.model.ListHistoryItem
@@ -57,12 +51,12 @@ class statisticsActivity() : AppCompatActivity() {
                 if(p0!!.position == 2 ){
                     //graph.series.clear()
                     showGraph()
-                    usageLabel.text = "This months spending"
+                    usageLabel.text = "Past month spending"
                     plotMonthData(items, chartView)
                 }else if(p0!!.position == 1){
                     //graph.series.clear()
                     showGraph()
-                    usageLabel.text = "This weeks spending"
+                    usageLabel.text = "Past week spending"
 
                     plotWeekData(items, chartView)
                 }else if(p0!!.position == 0){
@@ -120,7 +114,7 @@ class statisticsActivity() : AppCompatActivity() {
             }
 
         }
-        val chart  = AnyChart.bar()
+        val chart  = AnyChart.column()
 
         val list : ArrayList<DataEntry> = ArrayList<DataEntry>()
         list.add(ValueDataEntry("private", privatePaid))
@@ -152,14 +146,14 @@ class statisticsActivity() : AppCompatActivity() {
             }
 
         }
-        val chart  = AnyChart.bar()
-
+        val chart  = AnyChart.column()
 
         val list : ArrayList<DataEntry> = ArrayList<DataEntry>()
         list.add(ValueDataEntry("private", privatePaid))
         list.add(ValueDataEntry("Shared", sharedPaid))
 
         chart.data(list)
+        chart.palette().itemAt(0, SolidFill("#0100CA", 1.0))
         chartView.setChart(chart)
 
     }
