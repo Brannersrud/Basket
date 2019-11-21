@@ -53,7 +53,7 @@ class ListHistoryAdapter(private val listHistory : MutableList<ListHistoryItem>,
         fun bind(item : ListHistoryItem){
             pricepaid.text = item.pricepaid.toString()
             itemTitle.text = item.listName
-            date.text = act.applicationContext.resources.getString(R.string.Historydatelabel, item.date.day.toString(), item.date.month.toString(), (item.date.year+1900).toString())
+            date.text = item.date.toLocaleString()
 
         }
 

@@ -1,6 +1,7 @@
 package no.hiof.andersax.basket
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Parcelable
 import android.view.View
@@ -14,6 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_statistics.*
 import no.hiof.andersax.basket.Adapter.ListHistoryAdapter
 import no.hiof.andersax.basket.model.ListHistoryItem
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -25,6 +27,8 @@ class statisticsActivity() : AppCompatActivity() {
     private val month : Long = 604800000L*4
     private lateinit var adapter : ListHistoryAdapter
     private lateinit var chartView : AnyChartView
+    private var list : ArrayList<DataEntry> = ArrayList<DataEntry>()
+
 
 
 
@@ -48,16 +52,15 @@ class statisticsActivity() : AppCompatActivity() {
             }
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                if(p0!!.position == 2 ){
+                if(p0!!.position == 1 ){
                     showGraph()
                     usageLabel.text = "Past month spending"
-                    plotMonthData(items, chartView)
-                }else if(p0!!.position == 1){
+                    plotMonthData(items)
+                }/*else if(p0!!.position == 1){
                     showGraph()
                     usageLabel.text = "Past week spending"
-
-                    plotWeekData(items, chartView)
-                }else if(p0!!.position == 0){
+                    plotWeekData(items)
+                }*/else if(p0!!.position == 0){
                     ShowRecyclerView()
                     usageLabel.text ="History"
                     plotRecyclerView(items)
@@ -68,8 +71,6 @@ class statisticsActivity() : AppCompatActivity() {
     }
 
     private fun showGraph(){
-        privateSpendingLabel.visibility = View.VISIBLE
-        sharedSpendingLabel.visibility = View.VISIBLE
         chartView.visibility = View.VISIBLE
     }
     private fun ShowRecyclerView(){
@@ -80,8 +81,6 @@ class statisticsActivity() : AppCompatActivity() {
         listHistoryRecyclerView.visibility = View.INVISIBLE
     }
     private fun hideGraph(){
-        privateSpendingLabel.visibility = View.INVISIBLE
-        sharedSpendingLabel.visibility = View.INVISIBLE
         chartView.visibility = View.INVISIBLE
 
     }
@@ -95,70 +94,69 @@ class statisticsActivity() : AppCompatActivity() {
 
 
 
-    private fun plotMonthData(datalist : ArrayList<ListHistoryItem>, chartView: AnyChartView){
+    private fun plotMonthData(datalist : ArrayList<ListHistoryItem>){
         hideRecyclerView()
         val date : Date = Date()
-        val dateToMatch = (date.time - (month))
+        val dateToMatch = (date.time - month)
         val toDate = Date(dateToMatch)
         var privatePaid = 0.0
-        var sharedPaid = 480.0
+        var sharedPaid = 0.0
+            for (item in datalist) {
+                if (item.date.after(toDate) && item.isPrivate.equals("private")) {
+                    privatePaid += item.pricepaid
+                } else if (item.date.after(toDate) && item.isPrivate.equals("shared")) {
+                    sharedPaid += item.pricepaid
+                }
 
-        for(item in datalist){
-            if(item.date.after(toDate) && item.isPrivate.equals("private")){
-                privatePaid+= item.pricepaid
-
-            }else if(item.date.after(toDate) && !item.isPrivate.equals("private")){
-                sharedPaid+=item.pricepaid
             }
 
-        }
-        val chart  = AnyChart.column()
+            val chart  = AnyChart.column()
 
-        val list : ArrayList<DataEntry> = ArrayList<DataEntry>()
-        list.add(ValueDataEntry("private", privatePaid))
-        list.add(ValueDataEntry("Shared", sharedPaid))
+            list.add(ValueDataEntry("private", privatePaid))
+            list.add(ValueDataEntry("Shared", sharedPaid))
 
-        chart.data(list)
-        chartView.setChart(chart)
+            chart.data(list)
+
+            this.chartView.setChart(chart)
+
+
+        chart.palette().itemAt(0, SolidFill("#0100CA", 1.0))
 
 
     }
 
 
-
-    private fun plotWeekData(list : ArrayList<ListHistoryItem>, chartView: AnyChartView){
+/*
+    private fun plotWeekData(listhist : ArrayList<ListHistoryItem>){
         hideRecyclerView()
-
         val date : Date = Date()
         val dateToMatch = (date.time - week)
         val toDate = Date(dateToMatch)
         var privatePaid = 0.0
-        var sharedPaid = 480.0
+        var sharedPaid = 0.0
 
-        for(item in list){
+        for(item in listhist){
             if(item.date.after(toDate) && item.isPrivate.equals("private")){
-                privatePaid+= item.pricepaid
+                privatePaid+=item.pricepaid
 
-            }else if(item.date.after(toDate) && !item.isPrivate.equals("private")){
+            }else if(item.date.after(toDate) && item.isPrivate.equals("shared")){
                 sharedPaid+=item.pricepaid
             }
 
         }
         val chart  = AnyChart.column()
 
-        val list : ArrayList<DataEntry> = ArrayList<DataEntry>()
-        list.add(ValueDataEntry("private", privatePaid))
-        list.add(ValueDataEntry("Shared", sharedPaid))
+        this.list.add(ValueDataEntry("private", privatePaid))
+        this.list.add(ValueDataEntry("Shared", sharedPaid))
 
         chart.data(list)
-        chart.palette().itemAt(0, SolidFill("#0100CA", 1.0))
 
-        chartView.setChart(chart)
+        this.chartView.setChart(chart)
 
     }
 
 
-
+*/
 
 }
 

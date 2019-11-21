@@ -18,27 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 -->
 
-    <TextView
-        android:id="@+id/privateSpendingLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/private_usage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/usageLabel" />
-
-    <TextView
-        android:id="@+id/sharedSpendingLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/you_and_your_friends"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usageLabel"
-        app:layout_constraintVertical_bias="0.843" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listHistoryRecyclerView"
         android:layout_width="397dp"
@@ -61,10 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/history_stats_label" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/past_week_stats" />
+
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

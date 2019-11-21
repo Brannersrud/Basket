@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.history_item.*
 import no.hiof.andersax.basket.Adapter.ListHistoryAdapter
 import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.presenter.ListPresenter

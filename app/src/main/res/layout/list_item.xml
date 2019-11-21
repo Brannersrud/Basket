@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/cardViewTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:paddingStart="20dp"
@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/cardViewDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="120dp"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="250dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/common_google_signin_btn_text_light_default"
             android:textSize="14sp"
             android:textStyle="bold" />
