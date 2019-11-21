@@ -28,7 +28,7 @@ class ListActions {
                     }
                 }
             }.addOnFailureListener { e ->
-               fragment.showToastToUser("something happened, try checking your internet connection")
+               fragment.showToastToUser("something happened, try checking your internet connection", false)
             }
     }
 
@@ -39,9 +39,9 @@ class ListActions {
         ref.add(list)
             .addOnCompleteListener { Task ->
                 if(Task.isSuccessful){
-                    fragment.showToastToUser("List added beautifully")
+                    fragment.showToastToUser("List added beautifully", true)
                 }else{
-                    fragment.showToastToUser("List rejected violently")
+                    fragment.showToastToUser("List rejected violently",false)
                 }
             }.addOnFailureListener { e ->
                 e.printStackTrace()
@@ -59,15 +59,15 @@ class ListActions {
         ref.update("items", list.items)
             .addOnCompleteListener {Task ->
                 if(Task.isSuccessful){
-                    fragment.showToastToUser("List updated gracefully")
+                    fragment.showToastToUser("List updated gracefully", true)
                     ref.update("totalPrice", price)
 
                 }
                 else{
-                    fragment.showToastToUser("Unable to update list, obnoxiously")
+                    fragment.showToastToUser("Unable to update list, obnoxiously", false)
                 }
             }.addOnFailureListener {
-                fragment.showToastToUser("Something happened, try checking your internet connection")
+                fragment.showToastToUser("Something happened, try checking your internet connection", false)
 
             }
     }
@@ -112,12 +112,12 @@ class ListActions {
             .addOnCompleteListener { Task ->
                 if (Task.isSuccessful) {
                     //do some fancy stuff, toast for user
-                    fragment.showToastToUser("List created carefully")
+                    fragment.showToastToUser("List created carefully", true)
                 } else {
-                    fragment.showToastToUser("List denied awfully")
+                    fragment.showToastToUser("List denied awfully", false)
                 }
             }.addOnFailureListener {
-                fragment.showToastToUser("Something happened, try checking your internet connection")
+                fragment.showToastToUser("Something happened, try checking your internet connection", false)
             }
     }
 

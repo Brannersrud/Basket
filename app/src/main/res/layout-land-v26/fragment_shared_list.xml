@@ -128,13 +128,14 @@
         android:layout_height="56dp"
         android:layout_marginTop="124dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="#0100CA"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/checkwhite"
         android:transitionName="@string/transition_fab"
         app:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:focusable="true" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider3"

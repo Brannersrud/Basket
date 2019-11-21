@@ -123,11 +123,16 @@ class createListFragment : Fragment() {
         searchIdRecyclerView.layoutManager = GridLayoutManager(context,1)
     }
 
-    fun showToastToUser(message : String){
+    fun showToastToUser(message : String, shouldNavigate : Boolean){
         val duration = Toast.LENGTH_LONG
         val toast = Toast.makeText(context, message, duration)
 
         toast.show()
+
+        if(shouldNavigate){
+            val action = createListFragmentDirections.actionCreateListFragmentToListOverviewFragment2()
+            findNavController().navigate(action)
+        }
 
     }
 

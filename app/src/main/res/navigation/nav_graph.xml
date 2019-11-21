@@ -66,6 +66,9 @@
             app:argType="string" />
         <argument android:name="totalPrice"
             app:argType="long" />
+        <action
+            android:id="@+id/action_privateListFragment_to_listOverviewFragment2"
+            app:destination="@id/listOverviewFragment2" />
     </fragment>
     <fragment
         android:id="@+id/sharedListFragment"

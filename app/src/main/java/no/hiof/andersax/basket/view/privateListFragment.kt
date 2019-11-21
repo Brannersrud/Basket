@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_list_overview.*
@@ -139,11 +140,18 @@ class privateListFragment : Fragment() {
         setUpSingleListRecyclerView()
     }
 
-    fun showToastToUser(message : String){
+    fun showToastToUser(message : String, shouldNavigate : Boolean){
         val duration = Toast.LENGTH_LONG
         val toast = Toast.makeText(context, message, duration)
 
         toast.show()
+
+
+        if(shouldNavigate){
+            val action = privateListFragmentDirections.actionPrivateListFragmentToListOverviewFragment2()
+
+            findNavController().navigate(action)
+        }
 
     }
 
