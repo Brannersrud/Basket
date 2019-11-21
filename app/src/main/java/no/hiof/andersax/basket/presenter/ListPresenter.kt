@@ -1,9 +1,6 @@
 package no.hiof.andersax.basket.presenter
 
 import android.os.Handler
-import android.util.Log
-import androidx.fragment.app.Fragment
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
@@ -16,8 +13,6 @@ import no.hiof.andersax.basket.view.createListFragment
 import no.hiof.andersax.basket.view.listOverviewFragment
 import no.hiof.andersax.basket.view.privateListFragment
 import no.hiof.andersax.basket.view.sharedListFragment
-import java.lang.reflect.GenericArrayType
-import java.net.ConnectException
 import java.util.ArrayList
 
 class ListPresenter{
@@ -57,34 +52,33 @@ class ListPresenter{
          for (member in members){
              usernames.add(member.username)
          }
-
-         var sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items), ArrayList<ListItem>())
+         val sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items), ArrayList<ListItem>())
          listactions.addSharedList(sharedListToAdd, listFragment)
     }
 
 
 
-    fun addPrivateList(listname: String, description: String, owner: String, totalprice: Long, id: String, fragment : privateListFragment) {
-        val mynewlist = ListCollection(listname, description, owner,currentList, calculateTotalPrice(currentList), ArrayList<ListItem>())
+    fun addPrivateList(listname: String, description: String, owner: String, id: String, fragment : privateListFragment) {
+        val mynewlist = ListCollection(listname, description, owner,currentList,  calculateTotalPrice(currentList), ArrayList<ListItem>())
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
     //calculate
       fun calculateTotalPrice(list: MutableList<ListItem>): Long{
-        var temp: Long = 0;
+        var temp: Long = 0
         for (i in list) {
             if (i.isChecked && i.price > 0) {
-                temp += i.price;
+                temp += i.price
             }
         }
         return temp
     }
 
     //get private
-    fun getPrivateLists(fragment: listOverviewFragment) {
+    private fun getPrivateLists(fragment: listOverviewFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList")
-        var lists: ArrayList<ListCollection> = ArrayList()
+        val lists: ArrayList<ListCollection> = ArrayList()
 
         ref.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
@@ -94,7 +88,7 @@ class ListPresenter{
                     obj.setUid(document.id)
                     lists.add(obj)
                 }
-                fragment.setUpListRecyclerView(lists);
+                fragment.setUpListRecyclerView(lists)
 
             }.addOnFailureListener { e ->
                 e.suppressed
@@ -102,10 +96,10 @@ class ListPresenter{
     }
 
     //get shared lists
-    fun getSharedLists(fragment: listOverviewFragment, uname : String){
+    private fun getSharedLists(fragment: listOverviewFragment, uname : String){
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
-        var list : ArrayList<sharedList> = ArrayList()
+        val list : ArrayList<sharedList> = ArrayList()
 
 
 
@@ -174,7 +168,7 @@ class ListPresenter{
         val refPriv = db.collection("privateList")
         var refShared = db.collection("sharedList")
         var usersref = db.collection("Users")
-        var sharedres = 0
+        var sharedres: Int
         refShared.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnCompleteListener { task ->
@@ -183,7 +177,7 @@ class ListPresenter{
                     activity.setUpSharedCount(sharedres)
                 }
             }
-        var privRes = 0
+        var privRes : Int
         refPriv.whereEqualTo("owner", Auth.getCurrentUser().email)
             .get()
             .addOnCompleteListener { task ->

@@ -63,7 +63,7 @@ class privateListFragment : Fragment() {
 
 
         applyprivateChangeButton.setOnClickListener {
-            presenter.addPrivateList(listname, listdescription, owner, totalPrice, id, this)
+            presenter.addPrivateList(listname, listdescription, owner, id, this)
         }
 
         addNewItemPrivate.setOnClickListener {

@@ -26,11 +26,11 @@ class profileActivity: AppCompatActivity() {
         //let it set up by passing the activity to the method
         //or save instance state? The values arent present at the time so idk yet
 
-        buttonStats.setOnClickListener {
-            onUserRedirectToStatistic()
-        }
-        //create a button that launches the intent
 
+        //create a button that launches the intent
+            textHistLab.setOnClickListener {
+                onUserRedirectToStatistic()
+            }
     }
 
 
