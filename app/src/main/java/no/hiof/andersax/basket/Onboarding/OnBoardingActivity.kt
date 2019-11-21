@@ -59,6 +59,7 @@ class OnBoardingActivity : AppCompatActivity() {
             if(position == screenList.size){
                 savePrefsData()
             }
+
         }
 
     }

@@ -54,7 +54,7 @@ class createUserFragment : Fragment() {
         }else if(password.isEmpty() || !password.equals(passwordretype) || password.length < 6){
             showToastToUser("Your password has to match and it is required to have more then 6 characters")
         }else if(!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && password.equals(passwordretype) && username.isNotEmpty()){
-           if(presenter.signUpNewUser(email, password, phone, username)){
+           if(presenter.signUpNewUser(email, password, phone, username, this)){
                var action = createUserFragmentDirections.actionCreateUserFragment2ToLoginFragment2()
                findNavController().navigate(action)
            }else{
