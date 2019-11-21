@@ -11,8 +11,8 @@
         android:id="@+id/createListButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="264dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/button"
         android:text="@string/submit"
         android:textColor="#FFFFFF"
@@ -20,15 +20,63 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
+        android:id="@+id/searchForFriend2"
+        android:layout_width="265dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/search_for_a_friend"
+        android:inputType="textPersonName"
+        android:radius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="o" />
+
+    <TextView
+        android:id="@+id/listsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/list_size"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createListDescriptionField" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchIdRecyclerView"
+        android:layout_width="264dp"
+        android:layout_height="169dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.914"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchForFriend2" />
+
+    <TextView
+        android:id="@+id/addFriendsCreateListText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/add_friend_s_to_list"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/searchForFriend2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
         android:id="@+id/createListNameField"
         android:layout_width="265dp"
         android:layout_height="65dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="@string/createListInputName"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,12 +84,13 @@
         android:id="@+id/createListDescriptionField"
         android:layout_width="265dp"
         android:layout_height="65dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="76dp"
         android:ems="10"
         android:hint="@string/createListInputDescription"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createListNameField" />
 
@@ -49,7 +98,8 @@
         android:id="@+id/createListNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/addListNameField"
         android:textAlignment="viewStart"
         android:textSize="14sp"
@@ -61,26 +111,12 @@
         android:id="@+id/createListDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:text="@string/addListDescriptionField"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/createListDescriptionField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/addFriendIcon"
-        android:layout_width="49dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="208dp"
-        android:background="#ffff"
-        android:contentDescription="@string/add"
-        android:scaleType="fitCenter"
-        android:src="@drawable/add_friend"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.234"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createListDescriptionField"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

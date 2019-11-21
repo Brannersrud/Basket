@@ -82,7 +82,7 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:autofillHints="" tools:targetApi="o"/>
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/sharedListItemQuantity"
@@ -95,7 +95,7 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sharedListItemName"
-        android:autofillHints="" tools:targetApi="o"/>
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/sharedListName"

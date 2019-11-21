@@ -45,7 +45,7 @@
         android:layout_height="46dp"
         android:layout_marginTop="12dp"
         android:text="@string/sharedOwnerLabel"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,8 @@
         android:hint="@string/item_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/sharedListItemQuantity"
@@ -97,14 +98,15 @@
         android:hint="@string/itemQuantity"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/sharedListItemName" />
+        app:layout_constraintEnd_toStartOf="@+id/sharedListItemName"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/sharedListName"
         android:layout_width="314dp"
         android:layout_height="61dp"
         android:layout_marginTop="52dp"
-        android:text="Listname: "
+        android:text="@string/listname"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,6 +121,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="36dp"
         android:background="#00000000"
+        android:contentDescription="@string/payment_desc"
         android:scaleType="fitCenter"
         android:src="@drawable/payment"
         app:layout_constraintBottom_toTopOf="@+id/sharedListItemName"
@@ -135,7 +138,8 @@
         android:transitionName="@string/transition_fab"
         app:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true" />
 
     <View
         android:id="@+id/divider3"

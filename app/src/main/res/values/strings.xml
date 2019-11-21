@@ -5,12 +5,12 @@
     <string name="password_field">Supersecretpassword</string>
     <string name="e_mail_label">E-mail</string>
     <string name="password_label">Password</string>
-    <string name="login_button">Login</string>
+    <string name="login_button">Sign in</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="don_t_have_an_account_yet_click_here">Don\'t have an account yet? Click here</string>
-    <string name="create_user_button">Create user</string>
+    <string name="create_user_button">Sign up</string>
     <string name="create_user_title">Create user</string>
     <string name="re_type_password">re-type password</string>
     <string name="phone_create_user">Phone</string>
@@ -63,6 +63,21 @@
     <string name="history_stats_label">History</string>
     <string name="history_and_statistics">History and statistics</string>
     <string name="placeholder_profile">Ola normann</string>
+    <string name="payment_desc">Payment</string>
+    <string name="listname">Listname:</string>
+    <string name="membericon">membericon</string>
+    <string name="placeholder">placeholder</string>
+    <string name="name_item">Name</string>
+    <string name="onboardingimg">onboardingimage</string>
+    <string name="please_type_in_your_amount">please type in your amount</string>
+    <string name="payment_amount">payment amount</string>
+    <string name="private_list_count_placeholder">1</string>
+    <string name="placeholder_onboard_nav">o</string>
+    <string name="next_btn_onboard">Next</string>
+    <string name="name_item_field">Name</string>
+    <string name="new_item_private">new item private</string>
+    <string name="list_size">List size:</string>
+    <string name="add_friend_s_to_list">add friend(s)</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

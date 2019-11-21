@@ -76,10 +76,12 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="8dp"
+                android:background="#0100CA"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/add_white_icon"
                 android:transitionName="@string/transition_fab"
+                app:backgroundTint="#0100CA"
                 app:elevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

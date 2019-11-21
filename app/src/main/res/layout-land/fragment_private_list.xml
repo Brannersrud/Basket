@@ -12,7 +12,7 @@
         android:id="@+id/scrollViewPrivateList"
         android:layout_width="387dp"
         android:layout_height="284dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,72 +26,66 @@
 
     <TextView
         android:id="@+id/privateListDescriptionField"
-        android:layout_width="215dp"
-        android:layout_height="114dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="260dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/privateListName"
-        android:layout_width="151dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="220dp"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/applyprivateChangeButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="40dp"
+        android:background="#0100CA"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/checkwhite"
+        android:transitionName="@string/transition_fab"
+        app:backgroundTint="#0100CA"
+        app:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/itemNameField"
         android:layout_width="209dp"
         android:layout_height="45dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="56dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/item_name"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/privateListDescriptionField" />
-
-    <Button
-        android:id="@+id/applyprivateChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/button"
-        android:text="@string/apply"
-        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/privateListOwnerField"
-        android:layout_width="137dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollViewPrivateList"
-        app:layout_constraintEnd_toStartOf="@+id/privateListName"
-        app:layout_constraintHorizontal_bias="0.194"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/addItemQuantityField"
         android:layout_width="49dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="56dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/itemQuantity"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/itemNameField"
+        tools:targetApi="o" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

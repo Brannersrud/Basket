@@ -42,7 +42,8 @@
         android:hint="@string/item_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/privateListRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/addItemQuantityField"
@@ -55,7 +56,8 @@
         android:hint="@string/itemQuantity"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/privateListRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/itemNameField" />
+        app:layout_constraintEnd_toStartOf="@+id/itemNameField"
+        tools:targetApi="o" />
 
     <ImageView
         android:id="@+id/addNewItemPrivate"
@@ -65,7 +67,8 @@
         android:layout_marginBottom="24dp"
         android:src="@drawable/add"
         app:layout_constraintBottom_toTopOf="@+id/privateListRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/addItemQuantityField" />
+        app:layout_constraintEnd_toStartOf="@+id/addItemQuantityField"
+        android:contentDescription="@string/new_item_private" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/applyprivateChangeButton"
@@ -73,9 +76,12 @@
         android:layout_height="56dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="16dp"
+        android:background="#0100CA"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/checkwhite"
         android:transitionName="@string/transition_fab"
+        app:backgroundTint="#0100CA"
         app:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
