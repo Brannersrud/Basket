@@ -22,6 +22,8 @@ class ListPresenter{
     private var currentSharedList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
     private var listcalculator : ListCalculator = ListCalculator()
+    private var store : FirebaseFirestore  = FirebaseFirestore.getInstance()
+
 
 
     fun addItemToList(item : ListItem, fragment : privateListFragment){
@@ -90,7 +92,7 @@ class ListPresenter{
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList")
         val list : ArrayList<sharedList> = ArrayList()
-
+        //the ones you own
             ref.whereEqualTo("owner", Auth.getCurrentUser().email)
                 .get()
                 .addOnSuccessListener { documents ->
@@ -100,8 +102,8 @@ class ListPresenter{
                         list.add(obj)
                     }
                     fragment.setUpSharedListRecyclerView(list)
-
                 }
+        //where you are a member
             ref.whereArrayContains("usernames", uname.toString())
                 .get()
                 .addOnSuccessListener { documents ->
@@ -118,7 +120,7 @@ class ListPresenter{
     }
 
 
-    //get det lists
+    //get both kinds of lists
     fun getListOverViews(frag : listOverviewFragment) {
         val email = Auth.getCurrentUser().email
         val db = FirebaseFirestore.getInstance()
@@ -127,6 +129,7 @@ class ListPresenter{
             getPrivateLists(frag)
         },800)
         var uname = ""
+        //fetching the username
         ref.whereEqualTo("email", email)
             .get()
             .addOnCompleteListener { task ->
@@ -175,11 +178,46 @@ class ListPresenter{
     fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
         if(updatefashion.equals("destroy")){
             listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), false)
-            //need to update the price 2 stupid
         }else{
             listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), true)
 
         }
+    }
+
+    //get listitems
+
+     fun getListItems(id: String, fragment : privateListFragment) {
+        val ref = store.collection("privateList")
+        ref.get()
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    task.result!!
+                        .asSequence()
+                        .filter { it.id == id }
+                        .forEach {
+                            var data = it.data["items"] as List<HashMap<String, Any>>
+                            prepareData(data, fragment)
+                        }
+                }else{
+                    error("Should i have an error field instead of posts?")
+                }
+            }
+    }
+
+    private fun prepareData(list: List<HashMap<String, Any>>, fragment : privateListFragment) {
+        var items : MutableList<ListItem> = ArrayList()
+        var i : Int = 0;
+        for(item in list){
+            var p = list.get(i)["price"] as Long
+            var n = list.get(i)["itemName"] as String
+            var c = list.get(i)["checked"] as Boolean
+            var q = list.get(i)["quantity"] as Long
+            items.add(ListItem(n,q,c,p))
+            i++;
+
+        }
+        addCurrentList(items)
+        fragment.setUpSingleListRecyclerView()
     }
 
 

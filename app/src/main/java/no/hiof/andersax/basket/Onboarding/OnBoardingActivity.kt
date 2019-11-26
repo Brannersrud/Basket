@@ -1,28 +1,21 @@
 package no.hiof.andersax.basket.Onboarding
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import no.hiof.andersax.basket.MainActivity
 import no.hiof.andersax.basket.R
-import no.hiof.andersax.basket.services.sharedPreferencesManipulator
-import no.hiof.andersax.basket.view.listOverviewFragment
+import no.hiof.andersax.basket.services.SharedPreferencesGateWay
 
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var viewpager : ViewPager
     private lateinit var tabindicatior : TabLayout
     private lateinit var btnNext : Button
     private var position : Int = 0
-    private var prefs : sharedPreferencesManipulator = sharedPreferencesManipulator()
+    private var prefs : SharedPreferencesGateWay = SharedPreferencesGateWay()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
