@@ -26,48 +26,48 @@ class OnBoardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
         setContentView(R.layout.activity_introactivity)
 
-
-        if(prefs.restoredPrefData(applicationContext, "myPrefs", "isIntroFinished")){
-        goToMainActivity()
-        }
         viewpager = findViewById(R.id.onboardingPager)
         tabindicatior = findViewById(R.id.tabindicator_boarding)
         btnNext = findViewById(R.id.onBoardingNext)
 
-        val screenList : MutableList<ScreenItem> = ArrayList()
-
-        screenList.add(ScreenItem("Organize your shopping", "Organize your lists to help you remember what to buy", R.drawable.shopping))
-        screenList.add(ScreenItem("Keep it private", "Create private lists that are only for your eyes", R.drawable.safetylist))
-        screenList.add(ScreenItem("Share with friends", "Create lists with your friend(s) for your events and gatherings", R.drawable.shared))
-
-        val adapter : introViewPagerAdapter = introViewPagerAdapter(this, screenList)
+        val adapter : introViewPagerAdapter = introViewPagerAdapter(this, getScreenData())
 
         viewpager.adapter = adapter
 
         tabindicatior.setupWithViewPager(viewpager)
 
         btnNext.setOnClickListener {
-            position = viewpager.currentItem
-
-            if(position < screenList.size){
-                position++
-                viewpager.currentItem = position
-            }
-            if(position == screenList.size){
-                savePrefsData()
-            }
+            changeScreen()
 
         }
 
     }
 
-    fun goToMainActivity(){
+    private fun changeScreen() {
+        position = viewpager.currentItem
 
+        if (position < getScreenData().size) {
+            position++
+            viewpager.currentItem = position
+        }
+        if (position == getScreenData().size) {
+            savePrefsData()
+        }
+    }
+
+    private fun getScreenData() : MutableList<ScreenItem>{
+        val screenList : MutableList<ScreenItem> = ArrayList()
+
+        screenList.add(ScreenItem("Organize your shopping", "Organize your lists to help you remember what to buy", R.drawable.shopping))
+        screenList.add(ScreenItem("Keep it private", "Create private lists that are only for your eyes", R.drawable.safetylist))
+        screenList.add(ScreenItem("Share with friends", "Create lists with your friend(s) for your events and gatherings", R.drawable.shared))
+
+        return screenList
+    }
+
+    fun goToMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }

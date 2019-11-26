@@ -32,6 +32,7 @@ import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 import java.lang.Thread.sleep
 import androidx.appcompat.app.AppCompatActivity
+import no.hiof.andersax.basket.MainActivity
 import no.hiof.andersax.basket.Onboarding.OnBoardingActivity
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.services.sharedPreferencesManipulator
@@ -60,7 +61,9 @@ class loginFragment : Fragment() {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        if(prefs.restoredPrefData(context!!, "myPrefs", "isIntroFinished")){
+        if(prefs.restorePrefData(context!!, "myPrefs", "isIntroFinished")){
+            navigateToMain()
+        }else if(prefs.restorePrefData(context!!, "myPrefs", "hasLoggedIn")){
             navigateToNextScreen()
         }
     }
@@ -109,9 +112,14 @@ class loginFragment : Fragment() {
         startActivity(intent)
 
     }
+    fun navigateToMain(){
+        val intent = Intent(context,MainActivity::class.java )
+
+        startActivity(intent)
+    }
 
     private fun savePrefsData(){
-        prefs.savePrefsData(context!!, "myPrefs", "isIntroFinished")
+        prefs.savePrefsData(context!!, "myPrefs", "hasLoggedIn")
     }
 
 
