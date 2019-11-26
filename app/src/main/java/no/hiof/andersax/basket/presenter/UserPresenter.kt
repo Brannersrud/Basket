@@ -74,6 +74,51 @@ class UserPresenter {
             }
     }
 
+    fun getProfileInformation(activity : profileActivity) {
+        val db = authActions.getFireBaseStoreReference()
+        val refPriv = db.collection("privateList")
+        var refShared = db.collection("sharedList")
+        var usersref = db.collection("Users")
+        var sharedres: Int
+        refShared.whereEqualTo("owner", authActions.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    sharedres = task.result!!.size()
+                    activity.setUpSharedCount(sharedres)
+                }
+            }
+        var privRes : Int
+        refPriv.whereEqualTo("owner", authActions.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    privRes = task.result!!.size()
+                    activity.setUpPrivateCount(privRes)
+                }
+            }.addOnFailureListener { e ->
+                e.suppressed
+            }
+
+        var name = "";
+        usersref.whereEqualTo("email", authActions.getCurrentUser().email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result!!
+                        .asSequence()
+                        .forEach { it ->
+                            name = it.id
+
+                        }
+                }
+                activity.setUpName(name)
+            }.addOnFailureListener {e ->
+                e.suppressed
+            }
+
+    }
+
 
 
     fun getHistoryForUser(activity: profileActivity, uname : String){
@@ -90,7 +135,7 @@ class UserPresenter {
                 }
                 activity.setHistoryForUser(listHistory)
             }.addOnFailureListener { e ->
-                e.suppressed
+                e.printStackTrace()
             }
 
         //update activity

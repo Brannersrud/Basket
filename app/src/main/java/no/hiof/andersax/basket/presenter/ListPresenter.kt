@@ -4,6 +4,7 @@ import android.os.Handler
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.Database.ListActions
+import no.hiof.andersax.basket.Helpers.ListCalculator
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.ListMembers
@@ -20,6 +21,7 @@ class ListPresenter{
     private var currentList : MutableList<ListItem> = ArrayList()
     private var currentSharedList : MutableList<ListItem> = ArrayList()
     private var Auth : AuthActions = AuthActions()
+    private var listcalculator : ListCalculator = ListCalculator()
 
 
     fun addItemToList(item : ListItem, fragment : privateListFragment){
@@ -39,6 +41,7 @@ class ListPresenter{
         currentList.addAll(list)
     }
 
+
     fun getCurrentSharedList():MutableList<ListItem>{
         return this.currentSharedList
     }
@@ -52,29 +55,16 @@ class ListPresenter{
          for (member in members){
              usernames.add(member.username)
          }
-         val sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,calculateTotalPrice(items), ArrayList<ListItem>())
+         val sharedListToAdd : sharedList = sharedList(members, usernames,listname,description,owner,items,listcalculator.calculateTotal(items), ArrayList<ListItem>())
          listactions.addSharedList(sharedListToAdd, listFragment)
     }
 
 
-
     fun addPrivateList(listname: String, description: String, owner: String, id: String, fragment : privateListFragment) {
-        val mynewlist = ListCollection(listname, description, owner,currentList,  calculateTotalPrice(currentList), ArrayList<ListItem>())
+        val mynewlist = ListCollection(listname, description, owner,currentList,  listcalculator.calculateTotal(currentList), ArrayList<ListItem>())
         listactions.addPrivateList(mynewlist, id, fragment)
     }
 
-    //calculate
-      fun calculateTotalPrice(list: MutableList<ListItem>): Long{
-        var temp: Long = 0
-        for (i in list) {
-            if (i.isChecked && i.price > 0) {
-                temp += i.price
-            }
-        }
-        return temp
-    }
-
-    //get private
     private fun getPrivateLists(fragment: listOverviewFragment) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("privateList")
@@ -101,8 +91,6 @@ class ListPresenter{
         val ref = db.collection("sharedList")
         val list : ArrayList<sharedList> = ArrayList()
 
-
-
             ref.whereEqualTo("owner", Auth.getCurrentUser().email)
                 .get()
                 .addOnSuccessListener { documents ->
@@ -110,8 +98,6 @@ class ListPresenter{
                         val obj = document.toObject(sharedList::class.java)
                         obj.setUid(document.id)
                         list.add(obj)
-
-
                     }
                     fragment.setUpSharedListRecyclerView(list)
 
@@ -129,9 +115,6 @@ class ListPresenter{
                     fragment.setUpSharedListRecyclerView(list)
 
                 }
-
-
-
     }
 
 
@@ -162,51 +145,7 @@ class ListPresenter{
     }
 
 
-    //fetch profile information and set it up
-    fun getProfileInformation(activity : profileActivity) {
-        val db = Auth.getFireBaseStoreReference()
-        val refPriv = db.collection("privateList")
-        var refShared = db.collection("sharedList")
-        var usersref = db.collection("Users")
-        var sharedres: Int
-        refShared.whereEqualTo("owner", Auth.getCurrentUser().email)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    sharedres = task.result!!.size()
-                    activity.setUpSharedCount(sharedres)
-                }
-            }
-        var privRes : Int
-        refPriv.whereEqualTo("owner", Auth.getCurrentUser().email)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    privRes = task.result!!.size()
-                    activity.setUpPrivateCount(privRes)
-                }
-            }.addOnFailureListener { e ->
-                e.suppressed
-            }
 
-        var name = "";
-        usersref.whereEqualTo("email", Auth.getCurrentUser().email)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    task.result!!
-                        .asSequence()
-                        .forEach { it ->
-                            name = it.id
-
-                        }
-                }
-                activity.setUpName(name)
-            }.addOnFailureListener {e ->
-                e.suppressed
-            }
-
-    }
 
 
     // DELETE AND UPDATE
@@ -235,10 +174,10 @@ class ListPresenter{
 
     fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
         if(updatefashion.equals("destroy")){
-            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), false)
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), false)
             //need to update the price 2 stupid
         }else{
-            listactions.overWriteSharedList(uid, currentSharedList, listFragment, calculateTotalPrice(currentSharedList), true)
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), true)
 
         }
     }

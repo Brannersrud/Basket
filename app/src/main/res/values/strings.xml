@@ -77,7 +77,9 @@
     <string name="name_item_field">Name</string>
     <string name="new_item_private">new item private</string>
     <string name="list_size">List size:</string>
-    <string name="add_friend_s_to_list">add friend(s)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="add_friend_s_to_list">add friend(s) - optional</string>
+    <string name="no_private_list_message">You have no private lists yet, create one and lets get started</string>
+    <string name="no_shared_list_message">You have no shared lists yet, create one and lets get started</string>
+    <string name="error_message_login">Could not authenticate</string>
+    <string name="error_message_need_to_fill_out">You need to fill out the required fields to log in</string>
 </resources>

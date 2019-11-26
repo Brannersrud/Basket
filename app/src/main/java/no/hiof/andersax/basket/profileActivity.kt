@@ -12,21 +12,17 @@ import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
 
 class profileActivity: AppCompatActivity() {
-    private var presenter: ListPresenter = ListPresenter()
     private var userPresenter : UserPresenter = UserPresenter()
     private var username : String = ""
-    //private lateinit var adapter : ListHistoryAdapter
     private lateinit var userHistory : MutableList<ListHistoryItem>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        presenter.getProfileInformation(this)
+        userPresenter.getProfileInformation(this)
         //call a method in db that gets the listcount, name from db
         //let it set up by passing the activity to the method
-        //or save instance state? The values arent present at the time so idk yet
-
 
         //create a button that launches the intent
             textHistLab.setOnClickListener {
@@ -60,7 +56,12 @@ class profileActivity: AppCompatActivity() {
     }
 
     fun setHistoryForUser(listhistory : MutableList<ListHistoryItem>){
-        this.userHistory = listhistory
+        var sortedList = listhistory.sortedWith(compareBy({it.date}))
+        if(sortedList.isNotEmpty()) {
+            this.userHistory = sortedList as MutableList<ListHistoryItem>
+        }else{
+            this.userHistory = listhistory
+        }
     }
 
 }

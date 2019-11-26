@@ -86,7 +86,7 @@ class statisticsActivity() : AppCompatActivity() {
     }
      fun plotRecyclerView(listhistory : MutableList<ListHistoryItem>){
             hideGraph()
-            adapter = ListHistoryAdapter(listhistory, this)
+            adapter = ListHistoryAdapter(listhistory.asReversed(), this)
             listHistoryRecyclerView.adapter = adapter
             listHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 1)
 
@@ -126,37 +126,6 @@ class statisticsActivity() : AppCompatActivity() {
     }
 
 
-/*
-    private fun plotWeekData(listhist : ArrayList<ListHistoryItem>){
-        hideRecyclerView()
-        val date : Date = Date()
-        val dateToMatch = (date.time - week)
-        val toDate = Date(dateToMatch)
-        var privatePaid = 0.0
-        var sharedPaid = 0.0
-
-        for(item in listhist){
-            if(item.date.after(toDate) && item.isPrivate.equals("private")){
-                privatePaid+=item.pricepaid
-
-            }else if(item.date.after(toDate) && item.isPrivate.equals("shared")){
-                sharedPaid+=item.pricepaid
-            }
-
-        }
-        val chart  = AnyChart.column()
-
-        this.list.add(ValueDataEntry("private", privatePaid))
-        this.list.add(ValueDataEntry("Shared", sharedPaid))
-
-        chart.data(list)
-
-        this.chartView.setChart(chart)
-
-    }
-
-
-*/
 
 }
 

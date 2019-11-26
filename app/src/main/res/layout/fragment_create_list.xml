@@ -32,6 +32,7 @@
         tools:targetApi="o" />
 
     <Button
+        android:textAllCaps="false"
         android:id="@+id/createListButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -121,14 +122,14 @@
 
     <TextView
         android:id="@+id/addFriendsCreateListText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="71dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="68dp"
-        android:text="add friend(s)"
+        android:layout_marginTop="56dp"
+        android:text="@string/add_friend_s_to_list"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/searchForFriend2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

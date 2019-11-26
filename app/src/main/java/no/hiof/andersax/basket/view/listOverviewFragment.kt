@@ -45,6 +45,7 @@ class listOverviewFragment : Fragment() {
 
 
 
+
     }
 
     override fun onCreateView(
@@ -70,35 +71,33 @@ class listOverviewFragment : Fragment() {
     }
 
 
-    fun setUpListRecyclerView(list : ArrayList<ListCollection>){
-        if(list.isNotEmpty()){
-            singleListRecyclerView.adapter = ListOverviewAdapter(list,
-                View.OnClickListener { view ->
-                    val position = singleListRecyclerView.getChildAdapterPosition(view)
-                    val clickedList = list[position]
-                    //Action
-                    val action =
-                        listOverviewFragmentDirections.actionListOverviewFragment2ToPrivateListFragment(
-                            clickedList.owner,
-                            clickedList.description,
-                            clickedList.listname,
-                            clickedList.getUid(),
-                            clickedList.totalPrice
+    fun setUpListRecyclerView(list : ArrayList<ListCollection>) = if(list.isNotEmpty()){
+        singleListRecyclerView.adapter = ListOverviewAdapter(list,
+            View.OnClickListener { view ->
+                val position = singleListRecyclerView.getChildAdapterPosition(view)
+                val clickedList = list[position]
+                //Action
+                val action =
+                    listOverviewFragmentDirections.actionListOverviewFragment2ToPrivateListFragment(
+                        clickedList.owner,
+                        clickedList.description,
+                        clickedList.listname,
+                        clickedList.getUid(),
+                        clickedList.totalPrice
 
-                        );
-                    findNavController().navigate(action)
-                } ,
-                View.OnLongClickListener {view ->
-                    val position = singleListRecyclerView.getChildAdapterPosition(view)
-                    val clickedList = list[position]
-                    handleLongPress(clickedList, false)
-                    true
-                }
-            )
-            singleListRecyclerView.layoutManager = GridLayoutManager(context, 1)
-        }else{
-            noPrivateListsMessage.text = "You have no private lists yet, create one and lets get started"
-        }
+                    );
+                findNavController().navigate(action)
+            } ,
+            View.OnLongClickListener {view ->
+                val position = singleListRecyclerView.getChildAdapterPosition(view)
+                val clickedList = list[position]
+                handleLongPress(clickedList, false)
+                true
+            }
+        )
+        singleListRecyclerView.layoutManager = GridLayoutManager(context, 1)
+    }else{
+        noPrivateListsMessage!!.setText(R.string.no_private_list_message)
     }
 
     fun setUpSharedListRecyclerView(list : ArrayList<sharedList>) {
@@ -133,7 +132,7 @@ class listOverviewFragment : Fragment() {
             )
             sharedListRecyclerView.layoutManager = GridLayoutManager(context, 1)
         }else{
-            noSharedListsMessage.text = "You have no shared lists yet, create one, invite your friends and lets get started"
+            noSharedListsMessage.setText(R.string.no_shared_list_message)
         }
     }
 

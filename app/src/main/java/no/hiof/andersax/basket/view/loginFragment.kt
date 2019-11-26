@@ -33,6 +33,8 @@ import no.hiof.andersax.basket.presenter.ListPresenter
 import java.lang.Thread.sleep
 import androidx.appcompat.app.AppCompatActivity
 import no.hiof.andersax.basket.Onboarding.OnBoardingActivity
+import no.hiof.andersax.basket.R
+import no.hiof.andersax.basket.services.sharedPreferencesManipulator
 
 
 /**
@@ -40,6 +42,7 @@ import no.hiof.andersax.basket.Onboarding.OnBoardingActivity
  */
 class loginFragment : Fragment() {
     private var userAuth = FirebaseAuth.getInstance()
+    private var prefs : sharedPreferencesManipulator = sharedPreferencesManipulator()
 
 
     override fun onCreateView(
@@ -57,13 +60,9 @@ class loginFragment : Fragment() {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        if(restoredPrefData()){
+        if(prefs.restoredPrefData(context!!, "myPrefs", "isIntroFinished")){
             navigateToNextScreen()
         }
-        /*if(currentUser !== null){
-            navigateToNextScreen()
-        }*/
-
     }
 
 
@@ -95,11 +94,11 @@ class loginFragment : Fragment() {
 
                         navigateToNextScreen()
                     } else {
-                        errorMessageLogin.text = "Could not authenticate"
+                        errorMessageLogin.setText(R.string.error_message_login)
                     }
                 }
         }else{
-            errorMessageLogin.text = "You need to fill out the required fields to log in"
+            errorMessageLogin.setText(R.string.error_message_need_to_fill_out)
         }
     }
 
@@ -111,19 +110,9 @@ class loginFragment : Fragment() {
 
     }
 
-    fun savePrefsData(){
-        val preferences : SharedPreferences = context!!.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val prefEd : SharedPreferences.Editor = preferences.edit()
-
-        prefEd.putBoolean("isPrevLoggedIn", true)
-        prefEd.commit()
-
+    private fun savePrefsData(){
+        prefs.savePrefsData(context!!, "myPrefs", "isIntroFinished")
     }
 
-    fun restoredPrefData() : Boolean{
-        val pref : SharedPreferences = context!!.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val isIntroFinished = pref.getBoolean("isPrevLoggedIn", false)
 
-        return isIntroFinished
-    }
 }

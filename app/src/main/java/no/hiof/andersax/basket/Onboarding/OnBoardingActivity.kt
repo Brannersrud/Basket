@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import no.hiof.andersax.basket.MainActivity
 import no.hiof.andersax.basket.R
+import no.hiof.andersax.basket.services.sharedPreferencesManipulator
 import no.hiof.andersax.basket.view.listOverviewFragment
 
 class OnBoardingActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class OnBoardingActivity : AppCompatActivity() {
     private lateinit var tabindicatior : TabLayout
     private lateinit var btnNext : Button
     private var position : Int = 0
+    private var prefs : sharedPreferencesManipulator = sharedPreferencesManipulator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,7 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_introactivity)
 
 
-        if(restoredPrefData()){
+        if(prefs.restoredPrefData(applicationContext, "myPrefs", "isIntroFinished")){
         goToMainActivity()
         }
         viewpager = findViewById(R.id.onboardingPager)
@@ -71,19 +73,10 @@ class OnBoardingActivity : AppCompatActivity() {
     }
 
     fun savePrefsData(){
-        val preferences : SharedPreferences = applicationContext.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val prefEd : SharedPreferences.Editor = preferences.edit()
-
-        prefEd.putBoolean("isIntroFinished", true)
-        prefEd.commit()
+        prefs.savePrefsData(applicationContext, "myPrefs", "isIntroFinished")
 
         goToMainActivity()
     }
 
-    fun restoredPrefData() : Boolean{
-        val pref : SharedPreferences = applicationContext.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val isIntroFinished = pref.getBoolean("isIntroFinished", false)
 
-        return isIntroFinished
-    }
 }
