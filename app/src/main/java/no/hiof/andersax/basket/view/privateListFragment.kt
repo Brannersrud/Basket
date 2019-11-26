@@ -24,7 +24,7 @@ class privateListFragment : Fragment() {
     private var listname: String = ""
     private var listdescription: String = ""
     private var owner: String = ""
-    private var id: String = "";
+    private var id: String = ""
     private var presenter : ListPresenter = ListPresenter()
     private var totalPrice : Long = 0
 
@@ -44,7 +44,7 @@ class privateListFragment : Fragment() {
             totalPrice = args.getLong("totalPrice")
 
         }
-        presenter.getListItems(id, this)
+        presenter.getListItems(id, this, true,"privateList")
         return inflater.inflate(R.layout.fragment_private_list, container, false)
     }
 
@@ -87,13 +87,13 @@ class privateListFragment : Fragment() {
 
 
      fun setUpSingleListRecyclerView() {
-        var list = presenter.getCurrentList()
+        val list = presenter.getCurrentList()
 
          if(list.isNotEmpty()) {
              privateListRecyclerView.adapter = listItemAdapter(list.asReversed())
              privateListRecyclerView.layoutManager = GridLayoutManager(context, 1)
          }else{
-             noPrivateListItemsLabel.text = "No items yet.. add some"
+             noPrivateListItemsLabel.setText(R.string.no_items_label)
          }
 
      }

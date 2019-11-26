@@ -32,14 +32,12 @@ class loginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(no.hiof.andersax.basket.R.layout.fragment_login, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(context!!)
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
 
         if(prefs.restorePrefData(context!!, "myPrefs", "isIntroFinished")){
             navigateToMain()
@@ -65,16 +63,12 @@ class loginFragment : Fragment() {
         }
     }
 
-    fun doLogin(email : String, password : String){
-
+    private fun doLogin(email : String, password : String){
         if(password.isNotEmpty() && email.isNotEmpty()){
             userAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { Task ->
                     if (Task.isSuccessful) {
-                        print("Ja?")
-                        Log.d("result", Task.result.toString())
                         savePrefsData()
-
                         navigateToNextScreen()
                     } else {
                         errorMessageLogin.setText(R.string.error_message_login)
@@ -86,13 +80,13 @@ class loginFragment : Fragment() {
     }
 
 
-    fun navigateToNextScreen(){
+    private fun navigateToNextScreen(){
         val intent = Intent(context,OnBoardingActivity::class.java )
 
         startActivity(intent)
 
     }
-    fun navigateToMain(){
+   private fun navigateToMain(){
         val intent = Intent(context,MainActivity::class.java )
 
         startActivity(intent)

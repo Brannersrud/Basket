@@ -65,7 +65,7 @@
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:src="@drawable/add"
+        android:src="@drawable/add_blue"
         app:layout_constraintBottom_toTopOf="@+id/privateListRecyclerView"
         app:layout_constraintEnd_toStartOf="@+id/addItemQuantityField"
         android:contentDescription="@string/new_item_private" />

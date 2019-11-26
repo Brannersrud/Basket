@@ -25,7 +25,7 @@ class OnBoardingActivity : AppCompatActivity() {
         tabindicatior = findViewById(R.id.tabindicator_boarding)
         btnNext = findViewById(R.id.onBoardingNext)
 
-        val adapter : introViewPagerAdapter = introViewPagerAdapter(this, getScreenData())
+        val adapter = introViewPagerAdapter(this, getScreenData())
 
         viewpager.adapter = adapter
 
@@ -60,12 +60,12 @@ class OnBoardingActivity : AppCompatActivity() {
         return screenList
     }
 
-    fun goToMainActivity(){
+    private fun goToMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
 
-    fun savePrefsData(){
+    private fun savePrefsData(){
         prefs.savePrefsData(applicationContext, "myPrefs", "isIntroFinished")
 
         goToMainActivity()

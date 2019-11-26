@@ -56,6 +56,16 @@
         app:layout_constraintTop_toBottomOf="@+id/searchForFriend2" />
 
     <TextView
+        android:id="@+id/errorCreateList"
+        android:layout_width="190dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listsize"
+        app:layout_constraintVertical_bias="0.644" />
+
+    <TextView
         android:id="@+id/addFriendsCreateListText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

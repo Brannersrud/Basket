@@ -1,12 +1,9 @@
 package no.hiof.andersax.basket.view
 
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,34 +11,28 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_shared_list.*
 import no.hiof.andersax.basket.Adapter.listItemAdapter
 import no.hiof.andersax.basket.Database.AuthActions
 import no.hiof.andersax.basket.R
 import no.hiof.andersax.basket.model.ListItem
-import no.hiof.andersax.basket.model.ListMembers
-import no.hiof.andersax.basket.presenter.AuthPresenter
 import no.hiof.andersax.basket.presenter.ListPresenter
 import no.hiof.andersax.basket.presenter.UserPresenter
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * A simple [Fragment] subclass.
  */
 class sharedListFragment : Fragment() {
     private var presenter : ListPresenter = ListPresenter()
-    private var store : FirebaseFirestore = FirebaseFirestore.getInstance()
     private var listname: String = ""
     private var listdescription: String = ""
     private var owner: String = ""
-    private var id: String = "";
-    private var totalPrice : Long = 0;
-    private var memberCount : Long = 0;
+    private var id: String = ""
+    private var totalPrice : Long = 0
+    private var memberCount : Long = 0
     private val userPresenter : UserPresenter = UserPresenter()
-    private var priceExpected : Long = 0;
+    private var priceExpected : Long = 0
     private var Auth : AuthActions = AuthActions()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,34 +45,34 @@ class sharedListFragment : Fragment() {
             id = args.getString("uid")!!
             owner = args.getString("owner")!!
             totalPrice = args.getLong("totalPrice")
-            memberCount = args.getLong("members")!!
+            memberCount = args.getLong("members")
 
         }
-        getListItems(id)
+        presenter.getListItems(id, this, false, "sharedList")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_shared_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedOwnerLabel.text = "owner: " + this.owner
+        sharedOwnerLabel.text = context!!.getString(R.string.ownerLabel, "Owner: ", this.owner)
         sharedDescriptionLabel.text = this.listdescription
         sharedListName.text = listname
-        listTotalAmount.text = "total price: " + this.totalPrice.toString()
+        listTotalAmount.text = context!!.getString(R.string.total_price_label, "totalprice: ", this.totalPrice.toString())
         val sharedListButton = addItemToSharedListButton
 
 
 
         if(!owner.equals(Auth.getCurrentUser().email)) {
             if (memberCount.toInt() == 1) {
-                youOweLabel.text = "you owe: " + (totalPrice / 2).toString()
+                youOweLabel.text = context!!.getString(R.string.you_owe_label, "you owe: ", (totalPrice/2).toString())
                 priceExpected = (totalPrice / 2)
 
             } else if (memberCount > 1) {
-                youOweLabel.text = "you owe: " + (totalPrice / memberCount).toString()
+                youOweLabel.text = context!!.getString(R.string.you_owe_label, "you owe: ", (totalPrice/memberCount).toString())
                 priceExpected = (totalPrice / memberCount)
             } else {
-                youOweLabel.text = "no payment has been registrerd"
+                youOweLabel.text = context!!.getString(R.string.you_owe_label, "You owe: ", "nothing yet")
             }
         }else{
             youOweLabel.text = ""
@@ -122,17 +113,16 @@ class sharedListFragment : Fragment() {
     }
 
     private fun handlePayMent(){
-      var build :  AlertDialog.Builder = AlertDialog.Builder(context)
+      val build :  AlertDialog.Builder = AlertDialog.Builder(context)
         build.setTitle("Payment")
-        var input : EditText = EditText(context)
+        val input = EditText(context)
         input.inputType = InputType.TYPE_CLASS_TEXT
         build.setView(input)
         build.setCancelable(true)
 
 
-        build.setPositiveButton("Pay", DialogInterface.OnClickListener { dialogInterface, i ->
-            var valuePaid = input.text.toString().toLong()
-
+        build.setPositiveButton("Pay",  { dialogInterface, i ->
+            val valuePaid = input.text.toString().toLong()
             if(priceExpected < 1){
                 showToastToUser("No payment registerd")
             }
@@ -147,7 +137,7 @@ class sharedListFragment : Fragment() {
             }
         })
 
-        build.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialogInterface, i ->
+        build.setNegativeButton("Cancel",  { dialogInterface, i ->
             print("ive been canceled")
         })
 
@@ -163,49 +153,17 @@ class sharedListFragment : Fragment() {
     }
 
 
-    fun setUpSharedRecyclerView(list : MutableList<ListItem>) {
-        if(list.isNotEmpty()) {
-            sharedListItemRecyclerView.adapter = listItemAdapter(list.asReversed())
+    fun setUpSharedRecyclerView() {
+        val listitems = presenter.getCurrentSharedList()
+        if(listitems.isNotEmpty()) {
+            sharedListItemRecyclerView.adapter = listItemAdapter(listitems.asReversed())
             sharedListItemRecyclerView.layoutManager = GridLayoutManager(context, 1)
         }else{
-            noSharedListItemsLabel.text = "You guys do not have any items yet. You should add some"
+            noSharedListItemsLabel.text = context!!.getString(R.string.no_shared_list_message)
         }
     }
 
-    private fun getListItems(id: String) {
-        val ref = store.collection("sharedList")
-        ref.get()
-            .addOnCompleteListener { task ->
-                if(task.isSuccessful){
-                    task.result!!
-                        .asSequence()
-                        .filter { it.id == id }
-                        .forEach {
-                            var data = it.data["items"] as List<HashMap<String, Any>>
-                            prepareData(data)
-                        }
-                }else{
-                    error("Should i have an error field instead of posts?")
-                }
-            }
-    }
-    private fun prepareData(list: List<HashMap<String, Any>>) {
-        var items : MutableList<ListItem> = ArrayList()
-        var i : Int = 0;
-        for(item in list){
-            var p = list.get(i)["price"] as Long
-            var n = list.get(i)["itemName"] as String
-            var c = list.get(i)["checked"] as Boolean
-            var q = list.get(i)["quantity"] as Long
-            items.add(ListItem(n,q,c,p))
-            i++;
 
-        }
-        presenter.addCurrentSharedList(items)
-
-        setUpSharedRecyclerView(items)
-
-    }
 
 
     fun showToastToUser(message : String){
