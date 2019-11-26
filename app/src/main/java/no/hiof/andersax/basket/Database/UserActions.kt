@@ -4,9 +4,9 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import no.hiof.andersax.basket.model.ListHistoryItem
 import no.hiof.andersax.basket.model.ListMembers
-import no.hiof.andersax.basket.model.User;
+import no.hiof.andersax.basket.model.User
 import no.hiof.andersax.basket.model.sharedList
-import no.hiof.andersax.basket.view.createListFragment
+import no.hiof.andersax.basket.view.createUserFragment
 import java.util.*
 
 
@@ -14,14 +14,15 @@ class UserActions{
     val db = FirebaseFirestore.getInstance()
     val authActions : AuthActions = AuthActions()
 
-    fun addUserToDb(user : User, uid: String, username : String){
-        db.collection("Users").document("${username}")
+    fun addUserToDb(user : User, username : String, fragment: createUserFragment){
+        db.collection("Users").document(username)
             .set(user)
             .addOnSuccessListener {
                 Log.d("auth", "added user to db")
             }
-            .addOnFailureListener {
-                Log.d("auth", "someshit")
+            .addOnFailureListener {e ->
+               fragment.showToastToUser("Could not do this action, check your internet")
+
             }
     }
 
@@ -34,7 +35,7 @@ class UserActions{
             }
     }
 
-    fun markUserAsPaid(id : String, pricePaid: Long, listname: String, username : String){
+    fun markUserAsPaid(id : String, pricePaid: Long, username : String){
         val members : MutableList<ListMembers> = ArrayList<ListMembers>()
         db.collection("sharedList").document(id)
             .get()

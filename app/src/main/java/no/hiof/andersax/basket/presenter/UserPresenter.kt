@@ -58,7 +58,7 @@ class UserPresenter {
                         .asSequence()
                         .forEach {
                             if(isPrivate.equals("shared")) {
-                                uactions.markUserAsPaid(id, pricePaid, listname, it.id)
+                                uactions.markUserAsPaid(id, pricePaid, it.id)
                             }
                             uactions.insertHistoryItem(
                                 pricePaid,
@@ -70,15 +70,15 @@ class UserPresenter {
                         }
                 }
             }.addOnFailureListener { e ->
-                e.suppressed
+
             }
     }
 
     fun getProfileInformation(activity : profileActivity) {
         val db = authActions.getFireBaseStoreReference()
         val refPriv = db.collection("privateList")
-        var refShared = db.collection("sharedList")
-        var usersref = db.collection("Users")
+        val refShared = db.collection("sharedList")
+        val usersref = db.collection("Users")
         var sharedres: Int
         refShared.whereEqualTo("owner", authActions.getCurrentUser().email)
             .get()
@@ -100,7 +100,7 @@ class UserPresenter {
                 e.suppressed
             }
 
-        var name = "";
+        var name = ""
         usersref.whereEqualTo("email", authActions.getCurrentUser().email)
             .get()
             .addOnCompleteListener { task ->
@@ -122,13 +122,13 @@ class UserPresenter {
 
 
     fun getHistoryForUser(activity: profileActivity, uname : String){
-        var listHistory : MutableList<ListHistoryItem> = ArrayList<ListHistoryItem>()
+        val listHistory : MutableList<ListHistoryItem> = ArrayList<ListHistoryItem>()
         db.collection("Users").document(uname)
             .collection("History")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                        var obj = document.toObject(ListHistoryItem::class.java)
+                        val obj = document.toObject(ListHistoryItem::class.java)
                         listHistory.add(obj)
 
 

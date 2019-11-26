@@ -170,7 +170,7 @@ class ListPresenter{
             }
 
         }.addOnFailureListener { e ->
-            e.suppressed
+            fragment.showToastToUser("Something happened, check your internet connection")
         }
 
     }
@@ -178,9 +178,9 @@ class ListPresenter{
 
     fun updateSharedList(listFragment: sharedListFragment, uid : String, updatefashion : String){
         if(updatefashion.equals("destroy")){
-            listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), false)
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment,  false)
         }else{
-            listactions.overWriteSharedList(uid, currentSharedList, listFragment, listcalculator.calculateTotal(currentSharedList), true)
+            listactions.overWriteSharedList(uid, currentSharedList, listFragment,  true)
 
         }
     }
@@ -202,6 +202,16 @@ class ListPresenter{
                         }
                 }else{
                     error("Should i have an error field instead of posts?")
+                }
+            }.addOnFailureListener {
+                if(private) {
+                    val privatefrag: privateListFragment = fragment as privateListFragment
+                    privatefrag.showToastToUser("Something went wrong, check your internet", false)
+                }else{
+                    val sharedFrag : sharedListFragment = fragment as sharedListFragment
+
+                    sharedFrag.showToastToUser("Something went wrong, check your internet")
+
                 }
             }
     }

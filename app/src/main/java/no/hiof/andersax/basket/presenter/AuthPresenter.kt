@@ -19,21 +19,21 @@ class AuthPresenter {
 
     fun signUpNewUser(email: String, password: String, phone: String, username : String, fragment : createUserFragment): Boolean {
         var isSignUpSuccess = false
-        var newUser = User(phone, email)
+        val newUser = User(phone, email)
         try {
             userAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { Task ->
                     if(Task.isSuccessful) {
                         isSignUpSuccess = Task.isSuccessful
-                        useractions.addUserToDb(newUser, userAuth.uid!!, username)
+                        useractions.addUserToDb(newUser, username, fragment)
                     }else{
+                        fragment.showToastToUser("account could not be created, try with another email")
 
-                        Log.d("taged" ,Task.result.toString())
                     }
 
                 }
         }catch (e : Exception){
-            fragment.showToastToUser("Account could not be created. Something went wrong")
+            fragment.showToastToUser("Your internet might be a sparce resource")
         } finally {
             return isSignUpSuccess
         }
@@ -41,7 +41,7 @@ class AuthPresenter {
     }
 
     fun getCurrentLoggedInUser() : String {
-        var ref = useractions.db.collection("Users")
+        val ref = useractions.db.collection("Users")
         var myLoggedInUser = ""
         try {
             ref.whereEqualTo("email", userAuth.currentUser!!.email)

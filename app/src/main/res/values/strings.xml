@@ -89,5 +89,7 @@
     <string name="error_list_creation_label">"You have to fill out listname
         and description to create a list"</string>
     <string name="list_size_text">%1$s %2$s %3$s</string>
+    <string name="no_internet">Sorry, something went wrong, check your internet</string>
+    <string name="list_size_create_list">List size:</string>
 
 </resources>

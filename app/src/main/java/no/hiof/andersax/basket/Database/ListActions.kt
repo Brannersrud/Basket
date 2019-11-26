@@ -3,6 +3,7 @@ package no.hiof.andersax.basket.Database
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import no.hiof.andersax.basket.Helpers.ListCalculator
 import no.hiof.andersax.basket.model.ListCollection
 import no.hiof.andersax.basket.model.ListItem
 import no.hiof.andersax.basket.model.sharedList
@@ -12,6 +13,7 @@ import no.hiof.andersax.basket.view.sharedListFragment
 
 class ListActions {
     private var Auth: AuthActions = AuthActions()
+    private var calculator : ListCalculator = ListCalculator()
 
 
     fun addPrivateList(list: ListCollection, uid: String, fragment: privateListFragment) {
@@ -44,7 +46,7 @@ class ListActions {
                     fragment.showToastToUser("List rejected violently",false)
                 }
             }.addOnFailureListener { e ->
-                e.printStackTrace()
+                fragment.showToastToUser("Check your internet connection.",false)
             }
 
     }
@@ -74,13 +76,11 @@ class ListActions {
 
 
 
-     fun overWriteSharedList(uid: String, list: MutableList<ListItem>, fragment: sharedListFragment, totalprice : Long, shouldShowToast : Boolean) {
+     fun overWriteSharedList(uid: String, list: MutableList<ListItem>, fragment: sharedListFragment, shouldShowToast : Boolean) {
         val db = Auth.getFireBaseStoreReference()
         val ref = db.collection("sharedList").document(uid)
-         var price : Long= 0;
-         for(i in list){
-             price+= i.price
-         }
+        val price : Long = calculator.calculateTotal(list)
+
 
         ref.update("items", list)
             .addOnCompleteListener { Task ->
